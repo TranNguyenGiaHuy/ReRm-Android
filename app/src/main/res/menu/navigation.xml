@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-            android:id="@+id/navigation_find"
+            android:id="@+id/navigation_explore"
             android:icon="@drawable/ic_nav_find"
-            android:title="Find"
+            android:title="Explore"
     />
     <item
             android:id="@+id/navigation_save"

@@ -10,9 +10,10 @@
     <FrameLayout
             android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="679dp"
+            android:layout_height="wrap_content"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            app:layout_constraintBottom_toTopOf="@+id/navigationView"/>
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="4dp"/>
     <android.support.design.widget.BottomNavigationView
             android:id="@+id/navigationView"
             android:layout_width="0dp"
