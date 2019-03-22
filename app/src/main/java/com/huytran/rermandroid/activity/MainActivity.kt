@@ -17,6 +17,8 @@ class MainActivity : BaseActivity() {
 
         val bottomNavigation : BottomNavigationView = findViewById(R.id.navigationView)
         bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        val exploreFragment = ExploreFragment.newInstance()
+        openFragment(exploreFragment)
     }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
