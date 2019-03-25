@@ -6,11 +6,13 @@ import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
 import android.util.AttributeSet
 import android.view.View
+import dagger.android.AndroidInjection
 
 open class BaseActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
+        AndroidInjection.inject(this)
     }
 
     override fun onCreateView(name: String?, context: Context?, attrs: AttributeSet?): View? {
