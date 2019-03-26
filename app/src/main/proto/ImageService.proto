@@ -1,0 +1,40 @@
+syntax = "proto3";
+option java_multiple_files = true;
+package com.huytran.grpcdemo.generatedproto;
+
+message UploadFileRequest {
+    bytes content = 1;
+    string name = 2;
+    int64 room_id = 3;
+}
+
+message UploadFileResponse {
+    int32 result_code = 1;
+    string file_id = 2;
+    string name = 3;
+    int64 room_id = 4;
+}
+
+message DownloadRequest {
+    int64 id = 1;
+}
+
+message DownloadResponse {
+    int32 result_code = 1;
+    bytes image = 2;
+}
+
+message GetFileOfRoomRequest {
+    int64 room_id = 1;
+}
+
+message GetFileOfRoomResponse {
+    int32 result_code = 1;
+    repeated int64 file_id_list = 2;
+}
+
+service ImageService {
+    rpc UploadFile(stream UploadFileRequest) returns (UploadFileResponse) {}
+    rpc DownloadFile(DownloadRequest) returns (DownloadResponse) {}
+    rpc GetFileOfRoom(GetFileOfRoomRequest) returns (GetFileOfRoomResponse) {}
+}
