@@ -1,13 +1,15 @@
 package com.huytran.rermandroid.di.component
 
-import android.app.Application
-import com.huytran.rermandroid.activity.MainActivity
+import android.content.Context
 import com.huytran.rermandroid.di.AppController
 import com.huytran.rermandroid.di.module.ActivityModule
 import com.huytran.rermandroid.di.module.ApiModule
 import com.huytran.rermandroid.di.module.FragmentModule
+import com.huytran.rermandroid.di.module.SharedPreferenceModule
+import com.huytran.rermandroid.di.scope.ApplicationContext
 import dagger.BindsInstance
 import dagger.Component
+import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
 
@@ -17,25 +19,31 @@ import javax.inject.Singleton
         ActivityModule::class,
         ApiModule::class,
         FragmentModule::class,
-        AndroidSupportInjectionModule::class
+        AndroidSupportInjectionModule::class,
+        SharedPreferenceModule::class
     ]
 )
-interface AppComponent {
+interface AppComponent : AndroidInjector<AppController> {
 
     @Component.Builder
-    interface Builder {
+    abstract class Builder : AndroidInjector.Builder<AppController>() {
 
         @BindsInstance
-        fun application(application: Application): Builder
+        abstract fun apiModule(apiModule: ApiModule): Builder
 
         @BindsInstance
-        fun apiModule(apiModule: ApiModule): Builder
+        abstract fun appContext(@ApplicationContext context: Context)
 
-        fun build(): AppComponent
+        @BindsInstance
+        abstract fun sharedPreferenceModule(sharedPreferenceModule: SharedPreferenceModule): Builder
+
+        override fun seedInstance(instance: AppController?) {
+            appContext(instance as Context)
+        }
 
     }
 
-    fun inject(appController: AppController)
+    override fun inject(appController: AppController)
 //    fun inject(mainActivity: MainActivity)
 
 }
