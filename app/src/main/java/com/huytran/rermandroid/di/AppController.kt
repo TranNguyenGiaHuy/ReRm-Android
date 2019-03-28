@@ -1,38 +1,22 @@
 package com.huytran.rermandroid.di
 
-import android.app.Activity
-import android.app.Application
-import android.support.v4.app.Fragment
 import com.huytran.rermandroid.di.component.DaggerAppComponent
 import com.huytran.rermandroid.di.module.ApiModule
+import com.huytran.rermandroid.di.module.SharedPreferenceModule
 import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
+import dagger.android.support.DaggerApplication
 import dagger.android.support.HasSupportFragmentInjector
-import javax.inject.Inject
 
-class AppController: Application(), HasActivityInjector, HasSupportFragmentInjector {
-
-    @Inject
-    lateinit var activityInjector: DispatchingAndroidInjector<Activity>
-
-    @Inject
-    lateinit var fragmentInjector: DispatchingAndroidInjector<Fragment>
-
-    override fun activityInjector(): AndroidInjector<Activity> {
-        return activityInjector
-    }
-
-    override fun supportFragmentInjector(): AndroidInjector<Fragment> {
-        return fragmentInjector
-    }
+class AppController: DaggerApplication(), HasActivityInjector, HasSupportFragmentInjector {
 
     override fun onCreate() {
         super.onCreate()
-        DaggerAppComponent.builder()
-            .application(this)
+    }
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
+        return DaggerAppComponent.builder()
             .apiModule(ApiModule())
-            .build()
-            .inject(this)
+            .sharedPreferenceModule(SharedPreferenceModule())
+            .create(this)
     }
 }

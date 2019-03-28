@@ -22,7 +22,23 @@ message LoginResponse {
     string token = 2;
 }
 
+message GetInfoRequest {
+
+}
+
+message GetInfoResponse {
+    int32 result_code = 1;
+    string name = 2;
+    string userName = 3;
+    int64 avatarId = 4;
+    string phoneNumber = 5;
+    string idCard = 6;
+    int64 tsCardDated = 7;
+    int64 tsDateOfBirth = 8;
+}
+
 service UserService {
     rpc SignUp(SignUpRequest) returns (SignUpResponse) {}
     rpc Login(LoginRequest) returns (LoginResponse) {}
+    rpc GetInfo(GetInfoRequest) returns (GetInfoResponse) {}
 }
