@@ -1,14 +1,13 @@
 package com.huytran.rermandroid.fragment
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import com.huytran.rermandroid.R
-import com.huytran.rermandroid.data.remote.DataController
+import com.huytran.rermandroid.data.remote.UserController
 import com.huytran.rermandroid.fragment.base.BaseFragment
+import kotlinx.android.synthetic.main.test_fragment.*
 import javax.inject.Inject
 
 class TestFragment @Inject constructor() : BaseFragment() {
@@ -16,7 +15,7 @@ class TestFragment @Inject constructor() : BaseFragment() {
 //    @Inject
 //    lateinit var serverChannel: ManagedChannel
 
-    @Inject lateinit var dataController: DataController
+    @Inject lateinit var userController: UserController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,12 +23,33 @@ class TestFragment @Inject constructor() : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        val view = inflater.inflate(R.layout.test_fragment, container, false)
-        val btn = view.findViewById<Button>(R.id.test_grpc_btn)
-        btn.setOnClickListener {
-            dataController.user.signup()
+        return inflater.inflate(R.layout.test_fragment, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        btnSignup.setOnClickListener {
+            userController.signup(
+                etUsername.text.toString(),
+                etPassword.text.toString()
+            )
         }
-        return view
+
+        btnLogin.setOnClickListener {
+            userController.login(
+                etUsername.text.toString(),
+                etPassword.text.toString()
+            )
+        }
+
+        btnLogout.setOnClickListener {
+            userController.logout()
+        }
+
+        btnGetUserInfo.setOnClickListener {
+            userController.getUserInfo()
+        }
     }
 
 }

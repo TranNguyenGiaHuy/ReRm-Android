@@ -8,6 +8,7 @@ import com.huytran.rermandroid.activity.base.BaseActivity
 import com.huytran.rermandroid.fragment.ExploreFragment
 import com.huytran.rermandroid.fragment.ProfileFragment
 import com.huytran.rermandroid.fragment.TestFragment
+import com.huytran.rermandroid.manager.TransactionManager
 
 class MainActivity : BaseActivity() {
 
@@ -17,8 +18,13 @@ class MainActivity : BaseActivity() {
 
         val bottomNavigation : BottomNavigationView = findViewById(R.id.navigationView)
         bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        val exploreFragment = ExploreFragment.newInstance()
-        openFragment(exploreFragment)
+
+//        val exploreFragment = ExploreFragment.newInstance()
+//        openFragment(exploreFragment)
+        TransactionManager.replaceFragmentWithNoBackStack(
+            this,
+            TestFragment()
+        )
     }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->

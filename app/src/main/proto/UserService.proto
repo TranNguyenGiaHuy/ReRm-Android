@@ -37,8 +37,17 @@ message GetInfoResponse {
     int64 tsDateOfBirth = 8;
 }
 
+message LogoutRequest {
+
+}
+
+message LogoutResponse {
+
+}
+
 service UserService {
     rpc SignUp(SignUpRequest) returns (SignUpResponse) {}
     rpc Login(LoginRequest) returns (LoginResponse) {}
     rpc GetInfo(GetInfoRequest) returns (GetInfoResponse) {}
+    rpc Logout(LogoutRequest) returns (LogoutResponse) {}
 }

@@ -11,9 +11,10 @@ import android.view.ViewGroup
 import android.widget.SearchView
 
 import com.huytran.rermandroid.R
+import com.huytran.rermandroid.fragment.base.BaseFragment
 
 
-class ProfileFragment : Fragment() {
+class ProfileFragment : BaseFragment() {
 
 
 

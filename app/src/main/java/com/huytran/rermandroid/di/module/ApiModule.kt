@@ -1,9 +1,8 @@
 package com.huytran.rermandroid.di.module
 
-import android.content.Context
 import android.content.SharedPreferences
-import com.huytran.rermandroid.data.remote.DataController
-import com.huytran.rermandroid.di.scope.ApplicationContext
+import com.huytran.rermandroid.data.local.repository.UserRepository
+import com.huytran.rermandroid.data.remote.UserController
 import dagger.Module
 import dagger.Provides
 import io.grpc.ManagedChannel
@@ -24,8 +23,8 @@ class ApiModule {
 
     @Provides
     @Singleton
-    internal fun provideDataController(serverChannel: ManagedChannel, privatePreferences: SharedPreferences): DataController {
-        return DataController(serverChannel, privatePreferences)
+    internal fun provideUserController(serverChannel: ManagedChannel, privatePreferences: SharedPreferences, userRepository: UserRepository): UserController {
+        return UserController(serverChannel, privatePreferences, userRepository)
     }
 
 }

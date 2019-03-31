@@ -11,9 +11,10 @@ import android.view.ViewGroup
 import android.widget.SearchView
 
 import com.huytran.rermandroid.R
+import com.huytran.rermandroid.fragment.base.BaseFragment
 
 
-class ExploreFragment : Fragment() {
+class ExploreFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

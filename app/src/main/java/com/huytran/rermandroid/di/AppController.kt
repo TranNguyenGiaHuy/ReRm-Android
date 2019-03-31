@@ -2,6 +2,7 @@ package com.huytran.rermandroid.di
 
 import com.huytran.rermandroid.di.component.DaggerAppComponent
 import com.huytran.rermandroid.di.module.ApiModule
+import com.huytran.rermandroid.di.module.DatabaseModule
 import com.huytran.rermandroid.di.module.SharedPreferenceModule
 import dagger.android.AndroidInjector
 import dagger.android.HasActivityInjector
@@ -16,6 +17,7 @@ class AppController: DaggerApplication(), HasActivityInjector, HasSupportFragmen
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
         return DaggerAppComponent.builder()
             .apiModule(ApiModule())
+            .databaseModule(DatabaseModule())
             .sharedPreferenceModule(SharedPreferenceModule())
             .create(this)
     }
