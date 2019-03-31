@@ -21,22 +21,30 @@ class MainActivity : BaseActivity() {
 
 //        val exploreFragment = ExploreFragment.newInstance()
 //        openFragment(exploreFragment)
+//        TransactionManager.replaceFragmentWithNoBackStack(
+//            this,
+//            TestFragment()
+//        )
         TransactionManager.replaceFragmentWithNoBackStack(
             this,
-            TestFragment()
+            ExploreFragment()
         )
     }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_profile -> {
-                val profileFragment = ProfileFragment.newInstance()
-                openFragment(profileFragment)
+                TransactionManager.replaceFragmentWithWithBackStack(
+                    this,
+                    ProfileFragment()
+                )
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_explore -> {
-                val exploreFragment = ExploreFragment.newInstance()
-                openFragment(exploreFragment)
+                TransactionManager.replaceFragmentWithWithBackStack(
+                    this,
+                    ExploreFragment()
+                )
                 return@OnNavigationItemSelectedListener true
             }
         }
