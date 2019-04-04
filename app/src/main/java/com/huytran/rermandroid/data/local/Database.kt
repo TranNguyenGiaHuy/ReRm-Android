@@ -1,7 +1,8 @@
 package com.huytran.rermandroid.data.local
 
-import android.arch.persistence.room.Database
-import android.arch.persistence.room.RoomDatabase
+
+import androidx.room.Database
+import androidx.room.RoomDatabase
 import com.huytran.rermandroid.data.local.dao.UserDAO
 import com.huytran.rermandroid.data.local.entity.User
 
@@ -17,6 +18,6 @@ abstract class Database : RoomDatabase() {
     abstract fun userDAO(): UserDAO
 
     companion object {
-        val DATABASE_NAME = "database.db"
+        const val DATABASE_NAME = "database.db"
     }
 }

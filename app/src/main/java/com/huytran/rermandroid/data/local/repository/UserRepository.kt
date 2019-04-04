@@ -2,17 +2,16 @@ package com.huytran.rermandroid.data.local.repository
 
 import com.huytran.rermandroid.data.local.dao.UserDAO
 import com.huytran.rermandroid.data.local.entity.User
-import io.reactivex.Observable
+import io.reactivex.Completable
+import io.reactivex.Maybe
 
 class UserRepository(private val userDAO: UserDAO) {
 
-    fun addUser(user: User) {
-        Observable.fromCallable {
-            userDAO.insert(user)
-        }
+    fun addUser(user: User): Completable {
+        return userDAO.insert(user)
     }
 
-    fun getLast(): User {
+    fun getLast(): Maybe<User> {
         return userDAO.getLast()
     }
 

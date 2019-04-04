@@ -1,7 +1,7 @@
 package com.huytran.rermandroid.manager
 
 import android.content.Context
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.huytran.rermandroid.R
 import com.huytran.rermandroid.fragment.base.BaseFragment
 

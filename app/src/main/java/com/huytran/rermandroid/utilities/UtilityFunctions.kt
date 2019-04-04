@@ -13,7 +13,7 @@ class UtilityFunctions {
             val header = Metadata()
             header.put(
                 Metadata.Key.of(
-                    "Authorize",
+                    "Authorization",
                     Metadata.ASCII_STRING_MARSHALLER
                 ),
                 token

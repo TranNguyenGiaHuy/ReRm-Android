@@ -1,14 +1,17 @@
 package com.huytran.rermandroid.data.local.dao.base
-
-import android.arch.persistence.room.Delete
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.OnConflictStrategy
-import android.arch.persistence.room.Update
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Update
+import io.reactivex.Completable
 
 interface BaseDAO<T> {
 
+//    @Insert(onConflict = OnConflictStrategy.REPLACE)
+//    fun insert(obj: T)
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(obj: T)
+    fun insert(obj: T): Completable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(vararg obj: T)

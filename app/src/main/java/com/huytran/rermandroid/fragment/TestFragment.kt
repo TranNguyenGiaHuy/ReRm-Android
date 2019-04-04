@@ -5,8 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.huytran.rermandroid.R
+import com.huytran.rermandroid.data.local.repository.UserRepository
 import com.huytran.rermandroid.data.remote.UserController
 import com.huytran.rermandroid.fragment.base.BaseFragment
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.test_fragment.*
 import javax.inject.Inject
 
@@ -16,6 +21,10 @@ class TestFragment @Inject constructor() : BaseFragment() {
 //    lateinit var serverChannel: ManagedChannel
 
     @Inject lateinit var userController: UserController
+
+    @Inject lateinit var userRepository: UserRepository
+
+    private val compositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +59,18 @@ class TestFragment @Inject constructor() : BaseFragment() {
         btnGetUserInfo.setOnClickListener {
             userController.getUserInfo()
         }
+
+        userRepository.getLast()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe {
+                txtName.text = it.name
+            }.addTo(compositeDisposable)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.clear()
     }
 
 }

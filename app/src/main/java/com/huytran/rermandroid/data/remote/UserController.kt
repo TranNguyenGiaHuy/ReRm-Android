@@ -4,19 +4,18 @@ import android.content.SharedPreferences
 import com.huytran.grpcdemo.generatedproto.*
 import com.huytran.rermandroid.data.local.entity.User
 import com.huytran.rermandroid.data.local.repository.UserRepository
-import com.huytran.rermandroid.utilities.UtilityFunctions
-import io.grpc.ManagedChannel
-import io.grpc.stub.MetadataUtils
+import io.grpc.Channel
+import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
 class UserController(
-    private val serverChannel: ManagedChannel,
+    private val channel: Channel,
     private val privatePreferences: SharedPreferences,
     private val userRepository: UserRepository
 ) {
 
     fun signup(username: String, password: String) {
-        val stub = UserServiceGrpc.newBlockingStub(serverChannel)
+        val stub = UserServiceGrpc.newBlockingStub(channel)
         val signUpResponse = stub.signUp(
             SignUpRequest.newBuilder()
                 .setName(username)
@@ -32,7 +31,7 @@ class UserController(
     }
 
     fun login(username: String, password: String) {
-        val stub = UserServiceGrpc.newBlockingStub(serverChannel)
+        val stub = UserServiceGrpc.newBlockingStub(channel)
 
         val loginResponse = stub.login(
             LoginRequest.newBuilder()
@@ -49,12 +48,12 @@ class UserController(
     }
 
     fun logout() {
-        val token = UtilityFunctions.tokenHeader(privatePreferences) ?: return
-        val stub = UserServiceGrpc.newBlockingStub(serverChannel)
-        MetadataUtils.attachHeaders(
-            stub,
-            token
-        )
+//        val token = UtilityFunctions.tokenHeader(privatePreferences) ?: return
+        val stub = UserServiceGrpc.newBlockingStub(channel)
+//        MetadataUtils.attachHeaders(
+//            stub,
+//            token
+//        )
 
         val logoutResponse = stub.logout(
             LogoutRequest.newBuilder()
@@ -65,14 +64,14 @@ class UserController(
     }
 
     fun getUserInfo() {
-        val token = UtilityFunctions.tokenHeader(privatePreferences)
-        val stub = UserServiceGrpc.newBlockingStub(serverChannel)
-        token?.let {
-            MetadataUtils.attachHeaders(
-                stub,
-                it
-            )
-        }
+//        val token = UtilityFunctions.tokenHeader(privatePreferences)
+        val stub = UserServiceGrpc.newBlockingStub(channel)
+//        token?.let {
+//            MetadataUtils.attachHeaders(
+//                stub,
+//                it
+//            )
+//        }
 
         val getUserInfoResponse = stub.getInfo(
             GetInfoRequest.newBuilder()
@@ -82,6 +81,10 @@ class UserController(
         Timber.e(
             if (getUserInfoResponse.resultCode == 0) "Get Success" else "Get Fail"
         )
+
+        if (getUserInfoResponse.resultCode != 0) {
+            return
+        }
 
         val user = User(
             name = getUserInfoResponse.name,
@@ -94,7 +97,9 @@ class UserController(
         )
         userRepository.addUser(
             user
-        )
+        ).observeOn(Schedulers.io())
+            .subscribeOn(Schedulers.io())
+            .subscribe()
 
     }
 

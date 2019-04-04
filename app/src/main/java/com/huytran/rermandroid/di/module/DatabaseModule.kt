@@ -1,7 +1,7 @@
 package com.huytran.rermandroid.di.module
 
-import android.arch.persistence.room.Room
 import android.content.Context
+import androidx.room.Room
 import com.huytran.rermandroid.data.local.Database
 import com.huytran.rermandroid.data.local.dao.UserDAO
 import com.huytran.rermandroid.data.local.repository.UserRepository

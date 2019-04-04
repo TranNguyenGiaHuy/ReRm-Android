@@ -1,8 +1,7 @@
 package com.huytran.rermandroid.activity
 
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
-import android.support.v4.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.huytran.rermandroid.R
 import com.huytran.rermandroid.activity.base.BaseActivity
 import com.huytran.rermandroid.fragment.ExploreFragment
@@ -19,16 +18,14 @@ class MainActivity : BaseActivity() {
         val bottomNavigation : BottomNavigationView = findViewById(R.id.navigationView)
         bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
-//        val exploreFragment = ExploreFragment.newInstance()
-//        openFragment(exploreFragment)
-//        TransactionManager.replaceFragmentWithNoBackStack(
-//            this,
-//            TestFragment()
-//        )
         TransactionManager.replaceFragmentWithNoBackStack(
             this,
-            ExploreFragment()
+            TestFragment()
         )
+//        TransactionManager.replaceFragmentWithNoBackStack(
+//            this,
+//            ExploreFragment()
+//        )
     }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -49,12 +46,5 @@ class MainActivity : BaseActivity() {
             }
         }
         false
-    }
-
-    private fun openFragment(fragment: Fragment) {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.container, fragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
     }
 }
