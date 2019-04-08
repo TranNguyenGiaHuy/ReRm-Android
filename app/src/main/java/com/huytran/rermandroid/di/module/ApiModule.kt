@@ -24,16 +24,10 @@ class ApiModule {
             .forAddress("10.0.2.2", 6565)
             .usePlaintext()
             .build()
-        val token = context.getSharedPreferences("Private", Context.MODE_PRIVATE).getString("session", "") ?: ""
-
-        if (token.isNotEmpty()) {
-            return ClientInterceptors.intercept(
-                channel,
-                SecurityInterceptor(token)
-            )
-        }
-
-        return channel
+        return ClientInterceptors.intercept(
+            channel,
+            SecurityInterceptor(context.getSharedPreferences("Private", Context.MODE_PRIVATE))
+        )
     }
 
     @Provides

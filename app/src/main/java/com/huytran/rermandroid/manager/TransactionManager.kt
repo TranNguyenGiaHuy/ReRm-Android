@@ -20,7 +20,7 @@ class TransactionManager {
         fun replaceFragmentWithWithBackStack(context: Context, desFragment: BaseFragment) {
             (context as AppCompatActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.container, desFragment, desFragment::class.java.simpleName)
-                .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right)
+                .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, R.anim.slide_in_left, R.anim.slide_out_right)
                 .addToBackStack(desFragment::class.java.simpleName)
                 .commit()
         }

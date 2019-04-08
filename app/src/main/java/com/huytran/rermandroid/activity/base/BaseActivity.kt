@@ -9,8 +9,12 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.huytran.rermandroid.activity.MainActivity
 import dagger.android.AndroidInjection
+import io.reactivex.disposables.CompositeDisposable
+import kotlinx.android.synthetic.*
 
 open class BaseActivity: AppCompatActivity() {
+
+    var disposableContainer: CompositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
@@ -31,11 +35,13 @@ open class BaseActivity: AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        disposableContainer.clear()
+        clearFindViewByIdCache()
     }
 
     fun startActivitySilently(activityClass : Class<out BaseActivity>) {
         val intent = Intent(this, activityClass)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY
         startActivity(intent)
     }
 

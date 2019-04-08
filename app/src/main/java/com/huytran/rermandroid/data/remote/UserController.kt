@@ -6,7 +6,7 @@ import com.huytran.rermandroid.data.local.entity.User
 import com.huytran.rermandroid.data.local.repository.UserRepository
 import com.huytran.rermandroid.utilities.AppConstants
 import io.grpc.Channel
-import io.grpc.StatusRuntimeException
+import io.grpc.stub.StreamObserver
 import io.reactivex.Completable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
@@ -18,55 +18,99 @@ class UserController(
     private val userRepository: UserRepository
 ) {
 
-    fun signup(username: String, password: String) {
-        val stub = UserServiceGrpc.newBlockingStub(channel).withDeadlineAfter(AppConstants.REQUEST_TIMEOUT, TimeUnit.MILLISECONDS)
-        val signUpResponse = stub.signUp(
-            SignUpRequest.newBuilder()
-                .setName(username)
-                .setPassword(password)
-                .build()
-        )
+    fun signup(username: String, password: String): Completable {
+        val stub = UserServiceGrpc.newStub(channel)
+            .withDeadlineAfter(AppConstants.REQUEST_TIMEOUT, TimeUnit.MILLISECONDS)
 
-        privatePreferences.edit().putString("session", signUpResponse.token).apply()
+        val signUpRequest = SignUpRequest.newBuilder()
+            .setName(username)
+            .setPassword(password)
+            .build()
+
+
+        return Completable.create {
+            val signupResponseObserver = object : StreamObserver<SignUpResponse> {
+                override fun onNext(value: SignUpResponse?) {
+                    value?.let { signUpResponse ->
+                        if (signUpResponse.resultCode == 0
+                            && signUpResponse.token.isNotBlank()
+                        ) {
+                            privatePreferences.edit().putString("session", signUpResponse.token).apply()
+                        } else {
+                            it.onError(
+                                Throwable("Sign Up Fail")
+                            )
+                        }
+                    }
+                }
+
+                override fun onError(t: Throwable?) {
+                    it.onError(
+                        Throwable("Sign Up Fail")
+                    )
+                }
+
+                override fun onCompleted() {
+                    it.onComplete()
+                }
+
+            }
+
+            stub.signUp(
+                signUpRequest,
+                signupResponseObserver
+            )
+        }
     }
 
     fun login(username: String, password: String): Completable {
-        val stub = UserServiceGrpc.newBlockingStub(channel).withDeadlineAfter(AppConstants.REQUEST_TIMEOUT, TimeUnit.MILLISECONDS)
-        val loginResponse : LoginResponse
+        val stub =
+            UserServiceGrpc.newStub(channel).withDeadlineAfter(AppConstants.REQUEST_TIMEOUT, TimeUnit.MILLISECONDS)
 
-        try {
-            loginResponse = stub.login(
-                LoginRequest.newBuilder()
-                    .setName(username)
-                    .setPassword(password)
-                    .build()
+        val loginRequest = LoginRequest.newBuilder()
+            .setName(username)
+            .setPassword(password)
+            .build()
+
+        return Completable.create {
+
+            val loginResponseObserver = object : StreamObserver<LoginResponse> {
+                override fun onNext(value: LoginResponse?) {
+                    value?.let { loginResponse ->
+                        if (loginResponse.resultCode == 0
+                            && loginResponse.token.isNotBlank()
+                        ) {
+                            privatePreferences.edit().putString("session", loginResponse.token).apply()
+                        } else {
+                            it.onError(
+                                Throwable("Invalid Username or Password")
+                            )
+                        }
+                    }
+                }
+
+                override fun onError(t: Throwable?) {
+                    it.onError(
+                        Throwable("Login Fail")
+                    )
+                }
+
+                override fun onCompleted() {
+                    it.onComplete()
+                }
+
+            }
+
+            stub.login(
+                loginRequest,
+                loginResponseObserver
             )
-        } catch (e: StatusRuntimeException) {
-            return Completable.error {
-                Throwable("Login Fail")
-            }
-        }
-
-        return if (loginResponse.resultCode == 0
-            && loginResponse.token.isNotBlank()
-        ) {
-            privatePreferences.edit().putString("session", loginResponse.token).apply()
-            Completable.complete()
-        } else {
-            Completable.error {
-                Throwable("Login Fail")
-            }
         }
 
     }
 
     fun logout() {
-//        val token = UtilityFunctions.tokenHeader(privatePreferences) ?: return
         val stub = UserServiceGrpc.newBlockingStub(channel)
-//        MetadataUtils.attachHeaders(
-//            stub,
-//            token
-//        )
 
         val logoutResponse = stub.logout(
             LogoutRequest.newBuilder()
@@ -114,6 +158,50 @@ class UserController(
             .subscribeOn(Schedulers.io())
             .subscribe()
 
+    }
+
+    fun loginWithToken(): Completable {
+        val stub = UserServiceGrpc.newStub(channel).withDeadlineAfter(AppConstants.REQUEST_TIMEOUT, TimeUnit.MILLISECONDS)
+
+        val loginWithTokenRequest = LoginWithTokenRequest.newBuilder().build()
+
+        return Completable.create { emitter ->
+
+            val loginWithTokenWithTokenResponseObserver = object : StreamObserver<LoginWithTokenResponse> {
+                override fun onNext(value: LoginWithTokenResponse?) {
+                    value?.let {response ->
+                        if (response.resultCode == 0) {
+                            emitter.onComplete()
+                        } else {
+                            emitter.onError(
+                                Throwable(
+                                    "Login Fail"
+                                )
+                            )
+                        }
+                    }
+                }
+
+                override fun onError(t: Throwable?) {
+                    emitter.onError(
+                        Throwable(
+                            "Login Fail"
+                        )
+                    )
+                }
+
+                override fun onCompleted() {
+                    emitter.onComplete()
+                }
+
+            }
+
+            stub.loginWithToken(
+                loginWithTokenRequest,
+                loginWithTokenWithTokenResponseObserver
+            )
+
+        }
     }
 
 }

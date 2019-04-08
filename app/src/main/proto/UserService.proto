@@ -35,6 +35,7 @@ message GetInfoResponse {
     string idCard = 6;
     int64 tsCardDated = 7;
     int64 tsDateOfBirth = 8;
+    int64 id = 9;
 }
 
 message LogoutRequest {
@@ -45,9 +46,18 @@ message LogoutResponse {
 
 }
 
+message LoginWithTokenRequest {
+
+}
+
+message LoginWithTokenResponse {
+    int32 result_code = 1;
+}
+
 service UserService {
     rpc SignUp(SignUpRequest) returns (SignUpResponse) {}
     rpc Login(LoginRequest) returns (LoginResponse) {}
     rpc GetInfo(GetInfoRequest) returns (GetInfoResponse) {}
     rpc Logout(LogoutRequest) returns (LogoutResponse) {}
+    rpc LoginWithToken(LoginWithTokenRequest) returns (LoginWithTokenResponse) {}
 }

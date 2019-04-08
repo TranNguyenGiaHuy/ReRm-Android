@@ -1,10 +1,11 @@
 package com.huytran.rermandroid.data.remote.interceptor
 
+import android.content.SharedPreferences
 import io.grpc.*
 import io.grpc.ForwardingClientCallListener.SimpleForwardingClientCallListener
 import io.grpc.ForwardingClientCall.SimpleForwardingClientCall
 
-class SecurityInterceptor(val token: String) : ClientInterceptor {
+class SecurityInterceptor(val privatePreferences: SharedPreferences) : ClientInterceptor {
 
     private val header = Metadata.Key.of("Authorization", Metadata.ASCII_STRING_MARSHALLER)
 
@@ -17,7 +18,12 @@ class SecurityInterceptor(val token: String) : ClientInterceptor {
 
             override fun start(responseListener: ClientCall.Listener<RespT>, headers: Metadata) {
 
-                headers.put(header, token)
+                val token = privatePreferences.getString("session", "") ?: ""
+
+                if (token.isNotBlank()) {
+                    headers.put(header, token)
+                }
+
                 super.start(
                     object : SimpleForwardingClientCallListener<RespT>(responseListener) {
                     },
