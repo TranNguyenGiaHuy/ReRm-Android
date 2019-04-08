@@ -7,7 +7,6 @@ import android.os.PersistableBundle
 import android.util.AttributeSet
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.huytran.rermandroid.activity.MainActivity
 import dagger.android.AndroidInjection
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.*
@@ -41,7 +40,7 @@ open class BaseActivity: AppCompatActivity() {
 
     fun startActivitySilently(activityClass : Class<out BaseActivity>) {
         val intent = Intent(this, activityClass)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         startActivity(intent)
     }
 
