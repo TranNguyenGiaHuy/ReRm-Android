@@ -1,9 +1,7 @@
 package com.huytran.rermandroid.di.module
 
-import com.huytran.rermandroid.fragment.ExploreFragment
-import com.huytran.rermandroid.fragment.ProfileFragment
+import com.huytran.rermandroid.fragment.*
 import com.huytran.rermandroid.fragment.base.BaseFragment
-import com.huytran.rermandroid.fragment.TestFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -21,5 +19,11 @@ abstract class FragmentModule {
 
     @ContributesAndroidInjector
     abstract fun contributeProfileFragment(): ProfileFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeLoginFragment(): LoginFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeSignupFragment(): SignupFragment
 
 }

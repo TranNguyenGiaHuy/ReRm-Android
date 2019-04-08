@@ -4,9 +4,13 @@ import android.content.SharedPreferences
 import com.huytran.grpcdemo.generatedproto.*
 import com.huytran.rermandroid.data.local.entity.User
 import com.huytran.rermandroid.data.local.repository.UserRepository
+import com.huytran.rermandroid.utilities.AppConstants
 import io.grpc.Channel
+import io.grpc.StatusRuntimeException
+import io.reactivex.Completable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
+import java.util.concurrent.TimeUnit
 
 class UserController(
     private val channel: Channel,
@@ -15,7 +19,7 @@ class UserController(
 ) {
 
     fun signup(username: String, password: String) {
-        val stub = UserServiceGrpc.newBlockingStub(channel)
+        val stub = UserServiceGrpc.newBlockingStub(channel).withDeadlineAfter(AppConstants.REQUEST_TIMEOUT, TimeUnit.MILLISECONDS)
         val signUpResponse = stub.signUp(
             SignUpRequest.newBuilder()
                 .setName(username)
@@ -23,28 +27,37 @@ class UserController(
                 .build()
         )
 
-        Timber.e(
-            if (signUpResponse.resultCode == 0) "Sign up Success" else "Sign up Fail"
-        )
-
         privatePreferences.edit().putString("session", signUpResponse.token).apply()
     }
 
-    fun login(username: String, password: String) {
-        val stub = UserServiceGrpc.newBlockingStub(channel)
+    fun login(username: String, password: String): Completable {
+        val stub = UserServiceGrpc.newBlockingStub(channel).withDeadlineAfter(AppConstants.REQUEST_TIMEOUT, TimeUnit.MILLISECONDS)
+        val loginResponse : LoginResponse
 
-        val loginResponse = stub.login(
-            LoginRequest.newBuilder()
-                .setName(username)
-                .setPassword(password)
-                .build()
-        )
+        try {
+            loginResponse = stub.login(
+                LoginRequest.newBuilder()
+                    .setName(username)
+                    .setPassword(password)
+                    .build()
+            )
+        } catch (e: StatusRuntimeException) {
+            return Completable.error {
+                Throwable("Login Fail")
+            }
+        }
 
-        Timber.e(
-            if (loginResponse.resultCode == 0) "Login Success" else "Login Fail"
-        )
+        return if (loginResponse.resultCode == 0
+            && loginResponse.token.isNotBlank()
+        ) {
+            privatePreferences.edit().putString("session", loginResponse.token).apply()
+            Completable.complete()
+        } else {
+            Completable.error {
+                Throwable("Login Fail")
+            }
+        }
 
-        privatePreferences.edit().putString("session", loginResponse.token).apply()
     }
 
     fun logout() {
