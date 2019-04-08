@@ -1,5 +1,6 @@
 package com.huytran.rermandroid.activity
 
+import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.huytran.rermandroid.R
@@ -8,7 +9,7 @@ import com.huytran.rermandroid.fragment.ExploreFragment
 import com.huytran.rermandroid.fragment.ProfileFragment
 import com.huytran.rermandroid.fragment.TestFragment
 import com.huytran.rermandroid.manager.TransactionManager
-
+import com.huytran.rermandroid.activity.LoginActivity
 class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,14 +19,20 @@ class MainActivity : BaseActivity() {
         val bottomNavigation : BottomNavigationView = findViewById(R.id.navigationView)
         bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
-        TransactionManager.replaceFragmentWithNoBackStack(
-            this,
-            TestFragment()
-        )
+        val usercurrent = true
+        if(usercurrent == true) {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
+
 //        TransactionManager.replaceFragmentWithNoBackStack(
 //            this,
-//            ExploreFragment()
+//            TestFragment()
 //        )
+        TransactionManager.replaceFragmentWithNoBackStack(
+            this,
+            ExploreFragment()
+        )
     }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->

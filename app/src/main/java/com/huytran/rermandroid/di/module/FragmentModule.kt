@@ -21,6 +21,12 @@ abstract class FragmentModule {
     abstract fun contributeProfileFragment(): ProfileFragment
 
     @ContributesAndroidInjector
+    abstract fun contributeRoomDetailFragment(): RoomDetailFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeProfileDetailFragment(): ProfileDetailFragment
+
+    @ContributesAndroidInjector
     abstract fun contributeLoginFragment(): LoginFragment
 
     @ContributesAndroidInjector
