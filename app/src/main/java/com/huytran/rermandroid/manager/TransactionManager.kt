@@ -13,7 +13,7 @@ class TransactionManager {
             (context as AppCompatActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.container, desFragment, desFragment::class.java.simpleName)
                 .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right)
-                .addToBackStack(null)
+                /*.addToBackStack(null)*/
                 .commit()
         }
 
