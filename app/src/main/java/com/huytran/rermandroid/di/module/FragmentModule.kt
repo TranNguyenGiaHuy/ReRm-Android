@@ -32,4 +32,7 @@ abstract class FragmentModule {
     @ContributesAndroidInjector
     abstract fun contributeSignupFragment(): SignupFragment
 
+    @ContributesAndroidInjector
+    abstract fun contributeCreatePostFragment(): CreatePostFragment
+
 }
