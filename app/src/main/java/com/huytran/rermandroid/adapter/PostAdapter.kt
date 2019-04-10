@@ -31,8 +31,8 @@ class PostAdapter(val items : ArrayList<Room>, val context: Context) : RecyclerV
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val room : Room = items[position]
-        holder?.tvPrice?.text = room.price.toString()
-        holder?.tvSquare?.text = room.square.toString()
+        holder.tvPrice?.text = room.price.toString()
+        holder.tvSquare?.text = room.square.toString()
 
         holder.itemView.setOnClickListener{
             TransactionManager.replaceFragmentWithWithBackStack(

@@ -13,6 +13,7 @@ message UploadFileResponse {
     string file_id = 2;
     string name = 3;
     int64 room_id = 4;
+    int64 id = 5;
 }
 
 message DownloadRequest {

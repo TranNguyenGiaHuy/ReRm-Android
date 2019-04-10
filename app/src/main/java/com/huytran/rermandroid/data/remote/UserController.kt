@@ -7,7 +7,7 @@ import com.huytran.rermandroid.data.local.repository.UserRepository
 import com.huytran.rermandroid.utilities.AppConstants
 import io.grpc.Channel
 import io.grpc.stub.StreamObserver
-import io.reactivex.Completable
+import io.reactivex.*
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
@@ -120,48 +120,73 @@ class UserController(
         privatePreferences.edit().putString("session", "").apply()
     }
 
-    fun getUserInfo() {
-//        val token = UtilityFunctions.tokenHeader(privatePreferences)
-        val stub = UserServiceGrpc.newBlockingStub(channel)
-//        token?.let {
-//            MetadataUtils.attachHeaders(
-//                stub,
-//                it
-//            )
-//        }
+    fun getUserInfo(): Completable {
+        val stub = UserServiceGrpc.newStub(channel)
+            .withDeadlineAfter(AppConstants.REQUEST_TIMEOUT, TimeUnit.MILLISECONDS)
 
-        val getUserInfoResponse = stub.getInfo(
-            GetInfoRequest.newBuilder()
-                .build()
-        )
+        val getInfoRequest = GetInfoRequest.newBuilder().build()
 
-        Timber.e(
-            if (getUserInfoResponse.resultCode == 0) "Get Success" else "Get Fail"
-        )
+        val userSingle = Single.create<User> {emitter ->
 
-        if (getUserInfoResponse.resultCode != 0) {
-            return
+            val getInfoResponseObserver = object : StreamObserver<GetInfoResponse> {
+
+                override fun onNext(value: GetInfoResponse?) {
+
+                    value?.let {getUserInfoResponse ->
+
+                        if (getUserInfoResponse.resultCode != 0) {
+                            emitter.onError(
+                                Throwable(
+                                    "Get Info Fail"
+                                )
+                            )
+                        }
+
+                        val user = User(
+                            svId = getUserInfoResponse.id,
+                            name = getUserInfoResponse.name,
+                            userName = getUserInfoResponse.userName,
+                            avatarId = getUserInfoResponse.avatarId,
+                            phoneNumber = getUserInfoResponse.phoneNumber,
+                            idCard = getUserInfoResponse.idCard,
+                            tsCardDated = getUserInfoResponse.tsCardDated,
+                            tsDateOfBirth = getUserInfoResponse.tsDateOfBirth
+                        )
+
+                        emitter.onSuccess(user)
+                    }
+
+                }
+
+                override fun onError(t: Throwable?) {
+                    emitter.onError(
+                        Throwable(
+                            "Get Info Fail"
+                        )
+                    )
+                }
+
+                override fun onCompleted() {
+                }
+
+            }
+
+            stub.getInfo(
+                getInfoRequest,
+                getInfoResponseObserver
+            )
+
         }
 
-        val user = User(
-            name = getUserInfoResponse.name,
-            userName = getUserInfoResponse.userName,
-            avatarId = getUserInfoResponse.avatarId,
-            phoneNumber = getUserInfoResponse.phoneNumber,
-            idCard = getUserInfoResponse.idCard,
-            tsCardDated = getUserInfoResponse.tsCardDated,
-            tsDateOfBirth = getUserInfoResponse.tsDateOfBirth
-        )
-        userRepository.addUser(
-            user
-        ).observeOn(Schedulers.io())
-            .subscribeOn(Schedulers.io())
-            .subscribe()
+        return userSingle.flatMapCompletable { user ->
+            userRepository.addUser(user)
+        }
 
     }
 
     fun loginWithToken(): Completable {
-        val stub = UserServiceGrpc.newStub(channel).withDeadlineAfter(AppConstants.REQUEST_TIMEOUT, TimeUnit.MILLISECONDS)
+        val stub =
+            UserServiceGrpc.newStub(channel).withDeadlineAfter(AppConstants.REQUEST_TIMEOUT, TimeUnit.MILLISECONDS)
 
         val loginWithTokenRequest = LoginWithTokenRequest.newBuilder().build()
 
@@ -169,7 +194,7 @@ class UserController(
 
             val loginWithTokenWithTokenResponseObserver = object : StreamObserver<LoginWithTokenResponse> {
                 override fun onNext(value: LoginWithTokenResponse?) {
-                    value?.let {response ->
+                    value?.let { response ->
                         if (response.resultCode == 0) {
                             emitter.onComplete()
                         } else {

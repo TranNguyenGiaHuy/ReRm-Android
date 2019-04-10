@@ -4,11 +4,17 @@ import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.huytran.rermandroid.R
 import com.huytran.rermandroid.activity.base.BaseActivity
+import com.huytran.rermandroid.data.remote.UserController
 import com.huytran.rermandroid.fragment.ExploreFragment
 import com.huytran.rermandroid.fragment.ProfileFragment
 import com.huytran.rermandroid.manager.TransactionManager
+import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
+
+    @Inject
+    lateinit var userController: UserController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,6 +22,14 @@ class MainActivity : BaseActivity() {
 
         val bottomNavigation : BottomNavigationView = findViewById(R.id.navigationView)
         bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+
+        userController.getUserInfo()
+            .observeOn(Schedulers.newThread())
+            .subscribeOn(Schedulers.io())
+            .doOnSubscribe {
+                disposableContainer.add(it)
+            }
+            .subscribe()
 
         TransactionManager.replaceFragmentWithNoBackStack(
             this,

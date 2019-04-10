@@ -1,0 +1,31 @@
+syntax = "proto3";
+option java_multiple_files = true;
+package com.huytran.grpcdemo.generatedproto;
+
+message UploadAvatarRequest {
+    bytes content = 1;
+    string name = 2;
+    int64 user_id = 3;
+}
+
+message UploadAvatarResponse {
+    int32 result_code = 1;
+    string file_id = 2;
+    string name = 3;
+    int64 user_id = 4;
+    int64 id = 5;
+}
+
+message DownloadAvatarRequest {
+    int64 id = 1;
+}
+
+message DownloadAvatarResponse {
+    int32 result_code = 1;
+    bytes image = 2;
+}
+
+service AvatarService {
+    rpc UploadAvatar(stream UploadAvatarRequest) returns (UploadAvatarResponse) {}
+    rpc DownloadAvatar(DownloadAvatarRequest) returns (DownloadAvatarResponse) {}
+}

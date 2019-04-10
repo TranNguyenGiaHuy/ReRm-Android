@@ -9,11 +9,12 @@ import androidx.room.PrimaryKey
 @Entity(
     tableName = "user",
     indices = [
-        Index(value = ["name"], unique = true)
+        Index(value = ["name", "svId"], unique = true)
     ]
 )
 data class User (
     @PrimaryKey(autoGenerate = true) val id: Long? = null,
+    @ColumnInfo(name = "svId") val svId: Long,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "user_name") val userName: String,
     @ColumnInfo(name = "avatar_id") val avatarId: Long,
