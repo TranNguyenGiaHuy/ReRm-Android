@@ -35,4 +35,10 @@ abstract class FragmentModule {
     @ContributesAndroidInjector
     abstract fun contributeCreatePostFragment(): CreatePostFragment
 
+    @ContributesAndroidInjector
+    abstract fun contributeManagePostFragment(): ManagePostFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeManageEditPostFragment(): EditPostFragment
+
 }
