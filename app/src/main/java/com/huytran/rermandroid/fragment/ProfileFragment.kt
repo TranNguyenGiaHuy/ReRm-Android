@@ -115,14 +115,24 @@ class ProfileFragment: BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         tv_more_profile.setOnClickListener {
-            TransactionManager.replaceFragmentWithNoBackStack(
+            TransactionManager.replaceFragmentWithWithBackStack(
                 activity!!,
                 ProfileDetailFragment()
             )
         }
 
         profile_manage_post.setOnClickListener {
+            TransactionManager.replaceFragmentWithWithBackStack(
+                activity!!,
+                ManagePostFragment()
+            )
+        }
 
+        profile_manage_contract.setOnClickListener {
+            TransactionManager.replaceFragmentWithWithBackStack(
+                activity!!,
+                ManageContractFragment()
+            )
         }
 
         profile_notification.setOnClickListener {

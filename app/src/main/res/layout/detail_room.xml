@@ -104,8 +104,7 @@
                             android:text="Furniture"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textStyle="bold"
-                            android:id="@+id/tv_furniture_title"/>
+                            android:textStyle="bold"/>
                     <TextView
                             android:text="1 bed"
                             android:layout_width="match_parent"
@@ -142,8 +141,7 @@
                             android:text="Address"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textStyle="bold"
-                            android:id="@+id/tv_address_title"/>
+                            android:textStyle="bold"/>
                     <TextView
                             android:text="123"
                             android:layout_width="match_parent"
@@ -181,8 +179,7 @@
                             android:text="Square"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textStyle="bold"
-                            android:id="@+id/tv_square_title"/>
+                            android:textStyle="bold"/>
                     <TextView
                             android:text="123m2"
                             android:layout_width="match_parent"
@@ -218,13 +215,12 @@
                             android:text="Number of floor"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textStyle="bold"
-                            android:id="@+id/tv_nof_title"/>
+                            android:textStyle="bold"/>
                     <TextView
                             android:text="2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/tv_nof"/>
+                            android:id="@+id/tv_num_of_floor"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -256,13 +252,49 @@
                             android:text="Max member"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textStyle="bold"
-                            android:id="@+id/tv_guests_title"/>
+                            android:textStyle="bold"/>
                     <TextView
                             android:text="5"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/tv_guest"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <ImageView
+                        android:layout_width="77dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/ic_term"
+                        android:id="@+id/imageView"
+                        android:layout_weight="1"/>
+                <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+                    <TextView
+                            android:text="Cooking available"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"/>
+                    <TextView
+                            android:text=""
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tvCooking"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -294,8 +326,7 @@
                             android:text="Description and term"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textStyle="bold"
-                            android:id="@+id/tv_description_title"/>
+                            android:textStyle="bold"/>
                     <TextView
                             android:text="5"
                             android:layout_width="match_parent"

@@ -109,6 +109,31 @@
             <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
+                    android:layout_height="63dp"
+                    android:clickable="true"
+                    android:id="@+id/profile_manage_contract"
+            >
+
+                <TextView
+                        android:text="Manage contract"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="16dp"
+                        android:id="@+id/ManageContract"
+                        android:layout_weight="1"
+                        android:textSize="20sp"/>
+            </LinearLayout>
+
+            <View
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
                     android:clickable="true"
                     android:layout_height="63dp"
                     android:id="@+id/profile_setting"
