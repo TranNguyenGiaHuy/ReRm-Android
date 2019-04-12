@@ -88,6 +88,13 @@ class ProfileFragment: BaseFragment() {
             )
         }
 
+        profile_manage_contract.setOnClickListener {
+            TransactionManager.replaceFragmentWithWithBackStack(
+                activity!!,
+                ManageContractFragment()
+            )
+        }
+
         profile_notification.setOnClickListener {
 
         }

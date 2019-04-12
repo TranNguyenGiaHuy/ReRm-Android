@@ -41,4 +41,7 @@ abstract class FragmentModule {
     @ContributesAndroidInjector
     abstract fun contributeManageEditPostFragment(): EditPostFragment
 
+    @ContributesAndroidInjector
+    abstract fun contributeManageContractFragment(): ManageContractFragment
+
 }
