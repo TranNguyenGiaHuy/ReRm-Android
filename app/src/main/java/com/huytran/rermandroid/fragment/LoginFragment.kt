@@ -1,26 +1,24 @@
 package com.huytran.rermandroid.fragment
 
-import android.app.AlertDialog
-import android.content.Context
 import android.os.Bundle
+import android.text.InputFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.huytran.rermandroid.R
-import com.huytran.rermandroid.data.remote.UserController
-import com.huytran.rermandroid.fragment.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment_login.*
-import javax.inject.Inject
-import android.text.InputFilter
 import android.widget.Toast
+import com.huytran.rermandroid.R
 import com.huytran.rermandroid.activity.LoginActivity
 import com.huytran.rermandroid.activity.MainActivity
+import com.huytran.rermandroid.data.remote.UserController
+import com.huytran.rermandroid.fragment.base.BaseFragment
 import com.huytran.rermandroid.manager.TransactionManager
-import dmax.dialog.SpotsDialog
+import com.kinda.alert.KAlertDialog
 import io.reactivex.CompletableObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.fragment_login.*
+import javax.inject.Inject
 
 
 class LoginFragment : BaseFragment() {
@@ -54,10 +52,9 @@ class LoginFragment : BaseFragment() {
                 return@setOnClickListener
             }
 
-            val loadingDialog = SpotsDialog.Builder()
-                .setContext(context!!)
-                .setMessage("Login")
-                .build()
+            val loadingDialog = KAlertDialog(context, KAlertDialog.PROGRESS_TYPE)
+            loadingDialog.setTitleText("Login")
+                .setCancelable(false)
 
             userController.login(
                 username,

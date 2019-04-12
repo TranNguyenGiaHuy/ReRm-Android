@@ -2,7 +2,9 @@ package com.huytran.rermandroid.di.module
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.huytran.rermandroid.data.local.repository.AvatarRepository
 import com.huytran.rermandroid.data.local.repository.UserRepository
+import com.huytran.rermandroid.data.remote.AvatarController
 import com.huytran.rermandroid.data.remote.UserController
 import com.huytran.rermandroid.data.remote.interceptor.SecurityInterceptor
 import com.huytran.rermandroid.di.scope.ApplicationContext
@@ -10,7 +12,6 @@ import dagger.Module
 import dagger.Provides
 import io.grpc.Channel
 import io.grpc.ClientInterceptors
-import io.grpc.ManagedChannel
 import io.grpc.ManagedChannelBuilder
 import javax.inject.Singleton
 
@@ -38,6 +39,18 @@ class ApiModule {
         userRepository: UserRepository
     ): UserController {
         return UserController(channel, privatePreferences, userRepository)
+    }
+
+    @Provides
+    @Singleton
+    internal fun provideAvatarController(
+        @ApplicationContext context: Context,
+        channel: Channel,
+        privatePreferences: SharedPreferences,
+        userRepository: UserRepository,
+        avatarRepository: AvatarRepository
+    ): AvatarController {
+        return AvatarController(context, channel, privatePreferences, userRepository, avatarRepository)
     }
 
 }

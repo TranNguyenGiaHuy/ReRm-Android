@@ -45,6 +45,7 @@ class UserController(
                 }
 
                 override fun onError(t: Throwable?) {
+                    t?.printStackTrace()
                     it.onError(
                         Throwable("Sign Up Fail")
                     )
@@ -90,6 +91,7 @@ class UserController(
                 }
 
                 override fun onError(t: Throwable?) {
+                    t?.printStackTrace()
                     it.onError(
                         Throwable("Login Fail")
                     )
@@ -159,6 +161,7 @@ class UserController(
                 }
 
                 override fun onError(t: Throwable?) {
+                    t?.printStackTrace()
                     emitter.onError(
                         Throwable(
                             "Get Info Fail"
@@ -208,6 +211,7 @@ class UserController(
                 }
 
                 override fun onError(t: Throwable?) {
+                    t?.printStackTrace()
                     emitter.onError(
                         Throwable(
                             "Login Fail"

@@ -10,19 +10,20 @@ message UploadAvatarRequest {
 
 message UploadAvatarResponse {
     int32 result_code = 1;
-    string file_id = 2;
+    string file_name = 2;
     string name = 3;
     int64 user_id = 4;
     int64 id = 5;
 }
 
 message DownloadAvatarRequest {
-    int64 id = 1;
 }
 
 message DownloadAvatarResponse {
     int32 result_code = 1;
     bytes image = 2;
+    string file_name = 3;
+    string name = 4;
 }
 
 service AvatarService {

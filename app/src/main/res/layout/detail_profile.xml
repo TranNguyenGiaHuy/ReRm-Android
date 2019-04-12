@@ -19,13 +19,15 @@
                     android:layout_gravity="center"
                     android:layout_marginRight="16dp"/>
             <TextView
+                    android:id="@+id/tv_upload_avatar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:textColor="@color/colorGreen"
                     android:clickable="true"
                     android:textStyle="italic"
-                    android:text="Upload avatar"/>
+                    android:text="Upload avatar"
+                    android:focusable="true"/>
             <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"

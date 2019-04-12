@@ -11,7 +11,7 @@ import com.huytran.rermandroid.activity.LoginActivity
 import com.huytran.rermandroid.activity.MainActivity
 import com.huytran.rermandroid.data.remote.UserController
 import com.huytran.rermandroid.fragment.base.BaseFragment
-import dmax.dialog.SpotsDialog
+import com.kinda.alert.KAlertDialog
 import io.reactivex.CompletableObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -56,10 +56,9 @@ class SignupFragment : BaseFragment() {
                 return@setOnClickListener
             }
 
-            val loadingDialog = SpotsDialog.Builder()
-                .setContext(context!!)
-                .setMessage("Sign Up")
-                .build()
+            val loadingDialog = KAlertDialog(context, KAlertDialog.PROGRESS_TYPE)
+            loadingDialog.setTitleText("Sign Up")
+                .setCancelable(false)
 
             userController.signup(
                 etName.text.toString(),

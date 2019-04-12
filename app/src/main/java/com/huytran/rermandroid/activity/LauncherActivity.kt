@@ -4,19 +4,19 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.PersistableBundle
-import com.huytran.rermandroid.activity.base.BaseActivity
-import javax.inject.Inject
 import android.util.AttributeSet
 import android.view.View
 import android.widget.Toast
 import com.huytran.rermandroid.R
+import com.huytran.rermandroid.activity.base.BaseActivity
 import com.huytran.rermandroid.data.remote.UserController
 import com.huytran.rermandroid.di.scope.ApplicationContext
-import dmax.dialog.SpotsDialog
+import com.kinda.alert.KAlertDialog
 import io.reactivex.CompletableObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
 class LauncherActivity : BaseActivity() {
 
@@ -34,11 +34,10 @@ class LauncherActivity : BaseActivity() {
         val token = privatePreferences.getString("session", null)
         if (token != null) {
 
-            val loadingDialog = SpotsDialog.Builder()
-                .setContext(this)
-                .setMessage("Login")
-                .build()
-
+            val loadingDialog = KAlertDialog(this, KAlertDialog.PROGRESS_TYPE)
+            loadingDialog
+                .setTitleText("Login")
+                .setCancelable(false)
 
             userController.loginWithToken()
                 .observeOn(AndroidSchedulers.mainThread())
