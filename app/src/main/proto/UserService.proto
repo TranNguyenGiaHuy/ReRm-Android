@@ -29,13 +29,14 @@ message GetInfoRequest {
 message GetInfoResponse {
     int32 result_code = 1;
     string name = 2;
-    string userName = 3;
-    int64 avatarId = 4;
-    string phoneNumber = 5;
-    string idCard = 6;
-    int64 tsCardDated = 7;
-    int64 tsDateOfBirth = 8;
-    int64 id = 9;
+    string user_name = 3;
+    int64 avatar_id = 4;
+    string phone_number = 5;
+    string id_card = 6;
+    int64 ts_card_dated = 7;
+    int64 ts_date_of_birth = 8;
+    string place_of_permanent = 9;
+    int64 id = 10;
 }
 
 message LogoutRequest {
@@ -54,10 +55,34 @@ message LoginWithTokenResponse {
     int32 result_code = 1;
 }
 
+message UpdateUserInfoRequest {
+    string name = 1;
+    string user_name = 2;
+    string phone_number = 3;
+    string id_card = 4;
+    int64 tsCardDated = 5;
+    int64 tsDateOfBirth = 6;
+    string placeOfPermanent = 7;
+}
+
+message UpdateUserInfoResponse {
+    int32 result_code = 1;
+    string name = 2;
+    string user_name = 3;
+    int64 avatar_id = 4;
+    string phone_number = 5;
+    string id_card = 6;
+    int64 ts_card_dated = 7;
+    int64 ts_date_of_birth = 8;
+    string place_of_permanent = 9;
+    int64 id = 10;
+}
+
 service UserService {
     rpc SignUp(SignUpRequest) returns (SignUpResponse) {}
     rpc Login(LoginRequest) returns (LoginResponse) {}
     rpc GetInfo(GetInfoRequest) returns (GetInfoResponse) {}
     rpc Logout(LogoutRequest) returns (LogoutResponse) {}
     rpc LoginWithToken(LoginWithTokenRequest) returns (LoginWithTokenResponse) {}
+    rpc UpdateUserInfo(UpdateUserInfoRequest) returns (UpdateUserInfoResponse) {}
 }

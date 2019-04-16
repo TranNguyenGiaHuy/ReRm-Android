@@ -36,7 +36,7 @@ class AvatarController(
         val bufferSize = 256 * 1024
         val buffer = ByteArray(bufferSize)
 
-        return userRepository.getLast()
+        return userRepository.getLastMaybe()
             .flatMapSingle { user ->
                 Single.create<UploadAvatarResponse> { emitter ->
 

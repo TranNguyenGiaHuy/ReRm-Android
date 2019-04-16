@@ -1,6 +1,5 @@
 package com.huytran.rermandroid.fragment
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,6 +10,7 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.huytran.rermandroid.R
 import com.huytran.rermandroid.activity.LoginActivity
+import com.huytran.rermandroid.activity.MainActivity
 import com.huytran.rermandroid.data.local.entity.Avatar
 import com.huytran.rermandroid.data.local.entity.User
 import com.huytran.rermandroid.data.local.repository.AvatarRepository
@@ -18,8 +18,6 @@ import com.huytran.rermandroid.data.local.repository.UserRepository
 import com.huytran.rermandroid.data.remote.UserController
 import com.huytran.rermandroid.fragment.base.BaseFragment
 import com.huytran.rermandroid.manager.TransactionManager
-import com.huytran.rermandroid.manager.TransactionManager.Companion.replaceFragmentWithWithBackStack
-import io.reactivex.CompletableObserver
 import io.reactivex.MaybeObserver
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -54,7 +52,7 @@ class ProfileFragment: BaseFragment() {
         val tvUserName = view.findViewById<TextView>(R.id.tv_profile_username)
         val ivAvatar = view.findViewById<ImageView>(R.id.img_profile_image)
 
-        userRepository.getLast()
+        userRepository.getLastMaybe()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .doOnSubscribe {
@@ -62,7 +60,7 @@ class ProfileFragment: BaseFragment() {
             }
             .subscribe(object : MaybeObserver<User> {
                 override fun onSuccess(t: User) {
-                    tvUserName.text = t.name
+                    tvUserName.text = if (t.userName.isNotBlank()) t.userName else t.name
                 }
 
                 override fun onComplete() {
@@ -144,5 +142,10 @@ class ProfileFragment: BaseFragment() {
             startActivity(intent)
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as MainActivity).changeSelectedBottomNavigationBaseOnFragment(this)
     }
 }

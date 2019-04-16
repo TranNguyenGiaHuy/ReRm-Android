@@ -1,12 +1,15 @@
 package com.huytran.rermandroid.activity
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.huytran.rermandroid.R
 import com.huytran.rermandroid.activity.base.BaseActivity
 import com.huytran.rermandroid.data.remote.UserController
 import com.huytran.rermandroid.fragment.ExploreFragment
+import com.huytran.rermandroid.fragment.ProfileDetailFragment
 import com.huytran.rermandroid.fragment.ProfileFragment
+import com.huytran.rermandroid.fragment.base.BaseFragment
 import com.huytran.rermandroid.manager.TransactionManager
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -16,11 +19,13 @@ class MainActivity : BaseActivity() {
     @Inject
     lateinit var userController: UserController
 
+    private lateinit var bottomNavigation : BottomNavigationView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val bottomNavigation : BottomNavigationView = findViewById(R.id.navigationView)
+        bottomNavigation = findViewById(R.id.navigationView)
         bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         userController.getUserInfo()
@@ -55,5 +60,12 @@ class MainActivity : BaseActivity() {
             }
         }
         false
+    }
+
+    fun changeSelectedBottomNavigationBaseOnFragment(fragment: Fragment) {
+        when (fragment) {
+            is ProfileDetailFragment, is ProfileFragment -> bottomNavigation.menu.findItem(R.id.navigation_profile).isChecked = true
+            is ExploreFragment -> bottomNavigation.menu.findItem(R.id.navigation_explore).isChecked = true
+        }
     }
 }

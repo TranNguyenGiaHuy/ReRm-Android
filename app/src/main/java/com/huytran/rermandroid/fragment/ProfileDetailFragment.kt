@@ -6,24 +6,27 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.datetime.datePicker
+import com.afollestad.materialdialogs.input.input
 import com.bumptech.glide.Glide
 import com.esafirm.imagepicker.features.ImagePicker
 import com.esafirm.rximagepicker.RxImagePicker
 import com.huytran.rermandroid.R
-import com.huytran.rermandroid.data.local.entity.Avatar
+import com.huytran.rermandroid.activity.MainActivity
 import com.huytran.rermandroid.data.local.entity.User
 import com.huytran.rermandroid.data.local.repository.AvatarRepository
 import com.huytran.rermandroid.data.local.repository.UserRepository
 import com.huytran.rermandroid.data.remote.AvatarController
+import com.huytran.rermandroid.data.remote.UserController
 import com.huytran.rermandroid.fragment.base.BaseFragment
+import com.huytran.rermandroid.utilities.UtilityFunctions
 import de.hdodenhof.circleimageview.CircleImageView
+import io.reactivex.Completable
 import io.reactivex.CompletableObserver
-import io.reactivex.MaybeObserver
-import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.detail_profile.*
 import java.io.File
 import javax.inject.Inject
 
@@ -35,6 +38,21 @@ class ProfileDetailFragment : BaseFragment() {
     lateinit var avatarController: AvatarController
     @Inject
     lateinit var avatarRepository: AvatarRepository
+    @Inject
+    lateinit var userController: UserController
+
+    private lateinit var tvUserName: TextView
+    private lateinit var tvName: TextView
+    private lateinit var tvPhone: TextView
+    private lateinit var tvIdCard: TextView
+    private lateinit var tvIdCardDated: TextView
+    private lateinit var tvDateOfBirth: TextView
+    private lateinit var tvPlaceOfPermanent: TextView
+    private lateinit var tvUploadAvatar: TextView
+
+    private lateinit var user: User
+
+    private val simpleDateFormat = "dd/MM/yyyy"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,76 +62,46 @@ class ProfileDetailFragment : BaseFragment() {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.detail_profile, container, false)
 
-        val tvUserName = view.findViewById<TextView>(R.id.tvUsername)
-        val tvName = view.findViewById<TextView>(R.id.tvName)
-        val tvPhone = view.findViewById<TextView>(R.id.tvPhone)
-        val tvIdCard = view.findViewById<TextView>(R.id.tvID)
-        val tvIdCardDated = view.findViewById<TextView>(R.id.tv_Date_Of_Id)
-        val tvDateOfBirth = view.findViewById<TextView>(R.id.tv_Date_Of_Birth)
-        val tvPlaceOfPermanent = view.findViewById<TextView>(R.id.tv_place_of_permanent)
+        tvUserName = view.findViewById(R.id.tvUsername)
+        tvName = view.findViewById(R.id.tvName)
+        tvPhone = view.findViewById(R.id.tvPhone)
+        tvIdCard = view.findViewById(R.id.tvID)
+        tvIdCardDated = view.findViewById(R.id.tv_Date_Of_Id)
+        tvDateOfBirth = view.findViewById(R.id.tv_Date_Of_Birth)
+        tvPlaceOfPermanent = view.findViewById(R.id.tv_place_of_permanent)
         val ivAvatar = view.findViewById<ImageView>(R.id.img_profile_image)
+        tvUploadAvatar = view.findViewById(R.id.tv_upload_avatar)
 
-        userRepository.getLast()
+        val userInfoDisposable = userRepository.getLastFlowable()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
-            .doOnSubscribe {
-                disposableContainer.add(it)
+            .subscribe { user ->
+                this.user = user
+
+                tvUserName.text = user.name
+                tvName.text = user.userName
+                tvPhone.text = user.phoneNumber
+                tvIdCard.text = user.idCard
+                tvIdCardDated.text = if (user.tsCardDated == 0L) "" else UtilityFunctions.timestampToString(user.tsCardDated)
+                tvDateOfBirth.text = if (user.tsDateOfBirth == 0L) "" else UtilityFunctions.timestampToString(user.tsDateOfBirth)
+                tvName.text = user.userName
+                tvPlaceOfPermanent.text = user.placeOfPermanent
             }
-            .subscribe(object : MaybeObserver<User> {
-                override fun onSuccess(t: User) {
-                    tvUserName.text = t.name
-                    tvName.text = t.userName
-                    tvPhone.text = t.phoneNumber
-                    tvIdCard.text = t.idCard
-                    tvIdCardDated.text = t.tsCardDated.toString()
-                    tvDateOfBirth.text = t.tsDateOfBirth.toString()
-                    tvName.text = t.userName
-                }
+        disposableContainer.add(userInfoDisposable)
 
-                override fun onComplete() {
-
-                }
-
-                override fun onSubscribe(d: Disposable) {
-                }
-
-                override fun onError(e: Throwable) {
-                    e.printStackTrace()
-                }
-
-            })
-
-        avatarRepository.getAll()
+        val avatarDisposable = avatarRepository.getLastFlowable()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
-            .doOnSubscribe {
-                disposableContainer.add(it)
+            .subscribe {
+                val file = File(context!!.filesDir, it.fileName)
+                Glide
+                    .with(ivAvatar)
+                    .load(file)
+                    .into(ivAvatar)
             }
-            .subscribe(object: SingleObserver<List<Avatar>> {
-                override fun onSuccess(t: List<Avatar>) {
-                    if (t.isEmpty()) {
-                        onError(
-                            Throwable(
-                                "Empty"
-                            )
-                        )
-                        return
-                    }
-                    val file = File(context!!.filesDir, t.last().fileName)
-                    Glide
-                        .with(ivAvatar)
-                        .load(file)
-                        .into(ivAvatar)
-                }
+        disposableContainer.add(avatarDisposable)
 
-                override fun onSubscribe(d: Disposable) {
-                }
-
-                override fun onError(e: Throwable) {
-                }
-
-            })
-
+        configButton()
         return view
     }
 
@@ -122,14 +110,14 @@ class ProfileDetailFragment : BaseFragment() {
 
         val ivAvatar = view.findViewById<CircleImageView>(R.id.img_profile_image)
 
-        tv_upload_avatar.setOnClickListener {
+        tvUploadAvatar.setOnClickListener {
             RxImagePicker.getInstance()
                 .start(
                     context,
                     ImagePicker.create(this)
                         .single()
                 )
-                .subscribe {imageList ->
+                .subscribe { imageList ->
                     if (imageList == null) return@subscribe
                     val image = imageList.firstOrNull { image ->
                         image != null
@@ -140,7 +128,7 @@ class ProfileDetailFragment : BaseFragment() {
                         .subscribeOn(Schedulers.io())
                         .doOnSubscribe {
                             disposableContainer.add(it)
-                        }.subscribe(object: CompletableObserver {
+                        }.subscribe(object : CompletableObserver {
                             override fun onComplete() {
                                 Glide
                                     .with(ivAvatar)
@@ -158,5 +146,108 @@ class ProfileDetailFragment : BaseFragment() {
                         })
                 }
         }
+    }
+
+    private fun updateUser() : Completable {
+        return userController.updateInfo(
+            User(
+                id = user.id,
+                svId = user.svId,
+                name = tvUserName.text.toString(),
+                userName = tvName.text.toString(),
+                phoneNumber = tvPhone.text.toString(),
+                idCard = tvIdCard.text.toString(),
+                tsCardDated = UtilityFunctions.stringToTimestamp(tvIdCardDated.text.toString()) ?: user.tsCardDated,
+                tsDateOfBirth = UtilityFunctions.stringToTimestamp(tvDateOfBirth.text.toString()) ?: user.tsDateOfBirth,
+                placeOfPermanent = tvPlaceOfPermanent.text.toString(),
+                avatarId = user.avatarId
+            )
+        )
+    }
+
+    private fun callUpdate() {
+        updateUser()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .doOnSubscribe {
+                disposableContainer.addAll(it)
+            }
+            .subscribe()
+    }
+
+    private fun configButton() {
+//        tvUserName.setOnLongClickListener {
+//            MaterialDialog(context!!).show {
+//                input { _, charSequence ->
+//                    tvUserName.text = charSequence
+//                    callUpdate()
+//                }
+//            }
+//            true
+//        }
+        tvName.setOnLongClickListener {
+            MaterialDialog(context!!).show {
+                input { _, charSequence ->
+                    if (charSequence.isBlank()) return@input
+                    tvName.text = charSequence
+                    callUpdate()
+                }
+            }
+            true
+        }
+        tvPhone.setOnLongClickListener {
+            MaterialDialog(context!!).show {
+                input { _, charSequence ->
+                    if (charSequence.isBlank()) return@input
+                    tvPhone.text = charSequence
+                    callUpdate()
+                }
+            }
+            true
+        }
+        tvIdCard.setOnLongClickListener {
+            MaterialDialog(context!!).show {
+                input { _, charSequence ->
+                    if (charSequence.isBlank()) return@input
+                    tvIdCard.text = charSequence
+                    callUpdate()
+                }
+            }
+            true
+        }
+        tvPlaceOfPermanent.setOnLongClickListener {
+            MaterialDialog(context!!).show {
+                input { _, charSequence ->
+                    if (charSequence.isBlank()) return@input
+                    tvPlaceOfPermanent.text = charSequence
+                    callUpdate()
+                }
+            }
+            true
+        }
+
+        tvIdCardDated.setOnLongClickListener {
+            MaterialDialog(context!!).show {
+                datePicker { _, datetime ->
+                    tvIdCardDated.text = UtilityFunctions.timestampToString(datetime.timeInMillis)
+                    callUpdate()
+                }
+            }
+            true
+        }
+        tvDateOfBirth.setOnLongClickListener {
+            MaterialDialog(context!!).show {
+                datePicker { _, datetime ->
+                    tvDateOfBirth.text = UtilityFunctions.timestampToString(datetime.timeInMillis)
+                    callUpdate()
+                }
+            }
+            true
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as MainActivity).changeSelectedBottomNavigationBaseOnFragment(this)
     }
 }

@@ -5,11 +5,10 @@ import com.huytran.grpcdemo.generatedproto.*
 import com.huytran.rermandroid.data.local.entity.User
 import com.huytran.rermandroid.data.local.repository.UserRepository
 import com.huytran.rermandroid.utilities.AppConstants
+import com.huytran.rermandroid.utilities.ResultCode
 import io.grpc.Channel
 import io.grpc.stub.StreamObserver
 import io.reactivex.*
-import io.reactivex.schedulers.Schedulers
-import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 class UserController(
@@ -128,13 +127,13 @@ class UserController(
 
         val getInfoRequest = GetInfoRequest.newBuilder().build()
 
-        val userSingle = Single.create<User> {emitter ->
+        val userSingle = Single.create<User> { emitter ->
 
             val getInfoResponseObserver = object : StreamObserver<GetInfoResponse> {
 
                 override fun onNext(value: GetInfoResponse?) {
 
-                    value?.let {getUserInfoResponse ->
+                    value?.let { getUserInfoResponse ->
 
                         if (getUserInfoResponse.resultCode != 0) {
                             emitter.onError(
@@ -152,7 +151,8 @@ class UserController(
                             phoneNumber = getUserInfoResponse.phoneNumber,
                             idCard = getUserInfoResponse.idCard,
                             tsCardDated = getUserInfoResponse.tsCardDated,
-                            tsDateOfBirth = getUserInfoResponse.tsDateOfBirth
+                            tsDateOfBirth = getUserInfoResponse.tsDateOfBirth,
+                            placeOfPermanent = getUserInfoResponse.placeOfPermanent
                         )
 
                         emitter.onSuccess(user)
@@ -230,6 +230,68 @@ class UserController(
                 loginWithTokenWithTokenResponseObserver
             )
 
+        }
+    }
+
+    fun updateInfo(user: User): Completable {
+        val stub =
+            UserServiceGrpc.newStub(channel).withDeadlineAfter(AppConstants.REQUEST_TIMEOUT, TimeUnit.MILLISECONDS)
+
+        val updateInfoRequest = UpdateUserInfoRequest.newBuilder()
+            .setName(user.name)
+            .setUserName(user.userName)
+            .setPhoneNumber(user.phoneNumber)
+            .setIdCard(user.idCard)
+            .setTsCardDated(user.tsCardDated)
+            .setTsDateOfBirth(user.tsDateOfBirth)
+            .setPlaceOfPermanent(user.placeOfPermanent)
+            .build()
+
+        return Single.create<User> { emitter ->
+
+            val updateInfoResponse = object : StreamObserver<UpdateUserInfoResponse> {
+                override fun onNext(value: UpdateUserInfoResponse?) {
+                    if (value != null) {
+                        val newUser = User(
+                            id = user.id,
+                            svId = user.svId,
+                            avatarId = user.avatarId,
+                            name = value.name,
+                            userName = value.userName,
+                            idCard = value.idCard,
+                            phoneNumber = value.phoneNumber,
+                            placeOfPermanent = value.placeOfPermanent,
+                            tsDateOfBirth = value.tsDateOfBirth,
+                            tsCardDated = value.tsCardDated
+                        )
+                        emitter.onSuccess(newUser)
+                    } else {
+                        emitter.onError(
+                            Throwable("Update Info Fail")
+                        )
+                    }
+
+                }
+
+                override fun onError(t: Throwable?) {
+                    t?.printStackTrace()
+                    emitter.onError(
+                        Throwable("Update Info Fail")
+                    )
+                }
+
+                override fun onCompleted() {
+                }
+
+            }
+
+            stub.updateUserInfo(
+                updateInfoRequest,
+                updateInfoResponse
+            )
+
+        }.flatMapCompletable {
+            userRepository.addUser(it)
         }
     }
 

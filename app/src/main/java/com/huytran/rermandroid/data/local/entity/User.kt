@@ -21,5 +21,6 @@ data class User (
     @ColumnInfo(name = "phone_number") val phoneNumber: String,
     @ColumnInfo(name = "id_card") val idCard: String,
     @ColumnInfo(name = "ts_card_dated") val tsCardDated: Long,
-    @ColumnInfo(name = "ts_date_of_birth") val tsDateOfBirth: Long
+    @ColumnInfo(name = "ts_date_of_birth") val tsDateOfBirth: Long,
+    @ColumnInfo(name = "place_of_permanent") val placeOfPermanent: String
 )

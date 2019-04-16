@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.huytran.rermandroid.R
+import com.huytran.rermandroid.activity.MainActivity
 import com.huytran.rermandroid.adapter.PostAdapter
 import com.huytran.rermandroid.data.local.entity.Room
 import com.huytran.rermandroid.fragment.base.BaseFragment
@@ -16,13 +17,7 @@ import kotlinx.android.synthetic.main.fragment_explore.*
 import javax.inject.Inject
 
 
-class ExploreFragment @Inject constructor() : BaseFragment() {
-
-    private val compositeDisposable = CompositeDisposable()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+class ExploreFragment: BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -46,8 +41,8 @@ class ExploreFragment @Inject constructor() : BaseFragment() {
 
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        compositeDisposable.clear()
+    override fun onResume() {
+        super.onResume()
+        (activity as MainActivity).changeSelectedBottomNavigationBaseOnFragment(this)
     }
 }

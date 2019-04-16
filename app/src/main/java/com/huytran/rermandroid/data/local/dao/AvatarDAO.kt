@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import com.huytran.rermandroid.data.local.dao.base.BaseDAO
 import com.huytran.rermandroid.data.local.entity.Avatar
+import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.Single
 
@@ -16,5 +17,8 @@ interface AvatarDAO: BaseDAO<Avatar> {
 
     @Query("select * from avatar")
     fun getAll(): Single<List<Avatar>>
+
+    @Query("select * from avatar order by id desc limit 1")
+    fun getLastFlowable(): Flowable<Avatar>
 
 }
