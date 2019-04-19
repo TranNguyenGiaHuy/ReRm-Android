@@ -25,7 +25,7 @@ class UtilityFunctions {
         }
 
         fun stringToTimestamp(dateString: String): Long? {
-            if (dateString.isBlank()) return 0
+            if (dateString.isBlank()) return null
             return try {
                 simpleDateFormat.parse(dateString).time
             } catch (e: Exception) {

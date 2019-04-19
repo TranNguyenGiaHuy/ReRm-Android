@@ -28,6 +28,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import java.io.File
+import java.util.*
 import javax.inject.Inject
 
 class ProfileDetailFragment : BaseFragment() {
@@ -176,73 +177,88 @@ class ProfileDetailFragment : BaseFragment() {
     }
 
     private fun configButton() {
-//        tvUserName.setOnLongClickListener {
+//        tvUserName.setOnClickListener {
 //            MaterialDialog(context!!).show {
 //                input { _, charSequence ->
 //                    tvUserName.text = charSequence
 //                    callUpdate()
 //                }
 //            }
-//            true
 //        }
-        tvName.setOnLongClickListener {
+        tvName.setOnClickListener {
             MaterialDialog(context!!).show {
-                input { _, charSequence ->
+                input(prefill = tvName.text) { _, charSequence ->
                     if (charSequence.isBlank()) return@input
                     tvName.text = charSequence
                     callUpdate()
                 }
+                title(text = "What's Your Name?")
+                negativeButton(R.string.text_cancel)
             }
-            true
         }
-        tvPhone.setOnLongClickListener {
+        tvPhone.setOnClickListener {
             MaterialDialog(context!!).show {
-                input { _, charSequence ->
+                input(prefill = tvPhone.text) { _, charSequence ->
                     if (charSequence.isBlank()) return@input
                     tvPhone.text = charSequence
                     callUpdate()
                 }
+                title(text = "What's Your Phone Number?")
+                negativeButton(R.string.text_cancel)
             }
-            true
         }
-        tvIdCard.setOnLongClickListener {
+        tvIdCard.setOnClickListener {
             MaterialDialog(context!!).show {
-                input { _, charSequence ->
+                input(prefill = tvIdCard.text) { _, charSequence ->
                     if (charSequence.isBlank()) return@input
                     tvIdCard.text = charSequence
                     callUpdate()
                 }
+                title(text = "What's Your Identity Card Number?")
+                negativeButton(R.string.text_cancel)
             }
-            true
         }
-        tvPlaceOfPermanent.setOnLongClickListener {
+        tvPlaceOfPermanent.setOnClickListener {
             MaterialDialog(context!!).show {
-                input { _, charSequence ->
+                input(prefill = tvPlaceOfPermanent.text) { _, charSequence ->
                     if (charSequence.isBlank()) return@input
                     tvPlaceOfPermanent.text = charSequence
                     callUpdate()
                 }
+                title(text = "Where's Your Place Of Permanent?")
+                negativeButton(R.string.text_cancel)
             }
-            true
         }
 
-        tvIdCardDated.setOnLongClickListener {
+        tvIdCardDated.setOnClickListener {
+            val displayCalendar = Calendar.getInstance()
+            UtilityFunctions.stringToTimestamp(tvIdCardDated.text.toString())?.let {
+                displayCalendar.timeInMillis = it
+            }
+
             MaterialDialog(context!!).show {
-                datePicker { _, datetime ->
+                datePicker(currentDate = displayCalendar) { _, datetime ->
                     tvIdCardDated.text = UtilityFunctions.timestampToString(datetime.timeInMillis)
                     callUpdate()
                 }
+                title(text = "When's Your Identity Card Made?")
+                negativeButton(R.string.text_cancel)
             }
-            true
         }
-        tvDateOfBirth.setOnLongClickListener {
+        tvDateOfBirth.setOnClickListener {
+            val displayCalendar = Calendar.getInstance()
+            UtilityFunctions.stringToTimestamp(tvDateOfBirth.text.toString())?.let {
+                displayCalendar.timeInMillis = it
+            }
+
             MaterialDialog(context!!).show {
-                datePicker { _, datetime ->
+                datePicker(currentDate = displayCalendar) { _, datetime ->
                     tvDateOfBirth.text = UtilityFunctions.timestampToString(datetime.timeInMillis)
                     callUpdate()
                 }
+                title(text = "What's Your Date Of Birth?")
+                negativeButton(R.string.text_cancel)
             }
-            true
         }
     }
 

@@ -28,6 +28,12 @@
                     android:textStyle="italic"
                     android:text="Upload avatar"
                     android:focusable="true"/>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+
             <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -48,9 +54,14 @@
                         android:layout_marginLeft="16dp"
                         android:id="@+id/tvName"
                         android:layout_weight="1"
-                        android:textSize="20sp"
-                        android:longClickable="true"/>
+                        android:textSize="20sp"/>
             </LinearLayout>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+
             <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -71,9 +82,15 @@
                         android:layout_marginLeft="16dp"
                         android:id="@+id/tvUsername"
                         android:layout_weight="1"
-                        android:longClickable="true"
+                        android:clickable="true"
                         android:textSize="20sp"/>
             </LinearLayout>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+
             <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -94,9 +111,15 @@
                         android:layout_marginLeft="16dp"
                         android:id="@+id/tvPhone"
                         android:layout_weight="1"
-                        android:longClickable="true"
+                        android:clickable="true"
                         android:textSize="20sp"/>
             </LinearLayout>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+
             <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -117,9 +140,15 @@
                         android:layout_marginLeft="16dp"
                         android:id="@+id/tvID"
                         android:layout_weight="1"
-                        android:longClickable="true"
+                        android:clickable="true"
                         android:textSize="20sp"/>
             </LinearLayout>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+
             <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -140,9 +169,15 @@
                         android:layout_marginLeft="16dp"
                         android:id="@+id/tv_Date_Of_Id"
                         android:layout_weight="1"
-                        android:longClickable="true"
+                        android:clickable="true"
                         android:textSize="20sp"/>
             </LinearLayout>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+
             <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -163,9 +198,15 @@
                         android:layout_marginLeft="16dp"
                         android:id="@+id/tv_Date_Of_Birth"
                         android:layout_weight="1"
-                        android:longClickable="true"
+                        android:clickable="true"
                         android:textSize="20sp"/>
             </LinearLayout>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+
             <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -186,9 +227,15 @@
                         android:layout_marginLeft="16dp"
                         android:id="@+id/tv_place_of_permanent"
                         android:layout_weight="1"
-                        android:longClickable="true"
+                        android:clickable="true"
                         android:textSize="20sp"/>
             </LinearLayout>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+
         </LinearLayout>
     </ScrollView>
 </FrameLayout>

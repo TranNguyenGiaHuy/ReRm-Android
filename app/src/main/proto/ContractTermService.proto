@@ -1,0 +1,21 @@
+syntax = "proto3";
+option java_multiple_files = true;
+package com.huytran.grpcdemo.generatedproto;
+
+message ContractTerm {
+    int64 id = 1;
+    string name = 2;
+    string description = 3;
+}
+
+message GetAllContractTermRequest {
+}
+
+message GetAllContractTermResponse {
+    int32 result_code = 1;
+    repeated ContractTerm contract_term_list = 2;
+}
+
+service ContractTermService {
+    rpc GetAllContractTerm(GetAllContractTermRequest) returns (GetAllContractTermResponse) {}
+}

@@ -5,6 +5,8 @@ import android.content.SharedPreferences
 import com.huytran.rermandroid.data.local.repository.AvatarRepository
 import com.huytran.rermandroid.data.local.repository.UserRepository
 import com.huytran.rermandroid.data.remote.AvatarController
+import com.huytran.rermandroid.data.remote.ContractTermController
+import com.huytran.rermandroid.data.remote.RoomController
 import com.huytran.rermandroid.data.remote.UserController
 import com.huytran.rermandroid.data.remote.interceptor.SecurityInterceptor
 import com.huytran.rermandroid.di.scope.ApplicationContext
@@ -51,6 +53,18 @@ class ApiModule {
         avatarRepository: AvatarRepository
     ): AvatarController {
         return AvatarController(context, channel, privatePreferences, userRepository, avatarRepository)
+    }
+
+    @Provides
+    @Singleton
+    internal fun provideRoomController(channel: Channel) : RoomController {
+        return RoomController(channel)
+    }
+
+    @Provides
+    @Singleton
+    internal fun provideContractTermController(channel: Channel) : ContractTermController {
+        return ContractTermController(channel)
     }
 
 }

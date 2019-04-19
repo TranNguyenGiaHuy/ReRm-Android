@@ -1,11 +1,13 @@
 package com.huytran.rermandroid.activity
 
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.huytran.rermandroid.R
 import com.huytran.rermandroid.activity.base.BaseActivity
 import com.huytran.rermandroid.data.remote.UserController
+import com.huytran.rermandroid.fragment.CreatePostFragment
 import com.huytran.rermandroid.fragment.ExploreFragment
 import com.huytran.rermandroid.fragment.ProfileDetailFragment
 import com.huytran.rermandroid.fragment.ProfileFragment
@@ -65,7 +67,7 @@ class MainActivity : BaseActivity() {
     fun changeSelectedBottomNavigationBaseOnFragment(fragment: Fragment) {
         when (fragment) {
             is ProfileDetailFragment, is ProfileFragment -> bottomNavigation.menu.findItem(R.id.navigation_profile).isChecked = true
-            is ExploreFragment -> bottomNavigation.menu.findItem(R.id.navigation_explore).isChecked = true
+            is ExploreFragment, is CreatePostFragment -> bottomNavigation.menu.findItem(R.id.navigation_explore).isChecked = true
         }
     }
 }
