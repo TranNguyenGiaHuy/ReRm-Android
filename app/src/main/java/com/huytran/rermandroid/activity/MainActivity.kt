@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.huytran.rermandroid.R
 import com.huytran.rermandroid.activity.base.BaseActivity
+import com.huytran.rermandroid.data.remote.AvatarController
 import com.huytran.rermandroid.data.remote.UserController
 import com.huytran.rermandroid.fragment.CreatePostFragment
 import com.huytran.rermandroid.fragment.ExploreFragment
@@ -13,6 +14,8 @@ import com.huytran.rermandroid.fragment.ProfileDetailFragment
 import com.huytran.rermandroid.fragment.ProfileFragment
 import com.huytran.rermandroid.fragment.base.BaseFragment
 import com.huytran.rermandroid.manager.TransactionManager
+import io.reactivex.CompletableObserver
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
@@ -20,6 +23,8 @@ class MainActivity : BaseActivity() {
 
     @Inject
     lateinit var userController: UserController
+    @Inject
+    lateinit var avatarController: AvatarController
 
     private lateinit var bottomNavigation : BottomNavigationView
 
@@ -37,6 +42,25 @@ class MainActivity : BaseActivity() {
                 disposableContainer.add(it)
             }
             .subscribe()
+
+        avatarController.downloadAvatar()
+            .observeOn(Schedulers.io())
+            .subscribeOn(Schedulers.io())
+            .doOnSubscribe {
+                disposableContainer.add(it)
+            }
+            .subscribe(object: CompletableObserver {
+                override fun onComplete() {
+                }
+
+                override fun onSubscribe(d: Disposable) {
+                }
+
+                override fun onError(e: Throwable) {
+                    e.printStackTrace()
+                }
+
+            })
 
         TransactionManager.replaceFragmentWithNoBackStack(
             this,

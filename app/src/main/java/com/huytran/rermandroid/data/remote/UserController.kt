@@ -110,15 +110,35 @@ class UserController(
 
     }
 
-    fun logout() {
-        val stub = UserServiceGrpc.newBlockingStub(channel)
+    fun logout() : Completable {
+        val stub = UserServiceGrpc.newStub(channel)
 
-        val logoutResponse = stub.logout(
-            LogoutRequest.newBuilder()
-                .build()
-        )
+        val logoutRequest = LogoutRequest.newBuilder().build()
 
-        privatePreferences.edit().putString("session", "").apply()
+        return Completable.create { emitter ->
+
+            val logoutResponseObserver = object : StreamObserver<LogoutResponse> {
+                override fun onNext(value: LogoutResponse?) {
+                    value
+                }
+
+                override fun onError(t: Throwable?) {
+                    privatePreferences.edit().putString("session", "").apply()
+                    emitter.onComplete()
+                }
+
+                override fun onCompleted() {
+                    privatePreferences.edit().putString("session", "").apply()
+                    emitter.onComplete()
+                }
+
+            }
+
+            stub.logout(
+                logoutRequest,
+                logoutResponseObserver
+            )
+        }
     }
 
     fun getUserInfo(): Completable {

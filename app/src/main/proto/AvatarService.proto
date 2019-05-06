@@ -26,7 +26,41 @@ message DownloadAvatarResponse {
     string name = 4;
 }
 
+message DownloadAvatarOfUserRequest {
+    int64 user_id = 1;
+}
+
+message DownloadAvatarOfUserResponse {
+    int32 result_code = 1;
+    bytes image = 2;
+    string file_name = 3;
+    string name = 4;
+}
+
+message GetAvatarInfoOfUserRequest {
+    int64 user_id = 1;
+}
+
+message GetAvatarInfoOfUserResponse {
+    int32 result_code = 1;
+    int64 avatar_id = 2;
+}
+
+message DownloadAvatarWithIdRequest {
+    int64 id = 1;
+}
+
+message DownloadAvatarWithIdResponse {
+    int32 result_code = 1;
+    bytes image = 2;
+    string file_name = 3;
+    string name = 4;
+}
+
 service AvatarService {
     rpc UploadAvatar(stream UploadAvatarRequest) returns (UploadAvatarResponse) {}
-    rpc DownloadAvatar(DownloadAvatarRequest) returns (DownloadAvatarResponse) {}
+    rpc DownloadAvatar(DownloadAvatarRequest) returns (stream DownloadAvatarResponse) {}
+    rpc DownloadAvatarOfUser(DownloadAvatarOfUserRequest) returns (stream DownloadAvatarOfUserResponse) {}
+    rpc GetAvatarInfoOfUser(GetAvatarInfoOfUserRequest) returns (GetAvatarInfoOfUserResponse) {}
+    rpc DownloadAvatarWithId(DownloadAvatarWithIdRequest) returns (stream DownloadAvatarWithIdResponse) {}
 }

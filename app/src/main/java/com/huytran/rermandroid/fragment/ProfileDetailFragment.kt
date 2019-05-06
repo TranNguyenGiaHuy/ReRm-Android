@@ -24,6 +24,7 @@ import com.huytran.rermandroid.utilities.UtilityFunctions
 import de.hdodenhof.circleimageview.CircleImageView
 import io.reactivex.Completable
 import io.reactivex.CompletableObserver
+import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -90,17 +91,59 @@ class ProfileDetailFragment : BaseFragment() {
             }
         disposableContainer.add(userInfoDisposable)
 
-        val avatarDisposable = avatarRepository.getLastFlowable()
+//        val avatarDisposable = avatarRepository.getLastFlowable()
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribeOn(Schedulers.io())
+//            .subscribe {
+//                val file = File(context!!.filesDir, it.fileName)
+//                Glide
+//                    .with(ivAvatar)
+//                    .load(file)
+//                    .into(ivAvatar)
+//            }
+//        disposableContainer.add(avatarDisposable)
+
+//        avatarController.getAvatar()
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribeOn(Schedulers.io())
+//            .doOnSubscribe {
+//                disposableContainer.add(it)
+//            }
+//            .subscribe(object: SingleObserver<File> {
+//                override fun onSuccess(t: File) {
+//                    Glide
+//                        .with(ivAvatar)
+//                        .load(t)
+//                        .into(ivAvatar)
+//                }
+//
+//                override fun onSubscribe(d: Disposable) {
+//                }
+//
+//                override fun onError(e: Throwable) {
+//                    e.printStackTrace()
+//                }
+//
+//            })
+
+        userRepository.getLastMaybe()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
-            .subscribe {
-                val file = File(context!!.filesDir, it.fileName)
-                Glide
-                    .with(ivAvatar)
-                    .load(file)
-                    .into(ivAvatar)
-            }
-        disposableContainer.add(avatarDisposable)
+            .doOnSubscribe {
+                disposableContainer.add(it)
+            }.flatMapSingle { user ->
+                avatarController.getAvatarOfUser(user.svId)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+            }.flatMapCompletable { file ->
+                Completable.create {emitter ->
+                    Glide
+                        .with(ivAvatar)
+                        .load(file)
+                        .into(ivAvatar)
+                    emitter.onComplete()
+                }
+            }.subscribe()
 
         configButton()
         return view

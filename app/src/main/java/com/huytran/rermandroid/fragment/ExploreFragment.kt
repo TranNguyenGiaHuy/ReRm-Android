@@ -18,12 +18,19 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_explore.*
 import javax.inject.Inject
+import com.huytran.rermandroid.data.local.localbean.RoomData
+import com.huytran.rermandroid.data.remote.AvatarController
+import io.reactivex.Single
+import java.io.File
 
 
 class ExploreFragment : BaseFragment() {
 
     @Inject
     lateinit var roomController: RoomController
+
+    @Inject
+    lateinit var avatarController: AvatarController
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -52,7 +59,33 @@ class ExploreFragment : BaseFragment() {
             .subscribe(object : SingleObserver<List<Room>> {
                 override fun onSuccess(t: List<Room>) {
                     recyclerView.apply {
-                        adapter = PostAdapter(ArrayList(t), this.context)
+                        val roomData = t.map { room ->
+                            val data = RoomData(room)
+
+//                            avatarController.getAvatarOfUser(data.ownerId)
+//                                .observeOn(AndroidSchedulers.mainThread())
+//                                .subscribeOn(Schedulers.io())
+//                                .doOnSubscribe {
+//                                    disposableContainer.add(it)
+//                                }
+//                                .subscribe(object: SingleObserver<File> {
+//                                    override fun onSuccess(t: File) {
+//                                        data.ownerAvatar = t
+//                                        adapter?.notifyDataSetChanged()
+//                                    }
+//
+//                                    override fun onSubscribe(d: Disposable) {
+//                                    }
+//
+//                                    override fun onError(e: Throwable) {
+//                                        e.printStackTrace()
+//                                    }
+//
+//                                })
+                            data
+                        }
+
+                        adapter = PostAdapter(ArrayList(roomData), this.context, avatarController)
                         adapter?.notifyDataSetChanged()
                     }
                 }
