@@ -123,7 +123,8 @@ class CreatePostFragment : BaseFragment() {
                     else -> 5
                 },
                 etPrepaid.text.toString().toLong(),
-                etDescription.text.toString()
+                etDescription.text.toString(),
+                imageList
             )
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())

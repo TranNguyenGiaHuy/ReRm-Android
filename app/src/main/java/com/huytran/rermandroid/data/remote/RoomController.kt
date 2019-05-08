@@ -1,15 +1,20 @@
 package com.huytran.rermandroid.data.remote
 
+import com.esafirm.imagepicker.model.Image
 import com.huytran.grpcdemo.generatedproto.*
 import com.huytran.rermandroid.utilities.ResultCode
 import io.grpc.Channel
 import io.grpc.stub.StreamObserver
 import io.reactivex.Completable
+import io.reactivex.Flowable
 import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
+import java.io.File
 
 class RoomController(
-    private val channel: Channel
+    private val channel: Channel,
+    private val imageController: ImageController
 ) {
 
     fun createRoom(
@@ -24,7 +29,8 @@ class RoomController(
         cookingAllowance: Boolean,
         homeType: Int,
         prepaid: Long,
-        description: String
+        description: String,
+        imageList: List<Image>
     ): Completable {
         val stub = RoomServiceGrpc.newStub(channel)
 
@@ -47,9 +53,12 @@ class RoomController(
             )
             .build()
 
-        return Completable.create { emitter ->
+        return Single.create<Long> { emitter ->
 
             val responseObserver = object : StreamObserver<CreateRoomResponse> {
+
+                var roomId = -1L
+
                 override fun onNext(value: CreateRoomResponse?) {
                     if (value == null
                         || value.resultCode != ResultCode.RESULT_CODE_VALID
@@ -59,6 +68,8 @@ class RoomController(
                                 "Create Room Fail"
                             )
                         )
+                    } else {
+                        roomId = value.roomId
                     }
                 }
 
@@ -71,7 +82,7 @@ class RoomController(
                 }
 
                 override fun onCompleted() {
-                    emitter.onComplete()
+                    emitter.onSuccess(roomId)
                 }
 
             }
@@ -81,6 +92,18 @@ class RoomController(
                 responseObserver
             )
 
+        }.flatMapCompletable {roomId ->
+            Completable.concat {
+                imageList.forEach {image ->
+                    imageController.uploadFile(
+                        roomId,
+                        ImageController.ImageParamsForUpload(
+                            image.path,
+                            image.name
+                        )
+                    ).subscribe()
+                }
+            }
         }
     }
 

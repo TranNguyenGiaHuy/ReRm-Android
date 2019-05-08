@@ -18,6 +18,8 @@ message Room {
 
     int64 owner_id = 13;
     string owner_name = 14;
+
+    int64 id = 15;
 }
 
 message CreateRoomRequest {
@@ -26,6 +28,7 @@ message CreateRoomRequest {
 
 message CreateRoomResponse {
     int32 result_code = 1;
+    int64 room_id = 2;
 }
 
 message GetAllRoomRequest{

@@ -4,6 +4,7 @@ import com.huytran.grpcdemo.generatedproto.Room
 import java.io.File
 
 data class RoomData(val room: Room) {
+    var id: Long = 0
     var square: Float = 0F
     var address: String = ""
     var price: Long = 0
@@ -21,7 +22,10 @@ data class RoomData(val room: Room) {
     var ownerName: String = ""
     var ownerAvatar: File? = null
 
+    var imageList : List<File>? = null
+
     init {
+        id = room.id
         square = room.square
         address = room.address
         price = room.price

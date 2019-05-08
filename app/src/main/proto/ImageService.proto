@@ -48,7 +48,7 @@ message GetFileOfRoomRequest {
 
 message GetFileOfRoomResponse {
     int32 result_code = 1;
-    repeated int64 file_id_list = 2;
+    repeated int64 file_id = 2;
 }
 
 service ImageService {

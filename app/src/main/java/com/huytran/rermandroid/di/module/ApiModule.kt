@@ -54,20 +54,26 @@ class ApiModule {
 
     @Provides
     @Singleton
-    internal fun provideRoomController(channel: Channel) : RoomController {
-        return RoomController(channel)
+    internal fun provideRoomController(
+        channel: Channel,
+        imageController: ImageController
+    ): RoomController {
+        return RoomController(channel, imageController)
     }
 
     @Provides
     @Singleton
-    internal fun provideContractTermController(channel: Channel) : ContractTermController {
+    internal fun provideContractTermController(channel: Channel): ContractTermController {
         return ContractTermController(channel)
     }
 
     @Provides
     @Singleton
-    internal fun provideImageController(channel: Channel) : ImageController {
-        return ImageController(channel)
+    internal fun provideImageController(
+        @ApplicationContext context: Context,
+        channel: Channel
+    ): ImageController {
+        return ImageController(context, channel)
     }
 
 }
