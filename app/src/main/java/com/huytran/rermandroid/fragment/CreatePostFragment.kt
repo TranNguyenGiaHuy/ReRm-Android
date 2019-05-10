@@ -17,7 +17,9 @@ import com.huytran.rermandroid.data.remote.ContractTermController
 import com.huytran.rermandroid.data.remote.RoomController
 import com.huytran.rermandroid.fragment.base.BaseFragment
 import com.kinda.alert.KAlertDialog
+import io.reactivex.CompletableObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.create_post.*
 import java.util.ArrayList
@@ -92,6 +94,14 @@ class CreatePostFragment : BaseFragment() {
                 return@setOnClickListener
             }
 
+            if (imageList.isEmpty()) {
+                KAlertDialog(context, KAlertDialog.ERROR_TYPE)
+                    .setTitleText("Oops...")
+                    .setContentText("Missing Field!")
+                    .show()
+                return@setOnClickListener
+            }
+
             roomController.createRoom(
                 etTitle.text.toString(),
                 etSquare.text.toString().toFloat(),
@@ -131,9 +141,19 @@ class CreatePostFragment : BaseFragment() {
                 .doOnSubscribe {
                     disposableContainer.add(it)
                 }
-                .subscribe {
-                    fragmentManager?.popBackStack()
-                }
+                .subscribe(object: CompletableObserver{
+                    override fun onComplete() {
+                        fragmentManager?.popBackStack()
+                    }
+
+                    override fun onSubscribe(d: Disposable) {
+                    }
+
+                    override fun onError(e: Throwable) {
+                        e.printStackTrace()
+                    }
+
+                })
         }
 
 

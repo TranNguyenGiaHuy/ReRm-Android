@@ -101,9 +101,10 @@ class RoomController(
                             image.path,
                             image.name
                         )
-                    ).subscribe()
+                    )
                 }
             }
+            Completable.complete()
         }
     }
 

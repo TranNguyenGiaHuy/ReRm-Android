@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +16,8 @@ import com.huytran.rermandroid.data.remote.AvatarController
 import com.huytran.rermandroid.data.remote.ImageController
 import com.huytran.rermandroid.fragment.RoomDetailFragment
 import com.huytran.rermandroid.manager.TransactionManager
+import com.opensooq.pluto.PlutoView
+import com.opensooq.pluto.listeners.OnItemClickListener
 import io.reactivex.Single
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -53,7 +56,7 @@ class PostAdapter(val items : ArrayList<RoomData>, val context: Context, val ava
                 .subscribe(object : SingleObserver<File> {
                     override fun onSuccess(t: File) {
                         room.ownerAvatar = t
-                        notifyDataSetChanged()
+                        notifyItemChanged(position)
                     }
 
                     override fun onSubscribe(d: Disposable) {
@@ -94,10 +97,19 @@ class PostAdapter(val items : ArrayList<RoomData>, val context: Context, val ava
         } else {
             room.imageList?.let {
                 if (it.isNotEmpty()) {
-                    Glide
-                        .with(holder.imgPost)
-                        .load(room.imageList?.first())
-                        .into(holder.imgPost)
+                    val adapter = ImageViewAdapter(
+                        it,
+                        OnItemClickListener { item, position -> },
+                        object: ImageViewAdapter.Listener {
+
+                            override fun doubleClickListener() {
+                                holder.btnSave.setBackgroundColor(R.color.red_btn_bg_color)
+                            }
+
+                        }
+                    )
+
+                    holder.imgViewer.create(adapter)
                 }
             }
         }
@@ -116,7 +128,8 @@ class PostAdapter(val items : ArrayList<RoomData>, val context: Context, val ava
         val tvDescription : TextView
         val tvPostUserName: TextView
         val imgPostProfile: ImageView
-        val imgPost: ImageView
+        val imgViewer: PlutoView
+        val btnSave: ImageButton
 
         init {
             tvRoomType = view.findViewById(R.id.tv_room_type)
@@ -125,7 +138,8 @@ class PostAdapter(val items : ArrayList<RoomData>, val context: Context, val ava
             tvDescription = view.findViewById(R.id.tv_post_description)
             tvPostUserName = view.findViewById(R.id.tv_post_username)
             imgPostProfile = view.findViewById(R.id.img_post_profile)
-            imgPost = view.findViewById(R.id.img_post)
+            imgViewer = view.findViewById(R.id.imgViewer)
+            btnSave = view.findViewById(R.id.btn_save)
         }
     }
 }

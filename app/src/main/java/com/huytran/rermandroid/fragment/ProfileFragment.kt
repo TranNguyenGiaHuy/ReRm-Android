@@ -74,7 +74,10 @@ class ProfileFragment : BaseFragment() {
                         .into(ivAvatar)
                     emitter.onComplete()
                 }
-            }.subscribe()
+            }.doOnError {
+                it.printStackTrace()
+            }
+            .subscribe()
 
 //        avatarRepository.getAll()
 //            .observeOn(AndroidSchedulers.mainThread())

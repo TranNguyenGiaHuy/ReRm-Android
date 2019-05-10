@@ -65,6 +65,8 @@ class ExploreFragment : BaseFragment() {
                     recyclerView.apply {
                         val roomData = t.map { room ->
                             RoomData(room)
+                        }.sortedByDescending {
+                            it.id
                         }
 
                         adapter = PostAdapter(ArrayList(roomData), this.context, avatarController, imageController)
