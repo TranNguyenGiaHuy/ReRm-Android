@@ -76,4 +76,13 @@ class ApiModule {
         return ImageController(context, channel)
     }
 
+    @Provides
+    @Singleton
+    internal fun provideSavedRoomController(
+        @ApplicationContext context: Context,
+        channel: Channel
+    ): SavedRoomController {
+        return SavedRoomController(context, channel)
+    }
+
 }

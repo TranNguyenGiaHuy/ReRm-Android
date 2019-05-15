@@ -8,10 +8,7 @@ import com.huytran.rermandroid.R
 import com.huytran.rermandroid.activity.base.BaseActivity
 import com.huytran.rermandroid.data.remote.AvatarController
 import com.huytran.rermandroid.data.remote.UserController
-import com.huytran.rermandroid.fragment.CreatePostFragment
-import com.huytran.rermandroid.fragment.ExploreFragment
-import com.huytran.rermandroid.fragment.ProfileDetailFragment
-import com.huytran.rermandroid.fragment.ProfileFragment
+import com.huytran.rermandroid.fragment.*
 import com.huytran.rermandroid.fragment.base.BaseFragment
 import com.huytran.rermandroid.manager.TransactionManager
 import io.reactivex.CompletableObserver
@@ -84,6 +81,13 @@ class MainActivity : BaseActivity() {
                 )
                 return@OnNavigationItemSelectedListener true
             }
+            R.id.navigation_save -> {
+                TransactionManager.replaceFragmentWithWithBackStack(
+                    this,
+                    SavedRoomFragment()
+                )
+                return@OnNavigationItemSelectedListener true
+            }
         }
         false
     }
@@ -92,6 +96,7 @@ class MainActivity : BaseActivity() {
         when (fragment) {
             is ProfileDetailFragment, is ProfileFragment -> bottomNavigation.menu.findItem(R.id.navigation_profile).isChecked = true
             is ExploreFragment, is CreatePostFragment -> bottomNavigation.menu.findItem(R.id.navigation_explore).isChecked = true
+            is SavedRoomFragment ->  bottomNavigation.menu.findItem(R.id.navigation_save).isChecked = true
         }
     }
 }

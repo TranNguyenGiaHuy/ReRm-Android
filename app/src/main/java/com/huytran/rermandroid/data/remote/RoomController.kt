@@ -6,8 +6,10 @@ import com.huytran.rermandroid.utilities.ResultCode
 import io.grpc.Channel
 import io.grpc.stub.StreamObserver
 import io.reactivex.Completable
+import io.reactivex.CompletableObserver
 import io.reactivex.Flowable
 import io.reactivex.Single
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import java.io.File
@@ -101,7 +103,18 @@ class RoomController(
                             image.path,
                             image.name
                         )
-                    )
+                    ).subscribe(object: CompletableObserver {
+                        override fun onComplete() {
+                        }
+
+                        override fun onSubscribe(d: Disposable) {
+                        }
+
+                        override fun onError(e: Throwable) {
+                            e.printStackTrace()
+                        }
+
+                    })
                 }
             }
             Completable.complete()

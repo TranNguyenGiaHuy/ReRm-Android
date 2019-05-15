@@ -1,0 +1,34 @@
+syntax = "proto3";
+option java_multiple_files = true;
+package com.huytran.grpcdemo.generatedproto;
+
+message SaveRoomRequest {
+    int64 room_id = 1;
+}
+
+message SaveRoomResponse {
+    int32 result_code = 1;
+}
+
+message UnsaveRoomRequest {
+    int64 room_id = 1;
+}
+
+message UnsaveRoomResponse {
+    int32 result_code = 1;
+}
+
+message GetAllSavedRoomIdRequest {
+
+}
+
+message GetAllSavedRoomIdResponse {
+    int32 result_code = 1;
+    repeated int64 room_id = 2;
+}
+
+service SavedRoomService {
+    rpc SaveRoom(SaveRoomRequest) returns (SaveRoomResponse) {}
+    rpc UnsaveRoom(UnsaveRoomRequest) returns (UnsaveRoomResponse) {}
+    rpc GetAllSavedRoomId(GetAllSavedRoomIdRequest) returns (GetAllSavedRoomIdResponse) {}
+}

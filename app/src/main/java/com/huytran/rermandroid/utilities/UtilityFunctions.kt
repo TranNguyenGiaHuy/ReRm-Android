@@ -39,6 +39,15 @@ class UtilityFunctions {
             return simpleDateFormat.format(timestamp)
         }
 
+        fun longToRoomType(type: Int): AppConstants.RoomType {
+            return when (type) {
+                0 -> AppConstants.RoomType.HOME
+                1 -> AppConstants.RoomType.ROOM
+                2 -> AppConstants.RoomType.DORM
+                else -> AppConstants.RoomType.HOME
+            }
+        }
+
     }
 
 }

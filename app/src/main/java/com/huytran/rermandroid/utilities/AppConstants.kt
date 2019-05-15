@@ -10,4 +10,10 @@ class AppConstants {
         const val KEY_IMAGE_WITH_ID = "IMAGE_"
     }
 
+    enum class RoomType(val raw: Long, name: String) {
+        HOME(0, "Home"),
+        ROOM(1, "Room"),
+        DORM(2, "Dormitory")
+    }
+
 }

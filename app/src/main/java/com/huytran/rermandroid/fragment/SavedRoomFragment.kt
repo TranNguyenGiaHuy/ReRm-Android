@@ -9,27 +9,20 @@ import com.huytran.grpcdemo.generatedproto.Room
 import com.huytran.rermandroid.R
 import com.huytran.rermandroid.activity.MainActivity
 import com.huytran.rermandroid.adapter.PostAdapter
-import com.huytran.rermandroid.data.remote.RoomController
-import com.huytran.rermandroid.fragment.base.BaseFragment
-import com.huytran.rermandroid.manager.TransactionManager
-import io.reactivex.SingleObserver
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.fragment_explore.*
-import javax.inject.Inject
 import com.huytran.rermandroid.data.local.localbean.RoomData
 import com.huytran.rermandroid.data.remote.AvatarController
 import com.huytran.rermandroid.data.remote.ImageController
 import com.huytran.rermandroid.data.remote.SavedRoomController
-import io.reactivex.Single
-import java.io.File
+import com.huytran.rermandroid.fragment.base.BaseFragment
+import io.reactivex.SingleObserver
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.fragment_saved_room.*
+import javax.inject.Inject
 
 
-class ExploreFragment : BaseFragment() {
-
-    @Inject
-    lateinit var roomController: RoomController
+class SavedRoomFragment : BaseFragment() {
 
     @Inject
     lateinit var avatarController: AvatarController
@@ -44,7 +37,7 @@ class ExploreFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R.layout.fragment_explore, container, false)
+        return inflater.inflate(R.layout.fragment_saved_room, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -72,7 +65,7 @@ class ExploreFragment : BaseFragment() {
 
             })
 
-        roomController.getAllRoom()
+        savedRoomController.getAllSavedRoom()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .doOnSubscribe {
@@ -105,10 +98,6 @@ class ExploreFragment : BaseFragment() {
                 }
 
             })
-
-        btn_fab.setOnClickListener {
-            TransactionManager.replaceFragmentWithWithBackStack(context!!, CreatePostFragment())
-        }
 
     }
 

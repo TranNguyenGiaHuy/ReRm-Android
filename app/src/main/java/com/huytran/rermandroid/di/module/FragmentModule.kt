@@ -44,4 +44,7 @@ abstract class FragmentModule {
     @ContributesAndroidInjector
     abstract fun contributeManageContractFragment(): ManageContractFragment
 
+    @ContributesAndroidInjector
+    abstract fun contributeSavedRoomFragment(): SavedRoomFragment
+
 }
