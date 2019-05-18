@@ -1,0 +1,25 @@
+syntax = "proto3";
+option java_multiple_files = true;
+package com.huytran.grpcdemo.generatedproto;
+
+message SendMessageRequest {
+    string message = 1;
+    int64 to = 2;
+}
+
+message SendMessageResponse {
+    int32 result_code = 1;
+}
+
+message AddFirebaseTokenRequest {
+    string token = 1;
+}
+
+message AddFirebaseTokenResponse {
+    int32 result_code = 1;
+}
+
+service MessageService {
+    rpc SendMessage(SendMessageRequest) returns (SendMessageResponse) {}
+    rpc AddFirebaseToken(AddFirebaseTokenRequest) returns (AddFirebaseTokenResponse) {}
+}

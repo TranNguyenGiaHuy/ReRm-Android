@@ -10,17 +10,19 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.huytran.rermandroid.R
+import com.huytran.rermandroid.data.local.entity.User
 import com.huytran.rermandroid.data.local.localbean.RoomData
+import com.huytran.rermandroid.data.local.repository.UserRepository
 import com.huytran.rermandroid.data.remote.AvatarController
 import com.huytran.rermandroid.data.remote.ImageController
 import com.huytran.rermandroid.data.remote.SavedRoomController
 import com.huytran.rermandroid.fragment.RoomDetailFragment
 import com.huytran.rermandroid.manager.TransactionManager
-import com.huytran.rermandroid.utilities.AppConstants
 import com.huytran.rermandroid.utilities.UtilityFunctions
 import com.opensooq.pluto.PlutoView
 import com.opensooq.pluto.listeners.OnItemClickListener
 import io.reactivex.CompletableObserver
+import io.reactivex.MaybeObserver
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -33,11 +35,14 @@ class PostAdapter(
     private val avatarController: AvatarController,
     private val imageController: ImageController,
     private val savedRoomController: SavedRoomController,
+    private val userRepository: UserRepository,
     private val savedRoomIdList: MutableList<Long>
     ) : RecyclerView.Adapter<PostAdapter.ViewHolder>() {
 
 //    @Inject
 //    lateinit var avatarController: AvatarController
+
+    private var isOwned = false
 
     private fun isSaved(roomId: Long) = savedRoomIdList.contains(roomId)
 
@@ -172,10 +177,30 @@ class PostAdapter(
             }
         }
 
+        userRepository.getLastMaybe()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe(object: MaybeObserver<User> {
+                override fun onSuccess(t: User) {
+                    isOwned = t.svId == room.ownerId
+                }
+
+                override fun onComplete() {
+                }
+
+                override fun onSubscribe(d: Disposable) {
+                }
+
+                override fun onError(e: Throwable) {
+                    e.printStackTrace()
+                }
+
+            })
+
         holder.itemView.setOnClickListener {
             TransactionManager.replaceFragmentWithWithBackStack(
                 context,
-                RoomDetailFragment()
+                RoomDetailFragment(room, isOwned)
             )
         }
     }

@@ -85,4 +85,13 @@ class ApiModule {
         return SavedRoomController(context, channel)
     }
 
+    @Provides
+    @Singleton
+    internal fun provideMessageController(
+        @ApplicationContext context: Context,
+        channel: Channel
+    ): MessageController {
+        return MessageController(context, channel)
+    }
+
 }

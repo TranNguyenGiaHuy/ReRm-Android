@@ -239,6 +239,42 @@
                             android:layout_weight="1"
                             android:text="VND/Month"/>
                 </LinearLayout>
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                    <EditText android:id="@+id/etElectricityPrice"
+                              android:layout_width="44dp"
+                              android:layout_height="wrap_content"
+                              android:layout_margin="16dp"
+                              android:inputType="number"
+                              android:layout_weight="4"
+                              android:textColor="@android:color/black"/>
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:text="VND/kWh"/>
+                </LinearLayout>
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                    <EditText android:id="@+id/etWaterPrice"
+                              android:layout_width="44dp"
+                              android:layout_height="wrap_content"
+                              android:layout_margin="16dp"
+                              android:inputType="number"
+                              android:layout_weight="4"
+                              android:textColor="@android:color/black"/>
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:text="@string/symbol_water_unit"/>
+                </LinearLayout>
             </LinearLayout>
             <LinearLayout android:layout_width="match_parent"
                           android:layout_height="wrap_content"

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.iid.FirebaseInstanceId
 import com.huytran.rermandroid.R
 import com.huytran.rermandroid.activity.base.BaseActivity
 import com.huytran.rermandroid.data.remote.AvatarController
@@ -27,6 +28,9 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        FirebaseInstanceId.getInstance().instanceId
+
         setContentView(R.layout.activity_main)
 
         bottomNavigation = findViewById(R.id.navigationView)

@@ -38,10 +38,10 @@ class ManagePostAdapter(val items : ArrayList<Room>, val context: Context) : Rec
 
 
         holder.itemView.setOnClickListener{
-            TransactionManager.replaceFragmentWithWithBackStack(
-                context,
-                RoomDetailFragment()
-            )
+//            TransactionManager.replaceFragmentWithWithBackStack(
+//                context,
+//                RoomDetailFragment(room)
+//            )
         }
 
         holder.btnDelete.setOnClickListener {

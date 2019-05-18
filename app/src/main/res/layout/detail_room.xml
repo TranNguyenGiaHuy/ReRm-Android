@@ -16,12 +16,17 @@
         <LinearLayout android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:orientation="vertical">
-            <ImageView
+
+            <com.opensooq.pluto.PlutoView
+                    android:id="@+id/imgViewer"
                     android:layout_width="match_parent"
                     android:layout_height="275dp"
                     android:layout_marginBottom="16dp"
-                    tools:srcCompat="@tools:sample/backgrounds/scenic[1]"
-                    android:id="@+id/img_detail_room_title"/>
+                    android:background="@color/colorBlack"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@color/colorGray"
+                    app:indicator_visibility="true"/>
+
             <TextView
                     android:text="RoomType"
                     android:layout_width="match_parent"

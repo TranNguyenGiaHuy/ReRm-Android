@@ -9,7 +9,6 @@ import com.huytran.grpcdemo.generatedproto.Room
 import com.huytran.rermandroid.R
 import com.huytran.rermandroid.activity.MainActivity
 import com.huytran.rermandroid.adapter.PostAdapter
-import com.huytran.rermandroid.data.remote.RoomController
 import com.huytran.rermandroid.fragment.base.BaseFragment
 import com.huytran.rermandroid.manager.TransactionManager
 import io.reactivex.SingleObserver
@@ -19,9 +18,8 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_explore.*
 import javax.inject.Inject
 import com.huytran.rermandroid.data.local.localbean.RoomData
-import com.huytran.rermandroid.data.remote.AvatarController
-import com.huytran.rermandroid.data.remote.ImageController
-import com.huytran.rermandroid.data.remote.SavedRoomController
+import com.huytran.rermandroid.data.local.repository.UserRepository
+import com.huytran.rermandroid.data.remote.*
 import io.reactivex.Single
 import java.io.File
 
@@ -39,6 +37,9 @@ class ExploreFragment : BaseFragment() {
 
     @Inject
     lateinit var savedRoomController: SavedRoomController
+
+    @Inject
+    lateinit var userRepository: UserRepository
 
     private var savedRoomIdList = emptyList<Long>()
 
@@ -93,6 +94,7 @@ class ExploreFragment : BaseFragment() {
                             avatarController,
                             imageController,
                             savedRoomController,
+                            userRepository,
                             savedRoomIdList.toMutableList())
                         adapter?.notifyDataSetChanged()
                     }

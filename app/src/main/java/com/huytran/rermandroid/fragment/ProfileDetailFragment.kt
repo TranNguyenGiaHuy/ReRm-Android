@@ -91,41 +91,6 @@ class ProfileDetailFragment : BaseFragment() {
             }
         disposableContainer.add(userInfoDisposable)
 
-//        val avatarDisposable = avatarRepository.getLastFlowable()
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribeOn(Schedulers.io())
-//            .subscribe {
-//                val file = File(context!!.filesDir, it.fileName)
-//                Glide
-//                    .with(ivAvatar)
-//                    .load(file)
-//                    .into(ivAvatar)
-//            }
-//        disposableContainer.add(avatarDisposable)
-
-//        avatarController.getAvatar()
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribeOn(Schedulers.io())
-//            .doOnSubscribe {
-//                disposableContainer.add(it)
-//            }
-//            .subscribe(object: SingleObserver<File> {
-//                override fun onSuccess(t: File) {
-//                    Glide
-//                        .with(ivAvatar)
-//                        .load(t)
-//                        .into(ivAvatar)
-//                }
-//
-//                override fun onSubscribe(d: Disposable) {
-//                }
-//
-//                override fun onError(e: Throwable) {
-//                    e.printStackTrace()
-//                }
-//
-//            })
-
         userRepository.getLastMaybe()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())

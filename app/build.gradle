@@ -8,6 +8,8 @@ apply plugin: 'kotlin-kapt'
 
 apply plugin: 'com.google.protobuf'
 
+apply plugin: 'com.google.gms.google-services'
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -110,4 +112,9 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:input:2.7.0'
 
     implementation 'com.opensooq.android:pluto:1.2'
+
+    implementation 'com.google.firebase:firebase-core:16.0.9'
+    implementation 'com.google.firebase:firebase-messaging:18.0.0'
+
+    implementation 'com.github.stfalcon:chatkit:0.3.3'
 }

@@ -47,4 +47,7 @@ abstract class FragmentModule {
     @ContributesAndroidInjector
     abstract fun contributeSavedRoomFragment(): SavedRoomFragment
 
+    @ContributesAndroidInjector
+    abstract fun contributeChatFragment(): ChatFragment
+
 }

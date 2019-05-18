@@ -10,6 +10,7 @@ import com.huytran.rermandroid.R
 import com.huytran.rermandroid.activity.MainActivity
 import com.huytran.rermandroid.adapter.PostAdapter
 import com.huytran.rermandroid.data.local.localbean.RoomData
+import com.huytran.rermandroid.data.local.repository.UserRepository
 import com.huytran.rermandroid.data.remote.AvatarController
 import com.huytran.rermandroid.data.remote.ImageController
 import com.huytran.rermandroid.data.remote.SavedRoomController
@@ -32,6 +33,9 @@ class SavedRoomFragment : BaseFragment() {
 
     @Inject
     lateinit var savedRoomController: SavedRoomController
+
+    @Inject
+    lateinit var userRepository: UserRepository
 
     private var savedRoomIdList = emptyList<Long>()
 
@@ -86,6 +90,7 @@ class SavedRoomFragment : BaseFragment() {
                             avatarController,
                             imageController,
                             savedRoomController,
+                            userRepository,
                             savedRoomIdList.toMutableList())
                         adapter?.notifyDataSetChanged()
                     }

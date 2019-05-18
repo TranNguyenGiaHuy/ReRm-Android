@@ -1,11 +1,13 @@
 package com.huytran.rermandroid.fragment
 
 import android.os.Bundle
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.input.input
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.esafirm.imagepicker.features.ImagePicker
 import com.esafirm.imagepicker.model.Image
@@ -34,6 +36,8 @@ class CreatePostFragment : BaseFragment() {
     lateinit var roomController: RoomController
 
     private var imageList: List<Image> = arrayListOf()
+
+    private var term: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,6 +81,16 @@ class CreatePostFragment : BaseFragment() {
 //                }
 //        }
 
+        btnViewContractTerm.setOnClickListener {
+            MaterialDialog(context!!).show {
+                input(prefill = term, inputType = InputType.TYPE_TEXT_FLAG_MULTI_LINE) { _, charSequence ->
+                    term = charSequence.toString()
+                }
+                title(text = "Contract Term?")
+                negativeButton(R.string.text_cancel)
+            }
+        }
+
         btnPost.setOnClickListener {
 
             if (etTitle.text.isBlank()
@@ -86,6 +100,9 @@ class CreatePostFragment : BaseFragment() {
                 || etPrice.text.isBlank()
                 || etPrepaid.text.isBlank()
                 || etDescription.text.isBlank()
+                || term.isBlank()
+                || etElectricityPrice.text.isBlank()
+                || etWaterPrice.text.isBlank()
             ) {
                 KAlertDialog(context, KAlertDialog.ERROR_TYPE)
                     .setTitleText("Oops...")
@@ -134,7 +151,10 @@ class CreatePostFragment : BaseFragment() {
                 },
                 etPrepaid.text.toString().toLong(),
                 etDescription.text.toString(),
-                imageList
+                imageList,
+                term,
+                etElectricityPrice.text.toString().toLong(),
+                etWaterPrice.text.toString().toLong()
             )
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())

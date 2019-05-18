@@ -20,6 +20,9 @@ message Room {
     string owner_name = 14;
 
     int64 id = 15;
+    string term = 16;
+    int64 electricity_price = 17;
+    int64 water_price = 18;
 }
 
 message CreateRoomRequest {

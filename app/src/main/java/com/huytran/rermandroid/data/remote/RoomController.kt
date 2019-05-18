@@ -32,7 +32,10 @@ class RoomController(
         homeType: Int,
         prepaid: Long,
         description: String,
-        imageList: List<Image>
+        imageList: List<Image>,
+        term: String,
+        electricityPrice: Long,
+        waterPrice: Long
     ): Completable {
         val stub = RoomServiceGrpc.newStub(channel)
 
@@ -51,6 +54,9 @@ class RoomController(
                     .setHomeType(homeType)
                     .setPrepaid(prepaid)
                     .setDescription(description)
+                    .setTerm(term)
+                    .setElectricityPrice(electricityPrice)
+                    .setWaterPrice(waterPrice)
                     .build()
             )
             .build()
