@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_margin="8dp"
+              android:layout_width="match_parent"
+              android:layout_height="60dp"
+              android:orientation="horizontal"
+              android:weightSum="10">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"/>
+
+    <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="5.5"
+            android:weightSum="2">
+        <TextView
+                android:id="@+id/tv_username"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:text="Huy Tran"
+                android:textStyle="bold"
+                android:gravity="bottom"
+                android:layout_weight="1"/>
+        <TextView
+                android:id="@+id/tv_rent_time"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:gravity="top"
+                android:text="from 10/4/1999 to 22/12/1997"
+                android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <Button
+            android:id="@+id/btn_confirm"
+            android:layout_width="0dp"
+            style="@style/Base.Widget.AppCompat.Button.Colored"
+            android:layout_gravity="center"
+            android:text="Confirm"
+            android:layout_height="match_parent"
+            android:layout_weight="2.5"/>
+
+</LinearLayout>

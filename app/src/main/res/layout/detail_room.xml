@@ -339,26 +339,26 @@
                             android:id="@+id/tv_description"/>
                 </LinearLayout>
             </LinearLayout>
-            <TextView
-                    android:text="Photos"
-                    android:layout_marginTop="16dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:id="@+id/tv_photos"/>
-            <ImageView
-                    android:layout_marginTop="8dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="275dp"
-                    tools:srcCompat="@tools:sample/backgrounds/scenic[1]"
-                    android:id="@+id/img_detail_room"/>
-            <TextView
-                    android:text="Comments"
-                    android:layout_marginTop="8dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:id="@+id/tv_comments"/>
+            <!--<TextView-->
+                    <!--android:text="Photos"-->
+                    <!--android:layout_marginTop="16dp"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textStyle="bold"-->
+                    <!--android:id="@+id/tv_photos"/>-->
+            <!--<ImageView-->
+                    <!--android:layout_marginTop="8dp"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="275dp"-->
+                    <!--tools:srcCompat="@tools:sample/backgrounds/scenic[1]"-->
+                    <!--android:id="@+id/img_detail_room"/>-->
+            <!--<TextView-->
+                    <!--android:text="Comments"-->
+                    <!--android:layout_marginTop="8dp"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textStyle="bold"-->
+                    <!--android:id="@+id/tv_comments"/>-->
 
         </LinearLayout>
 
@@ -369,7 +369,7 @@
             android:background="@color/white"
             android:layout_height="40dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:id="@+id/linearLayout"
+            android:id="@+id/llRent"
     >
         <LinearLayout
                 android:orientation="vertical"
@@ -393,11 +393,27 @@
                     android:id="@+id/ratingBar"/>
         </LinearLayout>
         <Button
-                android:text="Rent"
+                android:text="Set Dates"
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/Base.Widget.AppCompat.Button.Colored"
                 android:id="@+id/btn_rent"/>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:background="@color/white"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/llRequest">
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvRequest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -73,6 +73,25 @@ class ExploreFragment : BaseFragment() {
 
             })
 
+        refreshData()
+
+        btn_fab.setOnClickListener {
+            TransactionManager.replaceFragmentWithWithBackStack(context!!, CreatePostFragment())
+        }
+
+        pullToRefresh.setOnRefreshListener {
+            refreshData()
+            pullToRefresh.isRefreshing = false
+        }
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as MainActivity).changeSelectedBottomNavigationBaseOnFragment(this)
+    }
+
+    private fun refreshData() {
         roomController.getAllRoom()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
@@ -107,15 +126,5 @@ class ExploreFragment : BaseFragment() {
                 }
 
             })
-
-        btn_fab.setOnClickListener {
-            TransactionManager.replaceFragmentWithWithBackStack(context!!, CreatePostFragment())
-        }
-
-    }
-
-    override fun onResume() {
-        super.onResume()
-        (activity as MainActivity).changeSelectedBottomNavigationBaseOnFragment(this)
     }
 }

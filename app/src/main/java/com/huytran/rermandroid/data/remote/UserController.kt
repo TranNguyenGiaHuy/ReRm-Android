@@ -110,7 +110,7 @@ class UserController(
 
     }
 
-    fun logout() : Completable {
+    fun logout(): Completable {
         val stub = UserServiceGrpc.newStub(channel)
 
         val logoutRequest = LogoutRequest.newBuilder().build()
@@ -164,15 +164,15 @@ class UserController(
                         }
 
                         val user = User(
-                            svId = getUserInfoResponse.id,
-                            name = getUserInfoResponse.name,
-                            userName = getUserInfoResponse.userName,
-                            avatarId = getUserInfoResponse.avatarId,
-                            phoneNumber = getUserInfoResponse.phoneNumber,
-                            idCard = getUserInfoResponse.idCard,
-                            tsCardDated = getUserInfoResponse.tsCardDated,
-                            tsDateOfBirth = getUserInfoResponse.tsDateOfBirth,
-                            placeOfPermanent = getUserInfoResponse.placeOfPermanent
+                            svId = getUserInfoResponse.user.id,
+                            name = getUserInfoResponse.user.name,
+                            userName = getUserInfoResponse.user.userName,
+                            avatarId = getUserInfoResponse.user.avatarId,
+                            phoneNumber = getUserInfoResponse.user.phoneNumber,
+                            idCard = getUserInfoResponse.user.idCard,
+                            tsCardDated = getUserInfoResponse.user.tsCardDated,
+                            tsDateOfBirth = getUserInfoResponse.user.tsDateOfBirth,
+                            placeOfPermanent = getUserInfoResponse.user.placeOfPermanent
                         )
 
                         emitter.onSuccess(user)
@@ -276,13 +276,13 @@ class UserController(
                             id = user.id,
                             svId = user.svId,
                             avatarId = user.avatarId,
-                            name = value.name,
-                            userName = value.userName,
-                            idCard = value.idCard,
-                            phoneNumber = value.phoneNumber,
-                            placeOfPermanent = value.placeOfPermanent,
-                            tsDateOfBirth = value.tsDateOfBirth,
-                            tsCardDated = value.tsCardDated
+                            name = value.user.name,
+                            userName = value.user.userName,
+                            idCard = value.user.idCard,
+                            phoneNumber = value.user.phoneNumber,
+                            placeOfPermanent = value.user.placeOfPermanent,
+                            tsDateOfBirth = value.user.tsDateOfBirth,
+                            tsCardDated = value.user.tsCardDated
                         )
                         emitter.onSuccess(newUser)
                     } else {
@@ -312,6 +312,39 @@ class UserController(
 
         }.flatMapCompletable {
             userRepository.addUser(it)
+        }
+    }
+
+    fun getInfoOfUser(id: Long): Single<com.huytran.grpcdemo.generatedproto.User> {
+        val stub = UserServiceGrpc.newStub(channel)
+        val request = GetInfoOfUserRequest.newBuilder()
+            .setId(id)
+            .build()
+        return Single.create<com.huytran.grpcdemo.generatedproto.User> { emitter ->
+            var user: com.huytran.grpcdemo.generatedproto.User? = null
+            val throwable = Throwable("Get User Info Fail")
+            val responseObserver = object : StreamObserver<GetInfoOfUserResponse> {
+                override fun onNext(value: GetInfoOfUserResponse) {
+                    value.user.let {
+                        user = it
+                    }
+                }
+
+                override fun onError(t: Throwable?) {
+                    emitter.onError(throwable)
+                    t?.printStackTrace()
+                }
+
+                override fun onCompleted() {
+                    if (user != null) {
+                        emitter.onSuccess(user!!)
+                    } else {
+                        emitter.onError(throwable)
+                    }
+                }
+
+            }
+
         }
     }
 

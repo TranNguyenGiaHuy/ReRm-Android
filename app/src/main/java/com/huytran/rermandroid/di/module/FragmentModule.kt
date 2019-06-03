@@ -50,4 +50,7 @@ abstract class FragmentModule {
     @ContributesAndroidInjector
     abstract fun contributeChatFragment(): ChatFragment
 
+    @ContributesAndroidInjector
+    abstract fun contributeDatePickerFragment(): DatePickerFragment
+
 }

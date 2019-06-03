@@ -21,7 +21,7 @@ class ApiModule {
     @Singleton
     internal fun provideChannel(@ApplicationContext context: Context): Channel {
         val channel = ManagedChannelBuilder
-            .forAddress("10.0.2.2", 6565)
+            .forAddress("192.168.137.1", 6565)
             .usePlaintext()
             .build()
         return ClientInterceptors.intercept(
@@ -92,6 +92,15 @@ class ApiModule {
         channel: Channel
     ): MessageController {
         return MessageController(context, channel)
+    }
+
+    @Provides
+    @Singleton
+    internal fun provideRentRequestController(
+        @ApplicationContext context: Context,
+        channel: Channel
+    ): RentRequestController {
+        return RentRequestController(context, channel)
     }
 
 }

@@ -1,0 +1,53 @@
+syntax = "proto3";
+option java_multiple_files = true;
+package com.huytran.grpcdemo.generatedproto;
+
+message RentRequest {
+    int64 renter = 1;
+    int64 tsStart = 2;
+    int64 tsEnd = 3;
+    int64 roomId = 4;
+    int64 id = 5;
+}
+
+message AddRentRequestRequest {
+    int64 tsStart = 1;
+    int64 tsEnd = 2;
+    int64 roomId = 3;
+}
+
+message AddRentRequestResponse {
+    int32 result_code = 1;
+}
+
+message ConfirmRentRequestRequest {
+    int64 id = 1;
+}
+
+message ConfirmRentRequestResponse {
+    int32 result_code = 1;
+}
+
+message GetRentRequestOfRoomRequest {
+    int64 id = 1;
+}
+
+message GetRentRequestOfRoomResponse {
+    int32 result_code = 1;
+    repeated RentRequest rent_request = 2;
+}
+
+message CancelRentRequestRequest {
+    int64 request_id = 1;
+}
+
+message CancelRentRequestResponse {
+    int32 result_code = 1;
+}
+
+service RentRequestService {
+    rpc AddRentRequest(AddRentRequestRequest) returns (AddRentRequestResponse) {}
+    rpc ConfirmRentRequest(ConfirmRentRequestRequest) returns (ConfirmRentRequestResponse) {}
+    rpc GetRentRequestOfRoom(GetRentRequestOfRoomRequest) returns (GetRentRequestOfRoomResponse) {}
+    rpc CancelRentRequest(CancelRentRequestRequest) returns (CancelRentRequestResponse) {}
+}

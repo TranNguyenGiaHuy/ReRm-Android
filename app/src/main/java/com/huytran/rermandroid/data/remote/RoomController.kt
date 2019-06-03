@@ -123,12 +123,11 @@ class RoomController(
                     })
                 }
             }
-            Completable.complete()
         }
     }
 
     fun getAllRoom(): Single<List<Room>> {
-        var roomList: List<Room> = arrayListOf()
+        var roomList: List<Room> = listOf()
 
         val stub = RoomServiceGrpc.newStub(channel)
         val request = GetAllRoomRequest.newBuilder().build()

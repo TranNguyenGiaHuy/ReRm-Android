@@ -93,7 +93,7 @@ class PostAdapter(
         } else {
             room.ownerAvatar?.let {
                 Glide
-                    .with(holder.imgPostProfile)
+                    .with(holder.itemView)
                     .load(room.ownerAvatar)
                     .into(holder.imgPostProfile)
             }
@@ -107,6 +107,24 @@ class PostAdapter(
 
                     override fun onSuccess(t: List<File>) {
                         room.imageList = t
+                        val adapter = ImageViewAdapter(
+                            t,
+                            OnItemClickListener { item, position ->
+                                TransactionManager.replaceFragmentWithWithBackStack(
+                                    context,
+                                    RoomDetailFragment(room, isOwned)
+                                )
+                            },
+                            object : ImageViewAdapter.Listener {
+
+                                override fun doubleClickListener() {
+                                    holder.btnSave.setBackgroundColor(R.color.red_btn_bg_color)
+                                }
+
+                            }
+                        )
+
+                        holder.imgViewer.create(adapter)
                     }
 
                     override fun onSubscribe(d: Disposable) {
@@ -122,7 +140,12 @@ class PostAdapter(
                 if (it.isNotEmpty()) {
                     val adapter = ImageViewAdapter(
                         it,
-                        OnItemClickListener { item, position -> },
+                        OnItemClickListener { item, position ->
+                            TransactionManager.replaceFragmentWithWithBackStack(
+                                context,
+                                RoomDetailFragment(room, isOwned)
+                            )
+                        },
                         object : ImageViewAdapter.Listener {
 
                             override fun doubleClickListener() {

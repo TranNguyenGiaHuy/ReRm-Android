@@ -4,19 +4,40 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.huytran.grpcdemo.generatedproto.RentRequest
 import com.huytran.rermandroid.R
 import com.huytran.rermandroid.adapter.ImageViewAdapter
+import com.huytran.rermandroid.adapter.RentRequestAdapter
 import com.huytran.rermandroid.data.local.localbean.RoomData
+import com.huytran.rermandroid.data.remote.AvatarController
+import com.huytran.rermandroid.data.remote.MessageController
+import com.huytran.rermandroid.data.remote.RentRequestController
+import com.huytran.rermandroid.data.remote.UserController
 import com.huytran.rermandroid.fragment.base.BaseFragment
+import com.huytran.rermandroid.manager.TransactionManager
 import com.huytran.rermandroid.utilities.UtilityFunctions
 import com.opensooq.pluto.listeners.OnItemClickListener
+import io.reactivex.SingleObserver
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.detail_room.*
-import kotlinx.android.synthetic.main.manage_post_item.*
 import javax.inject.Inject
 
-class RoomDetailFragment @Inject constructor(private val room: RoomData, private val isOwned: Boolean) : BaseFragment() {
+class RoomDetailFragment @Inject constructor(private val room: RoomData, private val isOwned: Boolean) :
+    BaseFragment() {
+
+    @Inject
+    lateinit var messageController: MessageController
+    @Inject
+    lateinit var rentRequestController: RentRequestController
+    @Inject
+    lateinit var avatarController: AvatarController
+    @Inject
+    lateinit var userController: UserController
 
     private val compositeDisposable = CompositeDisposable()
 
@@ -60,11 +81,48 @@ class RoomDetailFragment @Inject constructor(private val room: RoomData, private
         tv_num_of_floor.text = room.numberOfFloor.toString()
         tv_guest.text = room.maxMember.toString()
         tvCooking.text = if (room.cookingAllowance) "YES" else "NO"
-        tvDescription.text = room.description
+        tv_description.text = room.description
         tv_cost.text = room.price.toString()
 
         tv_message.visibility = if (isOwned) View.GONE else View.VISIBLE
-        
+
+        btn_rent.visibility = if (isOwned) View.GONE else View.VISIBLE
+        llRent.visibility = if (isOwned) View.GONE else View.VISIBLE
+        btn_rent.setOnClickListener {
+            TransactionManager.replaceFragmentWithWithBackStack(context!!, DatePickerFragment(room.id))
+        }
+
+        llRequest.visibility = if (isOwned) View.VISIBLE else View.GONE
+        rvRequest.layoutManager = LinearLayoutManager(activity)
+
+        rentRequestController.getRentRequestOfRoom(room.id)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .doOnSubscribe {
+                disposableContainer.add(it)
+            }
+            .subscribe(object : SingleObserver<List<RentRequest>> {
+                override fun onSuccess(t: List<RentRequest>) {
+                    rvRequest.apply {
+                        adapter = RentRequestAdapter(
+                            t,
+                            context,
+                            avatarController,
+                            userController,
+                            rentRequestController
+                        )
+                        adapter?.notifyDataSetChanged()
+                    }
+                }
+
+                override fun onSubscribe(d: Disposable) {
+                }
+
+                override fun onError(e: Throwable) {
+                    e.printStackTrace()
+                }
+
+            })
 
     }
 

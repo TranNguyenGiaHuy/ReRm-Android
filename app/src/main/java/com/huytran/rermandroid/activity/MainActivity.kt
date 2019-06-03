@@ -8,6 +8,7 @@ import com.google.firebase.iid.FirebaseInstanceId
 import com.huytran.rermandroid.R
 import com.huytran.rermandroid.activity.base.BaseActivity
 import com.huytran.rermandroid.data.remote.AvatarController
+import com.huytran.rermandroid.data.remote.MessageController
 import com.huytran.rermandroid.data.remote.UserController
 import com.huytran.rermandroid.fragment.*
 import com.huytran.rermandroid.fragment.base.BaseFragment
@@ -23,13 +24,23 @@ class MainActivity : BaseActivity() {
     lateinit var userController: UserController
     @Inject
     lateinit var avatarController: AvatarController
+    @Inject
+    lateinit var messageController: MessageController
 
     private lateinit var bottomNavigation : BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        FirebaseInstanceId.getInstance().instanceId
+        FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener {
+            messageController.addToken(it.token)
+                .observeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
+                .doOnError { throwable ->
+                    throwable.printStackTrace()
+                }
+                .subscribe()
+        }
 
         setContentView(R.layout.activity_main)
 
@@ -58,7 +69,6 @@ class MainActivity : BaseActivity() {
                 }
 
                 override fun onError(e: Throwable) {
-                    e.printStackTrace()
                 }
 
             })

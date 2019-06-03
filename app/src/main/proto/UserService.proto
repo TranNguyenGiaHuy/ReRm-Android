@@ -2,6 +2,18 @@ syntax = "proto3";
 option java_multiple_files = true;
 package com.huytran.grpcdemo.generatedproto;
 
+message User {
+    int64 id = 1;
+    string name = 2;
+    string user_name = 3;
+    int64 avatar_id = 4;
+    string phone_number = 5;
+    string id_card = 6;
+    int64 ts_card_dated = 7;
+    int64 ts_date_of_birth = 8;
+    string place_of_permanent = 9;
+}
+
 message SignUpRequest {
     string name = 1;
     string password = 2;
@@ -28,15 +40,7 @@ message GetInfoRequest {
 
 message GetInfoResponse {
     int32 result_code = 1;
-    string name = 2;
-    string user_name = 3;
-    int64 avatar_id = 4;
-    string phone_number = 5;
-    string id_card = 6;
-    int64 ts_card_dated = 7;
-    int64 ts_date_of_birth = 8;
-    string place_of_permanent = 9;
-    int64 id = 10;
+    User user = 2;
 }
 
 message LogoutRequest {
@@ -67,15 +71,16 @@ message UpdateUserInfoRequest {
 
 message UpdateUserInfoResponse {
     int32 result_code = 1;
-    string name = 2;
-    string user_name = 3;
-    int64 avatar_id = 4;
-    string phone_number = 5;
-    string id_card = 6;
-    int64 ts_card_dated = 7;
-    int64 ts_date_of_birth = 8;
-    string place_of_permanent = 9;
-    int64 id = 10;
+    User user = 2;
+}
+
+message GetInfoOfUserRequest {
+    int64 id = 1;
+}
+
+message GetInfoOfUserResponse {
+    int32 result_code = 1;
+    User user = 2;
 }
 
 service UserService {
@@ -85,4 +90,5 @@ service UserService {
     rpc Logout(LogoutRequest) returns (LogoutResponse) {}
     rpc LoginWithToken(LoginWithTokenRequest) returns (LoginWithTokenResponse) {}
     rpc UpdateUserInfo(UpdateUserInfoRequest) returns (UpdateUserInfoResponse) {}
+    rpc GetInfoOfUser(GetInfoOfUserRequest) returns (GetInfoOfUserResponse) {}
 }
