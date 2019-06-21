@@ -102,6 +102,13 @@ class MainActivity : BaseActivity() {
                 )
                 return@OnNavigationItemSelectedListener true
             }
+            R.id.navigation_inbox -> {
+                TransactionManager.replaceFragmentWithWithBackStack(
+                    this,
+                    ChatDialogFragment()
+                )
+                return@OnNavigationItemSelectedListener true
+            }
         }
         false
     }
@@ -111,6 +118,7 @@ class MainActivity : BaseActivity() {
             is ProfileDetailFragment, is ProfileFragment -> bottomNavigation.menu.findItem(R.id.navigation_profile).isChecked = true
             is ExploreFragment, is CreatePostFragment -> bottomNavigation.menu.findItem(R.id.navigation_explore).isChecked = true
             is SavedRoomFragment ->  bottomNavigation.menu.findItem(R.id.navigation_save).isChecked = true
+            is ChatDialogFragment ->  bottomNavigation.menu.findItem(R.id.navigation_inbox).isChecked = true
         }
     }
 }

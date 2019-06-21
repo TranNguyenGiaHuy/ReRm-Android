@@ -124,6 +124,15 @@ class RoomDetailFragment @Inject constructor(private val room: RoomData, private
 
             })
 
+        tv_message.setOnClickListener {
+            TransactionManager.replaceFragmentWithWithBackStack(
+                context!!,
+                ChatFragment(
+                    room.ownerId
+                )
+            )
+        }
+
     }
 
     override fun onDestroy() {

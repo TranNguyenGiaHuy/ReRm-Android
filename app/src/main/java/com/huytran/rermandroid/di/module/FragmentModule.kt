@@ -51,6 +51,9 @@ abstract class FragmentModule {
     abstract fun contributeChatFragment(): ChatFragment
 
     @ContributesAndroidInjector
+    abstract fun contributeChatDialogFragment(): ChatDialogFragment
+
+    @ContributesAndroidInjector
     abstract fun contributeDatePickerFragment(): DatePickerFragment
 
 }

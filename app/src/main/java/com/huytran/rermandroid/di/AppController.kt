@@ -6,11 +6,12 @@ import com.huytran.rermandroid.di.module.DatabaseModule
 import com.huytran.rermandroid.di.module.SharedPreferenceModule
 import dagger.android.AndroidInjector
 import dagger.android.HasActivityInjector
+import dagger.android.HasServiceInjector
 import dagger.android.support.DaggerApplication
 import dagger.android.support.HasSupportFragmentInjector
 import timber.log.Timber
 
-class AppController: DaggerApplication(), HasActivityInjector, HasSupportFragmentInjector {
+class AppController: DaggerApplication(), HasActivityInjector, HasSupportFragmentInjector, HasServiceInjector {
 
     override fun onCreate() {
         super.onCreate()

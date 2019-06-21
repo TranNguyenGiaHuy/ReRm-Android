@@ -18,7 +18,8 @@ import javax.inject.Singleton
         FragmentModule::class,
         AndroidSupportInjectionModule::class,
         SharedPreferenceModule::class,
-        DatabaseModule::class
+        DatabaseModule::class,
+        ServiceModule::class
     ]
 )
 interface AppComponent : AndroidInjector<AppController> {

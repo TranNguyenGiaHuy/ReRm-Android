@@ -345,6 +345,11 @@ class UserController(
 
             }
 
+            stub.getInfoOfUser(
+                request,
+                responseObserver
+            )
+
         }
     }
 

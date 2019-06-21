@@ -7,6 +7,7 @@ import com.huytran.rermandroid.data.local.repository.UserRepository
 import com.huytran.rermandroid.data.remote.*
 import com.huytran.rermandroid.data.remote.interceptor.SecurityInterceptor
 import com.huytran.rermandroid.di.scope.ApplicationContext
+import com.huytran.rermandroid.utilities.AppConstants.Companion.SERVER_ADDRESS
 import dagger.Module
 import dagger.Provides
 import io.grpc.Channel
@@ -21,7 +22,7 @@ class ApiModule {
     @Singleton
     internal fun provideChannel(@ApplicationContext context: Context): Channel {
         val channel = ManagedChannelBuilder
-            .forAddress("192.168.137.1", 6565)
+            .forAddress(SERVER_ADDRESS, 6565)
             .usePlaintext()
             .build()
         return ClientInterceptors.intercept(
