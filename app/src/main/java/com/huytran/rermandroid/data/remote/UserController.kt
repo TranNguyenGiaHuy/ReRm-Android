@@ -172,7 +172,8 @@ class UserController(
                             idCard = getUserInfoResponse.user.idCard,
                             tsCardDated = getUserInfoResponse.user.tsCardDated,
                             tsDateOfBirth = getUserInfoResponse.user.tsDateOfBirth,
-                            placeOfPermanent = getUserInfoResponse.user.placeOfPermanent
+                            placeOfPermanent = getUserInfoResponse.user.placeOfPermanent,
+                            placeOfIssueOfIdentityCard = getUserInfoResponse.user.placeOfIssueOfIdentityCard
                         )
 
                         emitter.onSuccess(user)
@@ -282,7 +283,8 @@ class UserController(
                             phoneNumber = value.user.phoneNumber,
                             placeOfPermanent = value.user.placeOfPermanent,
                             tsDateOfBirth = value.user.tsDateOfBirth,
-                            tsCardDated = value.user.tsCardDated
+                            tsCardDated = value.user.tsCardDated,
+                            placeOfIssueOfIdentityCard = value.user.placeOfIssueOfIdentityCard
                         )
                         emitter.onSuccess(newUser)
                     } else {

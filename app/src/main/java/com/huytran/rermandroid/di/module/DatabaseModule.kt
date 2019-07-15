@@ -5,9 +5,11 @@ import androidx.room.Room
 import com.huytran.rermandroid.data.local.Database
 import com.huytran.rermandroid.data.local.dao.AvatarDAO
 import com.huytran.rermandroid.data.local.dao.MessageDAO
+import com.huytran.rermandroid.data.local.dao.NotificationDAO
 import com.huytran.rermandroid.data.local.dao.UserDAO
 import com.huytran.rermandroid.data.local.repository.AvatarRepository
 import com.huytran.rermandroid.data.local.repository.MessageRepository
+import com.huytran.rermandroid.data.local.repository.NotificationRepository
 import com.huytran.rermandroid.data.local.repository.UserRepository
 import com.huytran.rermandroid.di.scope.ApplicationContext
 import dagger.Module
@@ -62,6 +64,18 @@ class DatabaseModule {
     @Provides
     internal fun provideMessageRepository(messageDAO: MessageDAO): MessageRepository {
         return MessageRepository(messageDAO)
+    }
+
+    @Singleton
+    @Provides
+    internal fun provideNotificationDAO(database: Database): NotificationDAO {
+        return database.noticationDAO()
+    }
+
+    @Singleton
+    @Provides
+    internal fun provideNotificationRepository(notificationDAO: NotificationDAO): NotificationRepository {
+        return NotificationRepository(notificationDAO)
     }
 
 }

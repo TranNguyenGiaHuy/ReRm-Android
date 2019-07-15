@@ -100,16 +100,16 @@ class RoomController(
                 responseObserver
             )
 
-        }.flatMapCompletable {roomId ->
+        }.flatMapCompletable { roomId ->
             Completable.concat {
-                imageList.forEach {image ->
+                imageList.forEach { image ->
                     imageController.uploadFile(
                         roomId,
                         ImageController.ImageParamsForUpload(
                             image.path,
                             image.name
                         )
-                    ).subscribe(object: CompletableObserver {
+                    ).subscribe(object : CompletableObserver {
                         override fun onComplete() {
                         }
 
@@ -132,7 +132,7 @@ class RoomController(
         val stub = RoomServiceGrpc.newStub(channel)
         val request = GetAllRoomRequest.newBuilder().build()
 
-        val errorThrowable = Throwable("Get Room Fail")
+        val errorThrowable = Throwable("Get Rooms Fail")
 
         return Single.create<List<Room>> { emitter ->
 
@@ -166,5 +166,32 @@ class RoomController(
             )
 
         }
+    }
+
+    fun getRoom(roomId: Long): Single<Room> {
+        val stub = RoomServiceGrpc.newStub(channel)
+        val request = GetRoomRequest.newBuilder().setRoomId(roomId).build()
+        val errorThrowable = Throwable("Get Room Fail")
+
+        return Single.create<Room> {emitter ->
+            val responseObserver = object: StreamObserver<GetRoomResponse> {
+                override fun onNext(value: GetRoomResponse) {
+                    emitter.onSuccess(
+                        value.room
+                    )
+                }
+
+                override fun onError(t: Throwable?) {
+                    t?.printStackTrace()
+                    emitter.onError(errorThrowable)
+                }
+
+                override fun onCompleted() {
+                }
+
+            }
+            stub.getRoom(request, responseObserver)
+        }
+
     }
 }

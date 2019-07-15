@@ -79,37 +79,6 @@ class ProfileFragment : BaseFragment() {
             }
             .subscribe()
 
-//        avatarRepository.getAll()
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribeOn(Schedulers.io())
-//            .doOnSubscribe {
-//                disposableContainer.add(it)
-//            }
-//            .subscribe(object : SingleObserver<List<Avatar>> {
-//                override fun onSuccess(t: List<Avatar>) {
-//                    if (t.isEmpty()) {
-//                        onError(
-//                            Throwable(
-//                                "Empty"
-//                            )
-//                        )
-//                        return
-//                    }
-//                    val file = File(context!!.filesDir, t.last().fileName)
-//                    Glide
-//                        .with(ivAvatar)
-//                        .load(file)
-//                        .into(ivAvatar)
-//                }
-//
-//                override fun onSubscribe(d: Disposable) {
-//                }
-//
-//                override fun onError(e: Throwable) {
-//                }
-//
-//            })
-
         avatarController.getAvatar()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
