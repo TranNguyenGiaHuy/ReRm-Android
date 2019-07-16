@@ -51,8 +51,18 @@ message GetAllSavedRoomResponse {
     repeated Room room = 2;
 }
 
+message GetRoomRequest {
+    int64 room_id = 1;
+}
+
+message GetRoomResponse {
+    int32 result_code = 1;
+    Room room = 2;
+}
+
 service RoomService {
     rpc CreateRoom(CreateRoomRequest) returns (CreateRoomResponse) {}
     rpc GetAllRoom(GetAllRoomRequest) returns (GetAllRoomResponse) {}
     rpc GetAllSavedRoom(GetAllSavedRoomRequest) returns (GetAllSavedRoomResponse) {}
+    rpc GetRoom(GetRoomRequest) returns (GetRoomResponse) {}
 }

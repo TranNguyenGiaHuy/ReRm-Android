@@ -29,9 +29,6 @@ import javax.inject.Inject
 
 class RoomDetailFragment @Inject constructor(private val room: RoomData, private val isOwned: Boolean) :
     BaseFragment() {
-
-    @Inject
-    lateinit var messageController: MessageController
     @Inject
     lateinit var rentRequestController: RentRequestController
     @Inject

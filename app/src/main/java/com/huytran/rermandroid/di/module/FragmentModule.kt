@@ -56,4 +56,7 @@ abstract class FragmentModule {
     @ContributesAndroidInjector
     abstract fun contributeDatePickerFragment(): DatePickerFragment
 
+    @ContributesAndroidInjector
+    abstract fun contributeNotificationFragment(): NotificationFragment
+
 }

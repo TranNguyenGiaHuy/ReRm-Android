@@ -12,6 +12,7 @@ message User {
     int64 ts_card_dated = 7;
     int64 ts_date_of_birth = 8;
     string place_of_permanent = 9;
+    string place_of_issue_of_identity_card = 10;
 }
 
 message SignUpRequest {

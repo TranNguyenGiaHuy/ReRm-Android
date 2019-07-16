@@ -169,7 +169,8 @@ class ProfileDetailFragment : BaseFragment() {
                 tsCardDated = UtilityFunctions.stringToTimestamp(tvIdCardDated.text.toString()) ?: user.tsCardDated,
                 tsDateOfBirth = UtilityFunctions.stringToTimestamp(tvDateOfBirth.text.toString()) ?: user.tsDateOfBirth,
                 placeOfPermanent = tvPlaceOfPermanent.text.toString(),
-                avatarId = user.avatarId
+                avatarId = user.avatarId,
+                placeOfIssueOfIdentityCard = user.placeOfIssueOfIdentityCard
             )
         )
     }
