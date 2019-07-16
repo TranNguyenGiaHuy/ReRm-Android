@@ -74,16 +74,19 @@
                                  android:layout_width="wrap_content"
                                  android:layout_height="wrap_content"
                                  android:layout_weight="1"
+                                 android:buttonTint="@color/colorPrimary"
                                  android:checked="true"/>
                     <RadioButton android:id="@+id/radioBtnRoom"
                                  android:text="Room"
                                  android:layout_width="wrap_content"
                                  android:layout_height="wrap_content"
+                                 android:buttonTint="@color/colorPrimary"
                                  android:layout_weight="1"/>
                     <RadioButton android:id="@+id/radioBtnDorm"
                                  android:text="Dormitory"
                                  android:layout_width="wrap_content"
                                  android:layout_height="wrap_content"
+                                 android:buttonTint="@color/colorPrimary"
                                  android:layout_weight="1"/>
                 </RadioGroup>
             </LinearLayout>
@@ -109,6 +112,7 @@
                                      android:text="Special"
                                      android:layout_width="wrap_content"
                                      android:layout_height="wrap_content"
+                                     android:buttonTint="@color/colorPrimary"
                                      android:layout_weight="1"
                                      android:checked="true"/>
 
@@ -116,24 +120,28 @@
                                      android:text="Type 1"
                                      android:layout_width="wrap_content"
                                      android:layout_height="wrap_content"
+                                     android:buttonTint="@color/colorPrimary"
                                      android:layout_weight="1"/>
 
                         <RadioButton android:id="@+id/radioButtonHomeType2"
                                      android:text="Type 2"
                                      android:layout_width="wrap_content"
                                      android:layout_height="wrap_content"
+                                     android:buttonTint="@color/colorPrimary"
                                      android:layout_weight="1"/>
 
                         <RadioButton android:id="@+id/radioButtonHomeType3"
                                      android:text="Type 3"
                                      android:layout_width="wrap_content"
                                      android:layout_height="wrap_content"
+                                     android:buttonTint="@color/colorPrimary"
                                      android:layout_weight="1"/>
 
                         <RadioButton android:id="@+id/radioButtonHomeType4"
                                      android:text="Type 4"
                                      android:layout_width="wrap_content"
                                      android:layout_height="wrap_content"
+                                     android:buttonTint="@color/colorPrimary"
                                      android:layout_weight="1"/>
 
 
@@ -332,6 +340,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/radioBtnHasFurniture"
+                            android:buttonTint="@color/colorPrimary"
                             android:checked="true"
                             android:layout_weight="1"/>
                     <RadioButton
@@ -339,6 +348,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/radioBtnNotHasFurniture"
+                            android:buttonTint="@color/colorPrimary"
                             android:layout_weight="1"/>
                 </RadioGroup>
 
@@ -372,6 +382,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/radioBtnAllowCooking"
+                                android:buttonTint="@color/colorPrimary"
                                 android:checked="true"
                                 android:layout_weight="1"/>
                         <RadioButton
@@ -379,6 +390,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/radioBtnNotAllowCooking"
+                                android:buttonTint="@color/colorPrimary"
                                 android:layout_weight="1"/>
                     </RadioGroup>
                 </LinearLayout>
