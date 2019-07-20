@@ -2,6 +2,7 @@ package com.huytran.rermandroid.data.remote
 
 import com.esafirm.imagepicker.model.Image
 import com.huytran.grpcdemo.generatedproto.*
+import com.huytran.rermandroid.data.local.localbean.RoomData
 import com.huytran.rermandroid.utilities.ResultCode
 import io.grpc.Channel
 import io.grpc.stub.StreamObserver
@@ -122,6 +123,8 @@ class RoomController(
 
                     })
                 }
+            }.andThen {
+                Completable.complete()
             }
         }
     }
@@ -193,5 +196,161 @@ class RoomController(
             stub.getRoom(request, responseObserver)
         }
 
+    }
+
+    fun updateRoom(
+        id: Long,
+        title: String,
+        square: Float,
+        address: String,
+        price: Long,
+        type: Int,
+        numberOfFloor: Int,
+        hasFurniture: Boolean,
+        maxMember: Int,
+        cookingAllowance: Boolean,
+        homeType: Int,
+        prepaid: Long,
+        description: String,
+        imageList: List<Image>,
+        term: String,
+        electricityPrice: Long,
+        waterPrice: Long
+    ): Completable {
+        val stub = RoomServiceGrpc.newStub(channel)
+
+        val request = UpdateRoomRequest.newBuilder()
+            .setRoom(
+                Room.newBuilder()
+                    .setId(id)
+                    .setTitle(title)
+                    .setSquare(square)
+                    .setAddress(address)
+                    .setPrice(price)
+                    .setType(type)
+                    .setNumberOfFloor(numberOfFloor)
+                    .setHasFurniture(hasFurniture)
+                    .setMaxMember(maxMember)
+                    .setCookingAllowance(cookingAllowance)
+                    .setHomeType(homeType)
+                    .setPrepaid(prepaid)
+                    .setDescription(description)
+                    .setTerm(term)
+                    .setElectricityPrice(electricityPrice)
+                    .setWaterPrice(waterPrice)
+                    .build()
+            )
+            .build()
+
+        return Single.create<Long> { emitter ->
+
+            val responseObserver = object : StreamObserver<UpdateRoomResponse> {
+
+                var roomId = -1L
+
+                override fun onNext(value: UpdateRoomResponse) {
+                    roomId = value.room.id
+                }
+
+                override fun onError(t: Throwable?) {
+                    emitter.onError(
+                        Throwable(
+                            "Update Room Fail"
+                        )
+                    )
+                }
+
+                override fun onCompleted() {
+                    emitter.onSuccess(roomId)
+                }
+
+            }
+
+            stub.updateRoom(
+                request,
+                responseObserver
+            )
+
+        }.flatMapCompletable { roomId ->
+            if (imageList.isEmpty()) {
+                Completable.complete()
+            } else {
+                Completable.concat {
+                    imageList.forEach { image ->
+                        imageController.uploadFile(
+                            roomId,
+                            ImageController.ImageParamsForUpload(
+                                image.path,
+                                image.name
+                            )
+                        ).subscribe(object : CompletableObserver {
+                            override fun onComplete() {
+
+                            }
+
+                            override fun onSubscribe(d: Disposable) {
+                            }
+
+                            override fun onError(e: Throwable) {
+                                e.printStackTrace()
+                            }
+
+                        })
+                    }
+                }.andThen {
+                    Completable.complete()
+                }
+            }
+        }
+    }
+
+    fun deleteRoom(id: Long): Completable {
+        val stub = RoomServiceGrpc.newStub(channel)
+        val deleteRoomRequest = DeleteRoomRequest.newBuilder()
+            .setId(id)
+            .build()
+
+        return Completable.create {emitter ->
+            val response = object: StreamObserver<DeleteRoomResponse> {
+                override fun onNext(value: DeleteRoomResponse) {
+                }
+
+                override fun onError(t: Throwable?) {
+                }
+
+                override fun onCompleted() {
+                    emitter.onComplete()
+                }
+
+            }
+
+            stub.deleteRoom(deleteRoomRequest, response)
+        }
+    }
+
+    fun getAllOfUser(): Single<List<Room>> {
+        val stub = RoomServiceGrpc.newStub(channel)
+        val request = GetAllRoomOfUserRequest.newBuilder().build()
+
+        return Single.create<List<Room>> {emitter ->
+            val response = object: StreamObserver<GetAllRoomOfUserResponse> {
+                override fun onNext(value: GetAllRoomOfUserResponse) {
+                    emitter.onSuccess(value.roomList)
+                }
+
+                override fun onError(t: Throwable?) {
+                    t?.let {
+                        t.printStackTrace()
+                        emitter.onError(t)
+                    }
+                }
+
+                override fun onCompleted() {
+                }
+
+            }
+
+            stub.getAllRoomOfUser(request, response)
+        }
     }
 }

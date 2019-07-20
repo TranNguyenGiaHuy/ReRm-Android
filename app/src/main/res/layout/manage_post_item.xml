@@ -63,7 +63,8 @@
                     android:numStars="5"
                     android:stepSize="1"
                     android:rating="4"
-                    android:id="@+id/rbManagePost"/>
+                    android:id="@+id/rbManagePost"
+                    android:visibility="gone"/>
 
         </LinearLayout>
         <LinearLayout

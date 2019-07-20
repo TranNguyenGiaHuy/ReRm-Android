@@ -130,7 +130,10 @@ class ProfileFragment : BaseFragment() {
         }
 
         profile_notification.setOnClickListener {
-
+            TransactionManager.replaceFragmentWithWithBackStack(
+                activity!!,
+                NotificationFragment()
+            )
         }
 
         profile_Logout.setOnClickListener {

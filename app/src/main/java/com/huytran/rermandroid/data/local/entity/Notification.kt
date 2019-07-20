@@ -14,6 +14,6 @@ data class Notification (
     @ColumnInfo(name = "from") val from: Long,
     @ColumnInfo(name = "room_id") val roomId: Long,
     @ColumnInfo(name = "value") val value: Long,
-    @ColumnInfo(name = "is_seen") val isSeen: Boolean,
+    @ColumnInfo(name = "is_seen") var isSeen: Boolean,
     @ColumnInfo(name = "message") val message: String
 )

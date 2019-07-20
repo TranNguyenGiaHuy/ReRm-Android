@@ -6,7 +6,10 @@ import com.huytran.rermandroid.utilities.ResultCode
 import io.grpc.Channel
 import io.grpc.stub.StreamObserver
 import io.reactivex.Completable
+import io.reactivex.Maybe
 import io.reactivex.Single
+import io.reactivex.SingleObserver
+import io.reactivex.disposables.Disposable
 
 class RentRequestController(
     private val context: Context,
@@ -130,6 +133,68 @@ class RentRequestController(
                 }
 
             }
+
+            stub.cancelRentRequest(request, responseObserver)
+        }
+    }
+
+    fun getRentRequestOfUserAndRoom(roomId : Long): Maybe<RentRequest> {
+        val stub = RentRequestServiceGrpc.newStub(channel)
+        val request = GetRentRequestOfRoomAndUserRequest.newBuilder()
+            .setId(roomId)
+            .build()
+
+        return Maybe.create<RentRequest> {emitter ->
+            val response = object: StreamObserver<GetRentRequestOfRoomAndUserResponse> {
+                override fun onNext(value: GetRentRequestOfRoomAndUserResponse) {
+                    value.rentRequest?.let {
+                        emitter.onSuccess(
+                            it
+                        )
+                    }
+                }
+
+                override fun onError(t: Throwable?) {
+                    t?.printStackTrace()
+                    t?.let {
+                        emitter.onError(t)
+                    }
+                }
+
+                override fun onCompleted() {
+                }
+            }
+            stub.getRentRequestOfRoomAndUser(request, response)
+        }
+    }
+
+    fun update(roomId: Long, tsStart: Long, tsEnd: Long): Single<RentRequest> {
+        val stub = RentRequestServiceGrpc.newStub(channel)
+        val request = UpdateRentRequestRequest.newBuilder()
+            .setId(roomId)
+            .setTsStart(tsStart)
+            .setTsEnd(tsEnd)
+            .build()
+
+        return Single.create<RentRequest> {emitter ->
+            val response = object: StreamObserver<UpdateRentRequestResponse> {
+                override fun onError(t: Throwable?) {
+                    t?.let {
+                        t.printStackTrace()
+                        emitter.onError(t)
+                    }
+                }
+
+                override fun onNext(value: UpdateRentRequestResponse) {
+                    emitter.onSuccess(value.rentRequest)
+                }
+
+                override fun onCompleted() {
+                }
+
+            }
+
+            stub.updateRentRequest(request, response)
         }
     }
 

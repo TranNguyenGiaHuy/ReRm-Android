@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             xmlns:app="http://schemas.android.com/apk/res-auto"
-                                             xmlns:tools="http://schemas.android.com/tools"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="match_parent"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
                                                    tools:context=".fragment.RoomDetailFragment">
 
 
@@ -328,7 +328,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
                     <TextView
-                            android:text="Description and term"
+                            android:text="Description"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textStyle="bold"/>
@@ -336,29 +336,145 @@
                             android:text="5"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/tv_description"/>
+                            android:id="@+id/tv_description"
+                            android:overScrollMode="ifContentScrolls"
+                            android:lines="5"
+                            android:maxLines="5"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <ImageView
+                        android:layout_width="77dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/ic_term"
+                        android:layout_weight="1"/>
+                <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+                    <TextView
+                            android:text="Term"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"/>
+                    <TextView
+                            android:text="5"
+                            android:overScrollMode="ifContentScrolls"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tv_term"
+                            android:lines="5"
+                            android:maxLines="5"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <ImageView
+                        android:layout_width="77dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/ic_term"
+                        android:layout_weight="1"/>
+                <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+                    <TextView
+                            android:text="Electricity Price"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"/>
+                    <TextView
+                            android:text="5"
+                            android:overScrollMode="ifContentScrolls"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tv_electricity_price"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <ImageView
+                        android:layout_width="77dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/ic_term"
+                        android:layout_weight="1"/>
+                <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+                    <TextView
+                            android:text="Water Price"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"/>
+                    <TextView
+                            android:text="5"
+                            android:overScrollMode="ifContentScrolls"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tv_water_price"/>
                 </LinearLayout>
             </LinearLayout>
             <!--<TextView-->
-                    <!--android:text="Photos"-->
-                    <!--android:layout_marginTop="16dp"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:textStyle="bold"-->
-                    <!--android:id="@+id/tv_photos"/>-->
+            <!--android:text="Photos"-->
+            <!--android:layout_marginTop="16dp"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textStyle="bold"-->
+            <!--android:id="@+id/tv_photos"/>-->
             <!--<ImageView-->
-                    <!--android:layout_marginTop="8dp"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="275dp"-->
-                    <!--tools:srcCompat="@tools:sample/backgrounds/scenic[1]"-->
-                    <!--android:id="@+id/img_detail_room"/>-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="275dp"-->
+            <!--tools:srcCompat="@tools:sample/backgrounds/scenic[1]"-->
+            <!--android:id="@+id/img_detail_room"/>-->
             <!--<TextView-->
-                    <!--android:text="Comments"-->
-                    <!--android:layout_marginTop="8dp"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:textStyle="bold"-->
-                    <!--android:id="@+id/tv_comments"/>-->
+            <!--android:text="Comments"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textStyle="bold"-->
+            <!--android:id="@+id/tv_comments"/>-->
             <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -414,7 +530,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/Base.Widget.AppCompat.Button.Colored"
-                android:id="@+id/btn_rent"/>
+                android:id="@+id/btn_rent"
+                android:visibility="gone"/>
+        <Button
+                android:text="Edit"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Base.Widget.AppCompat.Button.Colored"
+                android:id="@+id/btn_edit"
+                android:visibility="gone"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
