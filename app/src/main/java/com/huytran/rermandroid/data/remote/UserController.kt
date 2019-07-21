@@ -266,6 +266,7 @@ class UserController(
             .setTsCardDated(user.tsCardDated)
             .setTsDateOfBirth(user.tsDateOfBirth)
             .setPlaceOfPermanent(user.placeOfPermanent)
+            .setPlaceOfIssueOfIdentityCard(user.placeOfIssueOfIdentityCard)
             .build()
 
         return Single.create<User> { emitter ->

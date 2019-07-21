@@ -39,8 +39,6 @@ class ProfileDetailFragment : BaseFragment() {
     @Inject
     lateinit var avatarController: AvatarController
     @Inject
-    lateinit var avatarRepository: AvatarRepository
-    @Inject
     lateinit var userController: UserController
 
     private lateinit var tvUserName: TextView
@@ -51,6 +49,7 @@ class ProfileDetailFragment : BaseFragment() {
     private lateinit var tvDateOfBirth: TextView
     private lateinit var tvPlaceOfPermanent: TextView
     private lateinit var tvUploadAvatar: TextView
+    private lateinit var tvPlaceOfIssueOfIdentityCard: TextView
 
     private lateinit var user: User
 
@@ -73,6 +72,7 @@ class ProfileDetailFragment : BaseFragment() {
         tvPlaceOfPermanent = view.findViewById(R.id.tv_place_of_permanent)
         val ivAvatar = view.findViewById<ImageView>(R.id.img_profile_image)
         tvUploadAvatar = view.findViewById(R.id.tv_upload_avatar)
+        tvPlaceOfIssueOfIdentityCard = view.findViewById(R.id.tv_place_of_issue_of_identity_card)
 
         val userInfoDisposable = userRepository.getLastFlowable()
             .observeOn(AndroidSchedulers.mainThread())
@@ -88,6 +88,7 @@ class ProfileDetailFragment : BaseFragment() {
                 tvDateOfBirth.text = if (user.tsDateOfBirth == 0L) "" else UtilityFunctions.timestampToString(user.tsDateOfBirth)
                 tvName.text = user.userName
                 tvPlaceOfPermanent.text = user.placeOfPermanent
+                tvPlaceOfIssueOfIdentityCard.text = user.placeOfIssueOfIdentityCard
             }
         disposableContainer.add(userInfoDisposable)
 
@@ -170,7 +171,7 @@ class ProfileDetailFragment : BaseFragment() {
                 tsDateOfBirth = UtilityFunctions.stringToTimestamp(tvDateOfBirth.text.toString()) ?: user.tsDateOfBirth,
                 placeOfPermanent = tvPlaceOfPermanent.text.toString(),
                 avatarId = user.avatarId,
-                placeOfIssueOfIdentityCard = user.placeOfIssueOfIdentityCard
+                placeOfIssueOfIdentityCard = tvPlaceOfIssueOfIdentityCard.text.toString()
             )
         )
     }
@@ -266,6 +267,17 @@ class ProfileDetailFragment : BaseFragment() {
                     callUpdate()
                 }
                 title(text = "What's Your Date Of Birth?")
+                negativeButton(R.string.text_cancel)
+            }
+        }
+        tvPlaceOfIssueOfIdentityCard.setOnClickListener {
+            MaterialDialog(context!!).show {
+                input(prefill = tvPlaceOfIssueOfIdentityCard.text) { _, charSequence ->
+                    if (charSequence.isBlank()) return@input
+                    tvPlaceOfIssueOfIdentityCard.text = charSequence
+                    callUpdate()
+                }
+                title(text = "Where's Your Place Of Issue Of Identity Card?")
                 negativeButton(R.string.text_cancel)
             }
         }

@@ -23,6 +23,7 @@ message Room {
     string term = 16;
     int64 electricity_price = 17;
     int64 water_price = 18;
+    bool is_renting = 19;
 }
 
 message CreateRoomRequest {
@@ -60,9 +61,38 @@ message GetRoomResponse {
     Room room = 2;
 }
 
+message UpdateRoomRequest {
+    Room room = 1;
+}
+
+message UpdateRoomResponse {
+    int32 result_code = 1;
+    Room room = 2;
+}
+
+message DeleteRoomRequest {
+    int64 id = 1;
+}
+
+message DeleteRoomResponse {
+    int32 result_code = 1;
+}
+
+message GetAllRoomOfUserRequest {
+
+}
+
+message GetAllRoomOfUserResponse {
+    int32 result_code = 1;
+    repeated Room room = 2;
+}
+
 service RoomService {
     rpc CreateRoom(CreateRoomRequest) returns (CreateRoomResponse) {}
     rpc GetAllRoom(GetAllRoomRequest) returns (GetAllRoomResponse) {}
     rpc GetAllSavedRoom(GetAllSavedRoomRequest) returns (GetAllSavedRoomResponse) {}
     rpc GetRoom(GetRoomRequest) returns (GetRoomResponse) {}
+    rpc UpdateRoom(UpdateRoomRequest) returns (UpdateRoomResponse) {}
+    rpc DeleteRoom(DeleteRoomRequest) returns (DeleteRoomResponse) {}
+    rpc GetAllRoomOfUser(GetAllRoomOfUserRequest) returns (GetAllRoomOfUserResponse) {}
 }

@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -33,7 +34,8 @@ class NotificationAdapter(
     private val avatarController: AvatarController,
     private val roomController: RoomController,
     private val userRepository: UserRepository,
-    private val imageController: ImageController
+    private val imageController: ImageController,
+    private val notificationRepository: NotificationRepository
 ) : RecyclerView.Adapter<NotificationAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -73,6 +75,13 @@ class NotificationAdapter(
         var roomData: RoomData? = null
         var isOwner = false
         holder.llContainer.setOnClickListener {
+            notification.isSeen = true
+            notificationRepository.insert(
+                notification
+            ).observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe()
+
             roomController.getRoom(notification.roomId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
@@ -112,7 +121,7 @@ class NotificationAdapter(
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val ivAvatar: CircleImageView = view.findViewById(R.id.ivAvatar)
         val tvContent: TextView = view.findViewById(R.id.tvContent)
-        val llContainer: TextView = view.findViewById(R.id.llContainer)
+        val llContainer: LinearLayout = view.findViewById(R.id.llContainer)
 
     }
 

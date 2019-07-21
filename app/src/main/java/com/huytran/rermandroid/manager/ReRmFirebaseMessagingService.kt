@@ -63,7 +63,7 @@ class ReRmFirebaseMessagingService : FirebaseMessagingService() {
 
         p0?.let {
             val notificationType = AppConstants.NotificationType.toRoomType(it.data["notificationType"]?.toIntOrNull())
-            val extraData = it.data["extraData"] as? Map<*, *>
+            val extraData = it.data["extraData"]
 
             when (notificationType) {
                 AppConstants.NotificationType.MESSAGE_TYPE_MESSAGE -> {
@@ -129,6 +129,7 @@ class ReRmFirebaseMessagingService : FirebaseMessagingService() {
                     extraData?.let {data ->
                         saveAndPushNotification(data, notificationType)
                     }
+//                    saveAndPushNotification(it.data["from"]!!.toLong(), it.data["room"]!!.toLong(), it.data["value"]!!.toLong(), notificationType)
                 }
             }
 
@@ -177,15 +178,32 @@ class ReRmFirebaseMessagingService : FirebaseMessagingService() {
 
     }
 
-    private fun extractExtraData(extraData: Map<*, *>): ExtraData? {
+    private fun extractExtraData(extraData: String): ExtraData? {
+        val raw = extraData.substring(1, extraData.length - 1)
+        val dataPairs = raw.split(",")
+        if (dataPairs.size != 3) return null
+        var from: Long? = null
+        var room: Long? = null
+        var value: Long? = null
+
+        dataPairs.forEach { dataPair ->
+            val key = dataPair.split(":")[0].trim().replace("\"", "")
+            val data = dataPair.split(":")[1]
+            when (key) {
+                "from" -> from = data.toLong()
+                "room" -> room = data.toLong()
+                "value" -> value = data.toLong()
+            }
+        }
+
         return ExtraData(
-            extraData["from"]?.toString()?.toLong() ?: return null,
-            extraData["room"]?.toString()?.toLong() ?: return null,
-            extraData["value"]?.toString()?.toLong() ?: return null
+            from!!,
+            room!!,
+            value!!
         )
     }
 
-    private fun extractExtraDataAndSaveNotification(extraData: Map<*, *>): ExtraData? {
+    private fun extractExtraDataAndSaveNotification(extraData: String): ExtraData? {
         val data = extractExtraData(extraData) ?: return null
         notificationRepository.insert(
             Notification(
@@ -200,7 +218,7 @@ class ReRmFirebaseMessagingService : FirebaseMessagingService() {
         return data
     }
 
-    private fun saveAndPushNotification(extraData: Map<*, *>, type: AppConstants.NotificationType) {
+    private fun saveAndPushNotification(extraData: String, type: AppConstants.NotificationType) {
         val data = extractExtraData(extraData) ?: return
 
         var title: String

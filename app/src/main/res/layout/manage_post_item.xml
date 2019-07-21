@@ -54,6 +54,15 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginStart="8dp"
                     android:id="@+id/tvPrice"/>
+            <TextView
+                    android:text="RENTING"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:id="@+id/tvStatus"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:visibility="gone"/>
             <RatingBar
                     android:layout_marginStart="8dp"
                     android:layout_width="wrap_content"
@@ -63,7 +72,8 @@
                     android:numStars="5"
                     android:stepSize="1"
                     android:rating="4"
-                    android:id="@+id/rbManagePost"/>
+                    android:id="@+id/rbManagePost"
+                    android:visibility="gone"/>
 
         </LinearLayout>
         <LinearLayout

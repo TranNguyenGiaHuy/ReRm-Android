@@ -1,6 +1,5 @@
 package com.huytran.rermandroid.adapter
 
-import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.view.LayoutInflater
@@ -9,17 +8,15 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.huytran.rermandroid.R
-import com.huytran.rermandroid.data.local.entity.Room
+import com.huytran.rermandroid.data.local.localbean.RoomData
 import com.huytran.rermandroid.fragment.EditPostFragment
 import com.huytran.rermandroid.fragment.RoomDetailFragment
 import com.huytran.rermandroid.manager.TransactionManager
-import kotlinx.android.synthetic.main.detail_room.view.*
+import com.huytran.rermandroid.utilities.UtilityFunctions
 import kotlinx.android.synthetic.main.manage_post_item.view.*
 
 
-
-
-class ManagePostAdapter(val items : ArrayList<Room>, val context: Context) : RecyclerView.Adapter<ManagePostAdapter.ViewHolder>() {
+class ManagePostAdapter(private val items : MutableList<RoomData>, val context: Context) : RecyclerView.Adapter<ManagePostAdapter.ViewHolder>() {
 
 
     override fun getItemCount(): Int {
@@ -33,15 +30,19 @@ class ManagePostAdapter(val items : ArrayList<Room>, val context: Context) : Rec
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val room : Room = items[position]
-        holder.tvPrice?.text = room.price.toString()
-
+        val room : RoomData = items[position]
+        holder.tvPrice.text = "${room.price} VND"
+        holder.tvRoomType.text = UtilityFunctions.longToRoomType(room.type).name
+        holder.tvLocation.text = room.address
+        holder.tvStatus.visibility = if (room.isRenting) View.VISIBLE else View.GONE
+        holder.btnDelete.visibility = if (room.isRenting) View.GONE else View.VISIBLE
+        holder.btnEdit.visibility = if (room.isRenting) View.GONE else View.VISIBLE
 
         holder.itemView.setOnClickListener{
-//            TransactionManager.replaceFragmentWithWithBackStack(
-//                context,
-//                RoomDetailFragment(room)
-//            )
+            TransactionManager.replaceFragmentWithWithBackStack(
+                context,
+                RoomDetailFragment(room, true)
+            )
         }
 
         holder.btnDelete.setOnClickListener {
@@ -80,6 +81,7 @@ class ManagePostAdapter(val items : ArrayList<Room>, val context: Context) : Rec
         val ratingBar = view.rbManagePost
         val btnDelete = view.ivDelete
         val btnEdit = view.ivEdit
+        val tvStatus = view.tvStatus
 
     }
 }

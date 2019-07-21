@@ -108,6 +108,7 @@
                             android:layout_margin="16dp"
                             android:orientation="horizontal">
 
+<<<<<<< HEAD
                         <RadioButton android:id="@+id/radioButtonHomeTypeSpecial"
                                      android:text="Special"
                                      android:layout_width="wrap_content"
@@ -143,6 +144,38 @@
                                      android:layout_height="wrap_content"
                                      android:buttonTint="@color/colorPrimary"
                                      android:layout_weight="1"/>
+=======
+                    <RadioButton android:id="@+id/radioButtonHomeTypeSpecial"
+                                 android:text="Special"
+                                 android:layout_width="wrap_content"
+                                 android:layout_height="wrap_content"
+                                 android:layout_weight="1"
+                                 android:checked="true"/>
+
+                    <RadioButton android:id="@+id/radioButtonHomeType1"
+                                 android:text="Type 1"
+                                 android:layout_width="wrap_content"
+                                 android:layout_height="wrap_content"
+                                 android:layout_weight="1"/>
+
+                    <RadioButton android:id="@+id/radioButtonHomeType2"
+                                 android:text="Type 2"
+                                 android:layout_width="wrap_content"
+                                 android:layout_height="wrap_content"
+                                 android:layout_weight="1"/>
+
+                    <RadioButton android:id="@+id/radioButtonHomeType3"
+                                 android:text="Type 3"
+                                 android:layout_width="wrap_content"
+                                 android:layout_height="wrap_content"
+                                 android:layout_weight="1"/>
+
+                    <RadioButton android:id="@+id/radioButtonHomeType4"
+                                 android:text="Type 4"
+                                 android:layout_width="wrap_content"
+                                 android:layout_height="wrap_content"
+                                 android:layout_weight="1"/>
+>>>>>>> master
 
 
                 </RadioGroup>
@@ -208,6 +241,26 @@
                           android:layout_height="wrap_content"
                           android:textAlignment="center"
                           android:layout_marginStart="16dp"
+                          android:text="Max members"
+                          android:textStyle="bold"
+                          android:padding="0dp"/>
+
+                <EditText android:id="@+id/etMaxMember"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_margin="16dp"
+                          android:inputType="number"
+                          android:textColor="@android:color/black"/>
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical">
+
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:textAlignment="center"
+                          android:layout_marginStart="16dp"
                           android:text="Address"
                           android:textStyle="bold"
                           android:padding="0dp"/>
@@ -248,6 +301,20 @@
                             android:layout_weight="1"
                             android:text="VND/Month"/>
                 </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical">
+
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:textAlignment="center"
+                          android:layout_marginStart="16dp"
+                          android:text="Electricity Price"
+                          android:textStyle="bold"
+                          android:padding="0dp"/>
                 <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -266,6 +333,20 @@
                             android:layout_weight="1"
                             android:text="VND/kWh"/>
                 </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical">
+
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:textAlignment="center"
+                          android:layout_marginStart="16dp"
+                          android:text="Water Price"
+                          android:textStyle="bold"
+                          android:padding="0dp"/>
                 <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -409,10 +490,15 @@
                           android:padding="0dp"/>
 
                 <EditText android:id="@+id/etDescription"
+                          android:inputType="textMultiLine"
                           android:layout_width="match_parent"
                           android:layout_height="wrap_content"
                           android:layout_margin="16dp"
-                          android:textColor="@android:color/black"/>
+                          android:textColor="@android:color/black"
+                          android:lines="5"
+                          android:maxLines="5"
+                          android:gravity="top|start"
+                          android:scrollbars="vertical"/>
             </LinearLayout>
             <LinearLayout android:layout_width="match_parent"
                           android:layout_height="wrap_content"
@@ -426,17 +512,16 @@
                           android:textStyle="bold"
                           android:padding="0dp"/>
 
-                <TextView android:id="@+id/btnViewContractTerm"
-                          android:layout_width="wrap_content"
+                <EditText android:id="@+id/etTerm"
+                          android:inputType="textMultiLine"
+                          android:layout_width="match_parent"
                           android:layout_height="wrap_content"
-                          android:textAlignment="center"
-                          android:layout_marginStart="32dp"
-                          android:layout_marginTop="16dp"
-                          android:layout_marginBottom="16dp"
-                          android:text="View Contract Term"
-                          android:textColor="@color/colorGreen"
-                          android:textStyle="italic"
-                          android:padding="0dp"/>
+                          android:layout_margin="16dp"
+                          android:textColor="@android:color/black"
+                          android:lines="5"
+                          android:maxLines="5"
+                          android:gravity="top|start"
+                          android:scrollbars="vertical"/>
             </LinearLayout>
 
             <Button android:id="@+id/btnUploadImage"
@@ -455,6 +540,26 @@
                     android:textColor="@color/white"
                     android:background="@drawable/btn_rounded"
                     android:text="Post"/>
+
+            <Button android:id="@+id/btnUpdate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/btn_rounded"
+                    android:text="Update"
+                    android:visibility="gone"/>
+
+            <Button android:id="@+id/btnDelete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/btn_rounded_red"
+                    android:text="Delete"
+                    android:visibility="gone"/>
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

@@ -65,9 +65,10 @@ message UpdateUserInfoRequest {
     string user_name = 2;
     string phone_number = 3;
     string id_card = 4;
-    int64 tsCardDated = 5;
-    int64 tsDateOfBirth = 6;
-    string placeOfPermanent = 7;
+    int64 ts_card_dated = 5;
+    int64 ts_date_of_birth = 6;
+    string place_of_permanent = 7;
+    string place_of_issue_of_identity_card = 8;
 }
 
 message UpdateUserInfoResponse {
