@@ -20,6 +20,7 @@ data class RoomData(val room: Room) {
     var title: String = ""
     var waterPrice: Long = 0L
     var electricityPrice: Long = 0L
+    var isRenting: Boolean = false
 
     var ownerId: Long = 0
     var ownerName: String = ""
@@ -44,6 +45,7 @@ data class RoomData(val room: Room) {
         title = room.title
         waterPrice = room.waterPrice
         electricityPrice = room.electricityPrice
+        isRenting = room.isRenting
 
         ownerId = room.ownerId
         ownerName = room.ownerName

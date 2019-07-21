@@ -23,6 +23,7 @@ message Room {
     string term = 16;
     int64 electricity_price = 17;
     int64 water_price = 18;
+    bool is_renting = 19;
 }
 
 message CreateRoomRequest {
