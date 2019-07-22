@@ -95,7 +95,21 @@ class RentRequestAdapter(
 
         holder.btnConfirm.setOnClickListener {
             rentRequestController.confirmRentRequest(rentRequest.id)
-                .subscribe()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(object: CompletableObserver {
+                    override fun onComplete() {
+                        rentRequestDataList.removeAt(position)
+                        notifyItemRemoved(position)
+                    }
+
+                    override fun onSubscribe(d: Disposable) {
+                    }
+
+                    override fun onError(e: Throwable) {
+                    }
+
+                })
         }
 
         holder.btnEdit.setOnClickListener {

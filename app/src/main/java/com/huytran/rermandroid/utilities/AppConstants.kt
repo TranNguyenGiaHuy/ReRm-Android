@@ -56,4 +56,11 @@ class AppConstants {
         DORM(2, "Dormitory")
     }
 
+    enum class PaymentStatus(val raw: Int) {
+        WAITING_BILL(0),
+        WAITING_PAYMENT(1),
+        WAITING_CONFIRM(2),
+        DONE(3),
+    }
+
 }

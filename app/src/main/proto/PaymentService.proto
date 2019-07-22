@@ -1,0 +1,61 @@
+syntax = "proto3";
+option java_multiple_files = true;
+package com.huytran.grpcdemo.generatedproto;
+
+message Payment {
+    int64 amount = 1;
+    string currency = 2;
+    int32 status = 3;
+    int64 payer_id = 4;
+    int64 contract_id = 5;
+    int64 ts_start = 6;
+    int64 tsEnd = 7;
+    int64 electricity_bill = 8;
+    int64 water_bill = 9;
+    int64 id = 10;
+}
+
+message GetPaymentOfRoomRequest {
+    int64 room_id = 1;
+}
+
+message GetPaymentOfRoomResponse {
+    int32 result_code = 1;
+    repeated Payment payment = 2;
+}
+
+message AddBillRequest {
+    int64 paymentId = 1;
+    int64 electricityBill = 2;
+    int64 waterBill = 3;
+}
+
+message AddBillResponse {
+    int32 result_code = 1;
+    Payment payment = 2;
+}
+
+message RequestPaidRequest {
+    int64 paymentId = 1;
+}
+
+message RequestPaidResponse {
+    int32 result_code = 1;
+    Payment payment = 2;
+}
+
+message ConfirmPaymentRequest {
+    int64 paymentId = 1;
+}
+
+message ConfirmPaymentResponse {
+    int32 result_code = 1;
+    Payment payment = 2;
+}
+
+service PaymentService {
+    rpc GetPaymentOfRoom(GetPaymentOfRoomRequest) returns (GetPaymentOfRoomResponse) {}
+    rpc AddBill(AddBillRequest) returns (AddBillResponse) {}
+    rpc RequestPaid(RequestPaidRequest) returns (RequestPaidResponse) {}
+    rpc ConfirmPayment(ConfirmPaymentRequest) returns (ConfirmPaymentResponse) {}
+}

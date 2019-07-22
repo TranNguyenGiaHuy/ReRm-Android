@@ -26,6 +26,7 @@ import com.huytran.rermandroid.data.remote.AvatarController
 import com.huytran.rermandroid.data.remote.RoomController
 import com.huytran.rermandroid.data.remote.UserController
 import com.huytran.rermandroid.utilities.AppConstants
+import com.huytran.rermandroid.utilities.UtilityFunctions
 import dagger.android.AndroidInjection
 import io.reactivex.Completable
 import io.reactivex.SingleObserver
@@ -51,7 +52,7 @@ class ReRmFirebaseMessagingService : FirebaseMessagingService() {
 
     private val CHANNEL_ID = "100001"
 
-    data class ExtraData(val from: Long, val roomId: Long, val value: Long)
+    data class ExtraData(val from: Long, val roomId: Long, val value: Long, val tsStart: Long?, val tsEnd: Long?)
 
     override fun onCreate() {
         AndroidInjection.inject(this)
@@ -185,6 +186,8 @@ class ReRmFirebaseMessagingService : FirebaseMessagingService() {
         var from: Long? = null
         var room: Long? = null
         var value: Long? = null
+        var tsStart: Long? = null
+        var tsEnd: Long? = null
 
         dataPairs.forEach { dataPair ->
             val key = dataPair.split(":")[0].trim().replace("\"", "")
@@ -193,13 +196,17 @@ class ReRmFirebaseMessagingService : FirebaseMessagingService() {
                 "from" -> from = data.toLong()
                 "room" -> room = data.toLong()
                 "value" -> value = data.toLong()
+                "tsStart" -> tsStart = data.toLong()
+                "tsEnd" -> tsEnd = data.toLong()
             }
         }
 
         return ExtraData(
             from!!,
             room!!,
-            value!!
+            value!!,
+            tsStart,
+            tsEnd
         )
     }
 
@@ -264,19 +271,39 @@ class ReRmFirebaseMessagingService : FirebaseMessagingService() {
                     }
                     AppConstants.NotificationType.MESSAGE_TYPE_ADD_PAYMENT -> {
                         title = "Add Payment!"
-                        body = "Please add bill for $roomName."
+                        body = "Please add bill for $roomName" +
+                                "${if (data.tsStart != null
+                                    && data.tsEnd != null)
+                                    " from ${UtilityFunctions.timestampToString(data.tsStart)} " +
+                                            "to ${UtilityFunctions.timestampToString(data.tsEnd)}"
+                                else ""}."
                     }
                     AppConstants.NotificationType.MESSAGE_TYPE_BILL -> {
                         title = "You Have A Bill!"
-                        body = "The bill for your $roomName has value: ${data.value} VND."
+                        body = "The bill for your $roomName" +
+                                "${if (data.tsStart != null
+                                    && data.tsEnd != null)
+                                    " from ${UtilityFunctions.timestampToString(data.tsStart)} " +
+                                            "to ${UtilityFunctions.timestampToString(data.tsEnd)}"
+                                else ""} has value: ${data.value} VND."
                     }
                     AppConstants.NotificationType.MESSAGE_TYPE_PAYMENT_REQUEST -> {
                         title = "Payment Request!"
-                        body = "Have you receive the money for $roomName from $fromName, which has value: ${data.value} VND."
+                        body = "Have you receive the money for $roomName" +
+                                "${if (data.tsStart != null
+                                    && data.tsEnd != null)
+                                    " from ${UtilityFunctions.timestampToString(data.tsStart)} " +
+                                            "to ${UtilityFunctions.timestampToString(data.tsEnd)}"
+                                else ""} from $fromName, which has value: ${data.value} VND."
                     }
                     AppConstants.NotificationType.MESSAGE_TYPE_CONFIRM_PAYMENT -> {
                         title = "Payment Confirmation"
-                        body = "$fromName has confirmed your payment for $roomName"
+                        body = "$fromName has confirmed your payment for $roomName" +
+                                "${if (data.tsStart != null
+                                    && data.tsEnd != null)
+                                    " from ${UtilityFunctions.timestampToString(data.tsStart)} " +
+                                            "to ${UtilityFunctions.timestampToString(data.tsEnd)}"
+                                else ""}."
                     }
                     else -> return@doOnComplete
                 }
