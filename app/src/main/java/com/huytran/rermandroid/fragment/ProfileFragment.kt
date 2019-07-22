@@ -79,28 +79,28 @@ class ProfileFragment : BaseFragment() {
             }
             .subscribe()
 
-        avatarController.getAvatar()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .doOnSubscribe {
-                disposableContainer.add(it)
-            }
-            .subscribe(object: SingleObserver<File> {
-                override fun onSuccess(t: File) {
-                    Glide
-                        .with(ivAvatar)
-                        .load(t)
-                        .into(ivAvatar)
-                }
-
-                override fun onSubscribe(d: Disposable) {
-                }
-
-                override fun onError(e: Throwable) {
-                    e.printStackTrace()
-                }
-
-            })
+//        avatarController.getAvatar()
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribeOn(Schedulers.io())
+//            .doOnSubscribe {
+//                disposableContainer.add(it)
+//            }
+//            .subscribe(object: SingleObserver<File> {
+//                override fun onSuccess(t: File) {
+//                    Glide
+//                        .with(ivAvatar)
+//                        .load(t)
+//                        .into(ivAvatar)
+//                }
+//
+//                override fun onSubscribe(d: Disposable) {
+//                }
+//
+//                override fun onError(e: Throwable) {
+//                    e.printStackTrace()
+//                }
+//
+//            })
 
         return view
     }

@@ -48,6 +48,15 @@ class UtilityFunctions {
             }
         }
 
+        fun longToPaymentStatus(type: Int): AppConstants.PaymentStatus {
+            return when (type) {
+                0 -> AppConstants.PaymentStatus.WAITING_BILL
+                1 -> AppConstants.PaymentStatus.WAITING_PAYMENT
+                2 -> AppConstants.PaymentStatus.WAITING_CONFIRM
+                else -> AppConstants.PaymentStatus.DONE
+            }
+        }
+
     }
 
 }
