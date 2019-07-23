@@ -359,7 +359,7 @@
                         android:layout_width="77dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        app:srcCompat="@drawable/ic_term"
+                        app:srcCompat="@drawable/ic_description"
                         android:layout_weight="1"/>
                 <LinearLayout
                         android:orientation="vertical"
@@ -398,7 +398,7 @@
                         android:layout_width="77dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        app:srcCompat="@drawable/ic_term"
+                        app:srcCompat="@drawable/ic_idea"
                         android:layout_weight="1"/>
                 <LinearLayout
                         android:orientation="vertical"
@@ -435,7 +435,7 @@
                         android:layout_width="77dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        app:srcCompat="@drawable/ic_term"
+                        app:srcCompat="@drawable/ic_water"
                         android:layout_weight="1"/>
                 <LinearLayout
                         android:orientation="vertical"
@@ -501,7 +501,7 @@
             android:id="@+id/llPayment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@id/llRent"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:visibility="gone">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -549,7 +549,8 @@
                     android:numStars="5"
                     android:stepSize="1"
                     android:rating="4"
-                    android:id="@+id/ratingBar"/>
+                    android:id="@+id/ratingBar"
+                    android:visibility="gone"/>
         </LinearLayout>
         <Button
                 android:text="Rent"
@@ -557,10 +558,7 @@
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-<<<<<<< HEAD
                 android:background="@drawable/btn_rounded"
-                android:id="@+id/btn_rent"/>
-=======
                 style="@style/Base.Widget.AppCompat.Button.Colored"
                 android:id="@+id/btn_rent"
                 android:visibility="gone"/>
@@ -569,10 +567,10 @@
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/btn_rounded"
                 style="@style/Base.Widget.AppCompat.Button.Colored"
                 android:id="@+id/btn_edit"
                 android:visibility="gone"/>
->>>>>>> master
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

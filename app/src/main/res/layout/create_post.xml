@@ -108,7 +108,6 @@
                             android:layout_margin="16dp"
                             android:orientation="horizontal">
 
-<<<<<<< HEAD
                         <RadioButton android:id="@+id/radioButtonHomeTypeSpecial"
                                      android:text="Special"
                                      android:layout_width="wrap_content"
@@ -144,39 +143,6 @@
                                      android:layout_height="wrap_content"
                                      android:buttonTint="@color/colorPrimary"
                                      android:layout_weight="1"/>
-=======
-                    <RadioButton android:id="@+id/radioButtonHomeTypeSpecial"
-                                 android:text="Special"
-                                 android:layout_width="wrap_content"
-                                 android:layout_height="wrap_content"
-                                 android:layout_weight="1"
-                                 android:checked="true"/>
-
-                    <RadioButton android:id="@+id/radioButtonHomeType1"
-                                 android:text="Type 1"
-                                 android:layout_width="wrap_content"
-                                 android:layout_height="wrap_content"
-                                 android:layout_weight="1"/>
-
-                    <RadioButton android:id="@+id/radioButtonHomeType2"
-                                 android:text="Type 2"
-                                 android:layout_width="wrap_content"
-                                 android:layout_height="wrap_content"
-                                 android:layout_weight="1"/>
-
-                    <RadioButton android:id="@+id/radioButtonHomeType3"
-                                 android:text="Type 3"
-                                 android:layout_width="wrap_content"
-                                 android:layout_height="wrap_content"
-                                 android:layout_weight="1"/>
-
-                    <RadioButton android:id="@+id/radioButtonHomeType4"
-                                 android:text="Type 4"
-                                 android:layout_width="wrap_content"
-                                 android:layout_height="wrap_content"
-                                 android:layout_weight="1"/>
->>>>>>> master
-
 
                 </RadioGroup>
             </LinearLayout>

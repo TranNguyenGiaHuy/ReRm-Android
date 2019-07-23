@@ -99,7 +99,8 @@
                         android:numStars="5"
                         android:stepSize="1"
                         android:rating="4"
-                        android:id="@+id/ratingBar"/>
+                        android:id="@+id/ratingBar"
+                        android:visibility="gone"/>
 
             </LinearLayout>
             <de.hdodenhof.circleimageview.CircleImageView

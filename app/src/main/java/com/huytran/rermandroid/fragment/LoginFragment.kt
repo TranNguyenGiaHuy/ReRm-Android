@@ -78,9 +78,10 @@ class LoginFragment : BaseFragment() {
                     }
 
                     override fun onError(e: Throwable) {
-                        e.message?.let {
-                            Toast.makeText(activity, e.message, Toast.LENGTH_SHORT).show()
-                        }
+                        KAlertDialog(context, KAlertDialog.ERROR_TYPE)
+                            .setTitleText("Oops...")
+                            .setContentText("Something when wrong!")
+                            .show()
                     }
 
                 })

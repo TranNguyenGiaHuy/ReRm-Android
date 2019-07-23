@@ -33,6 +33,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_plus"
             android:layout_gravity="bottom|end"
+            android:backgroundTint="@color/colorPrimary"
             android:layout_margin="16dp"/>
 
 </FrameLayout>

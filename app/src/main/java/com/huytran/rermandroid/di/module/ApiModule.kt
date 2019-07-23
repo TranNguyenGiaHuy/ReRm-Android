@@ -113,4 +113,13 @@ class ApiModule {
         return PaymentController(context, channel)
     }
 
+    @Provides
+    @Singleton
+    internal fun provideContractController(
+        @ApplicationContext context: Context,
+        channel: Channel
+    ): ContractController {
+        return ContractController(context, channel)
+    }
+
 }

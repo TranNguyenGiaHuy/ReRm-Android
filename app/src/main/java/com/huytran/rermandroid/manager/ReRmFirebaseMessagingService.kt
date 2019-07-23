@@ -149,7 +149,7 @@ class ReRmFirebaseMessagingService : FirebaseMessagingService() {
 
         val notificationBuilder = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
             .setContentTitle(title)
-            .setSmallIcon(R.drawable.ic_launcher_background)
+            .setSmallIcon(R.drawable.ic_rerm)
             .setAutoCancel(true)
             .setSound(defaultSound)
             .setContentText(content)
@@ -182,7 +182,7 @@ class ReRmFirebaseMessagingService : FirebaseMessagingService() {
     private fun extractExtraData(extraData: String): ExtraData? {
         val raw = extraData.substring(1, extraData.length - 1)
         val dataPairs = raw.split(",")
-        if (dataPairs.size != 3) return null
+        if (dataPairs.size < 3) return null
         var from: Long? = null
         var room: Long? = null
         var value: Long? = null

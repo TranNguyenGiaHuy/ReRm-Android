@@ -2,8 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="horizontal"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:id="@+id/llContainer">
+              android:layout_height="160dp"
+              android:id="@+id/llContainer"
+              android:background="@android:color/white">
 
     <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ivAvatar"
@@ -80,6 +81,7 @@
             android:id="@+id/btn_send"
             android:layout_width="0dp"
             style="@style/Base.Widget.AppCompat.Button.Colored"
+            android:background="@drawable/btn_rounded"
             android:layout_gravity="center"
             android:text="Send"
             android:layout_height="wrap_content"

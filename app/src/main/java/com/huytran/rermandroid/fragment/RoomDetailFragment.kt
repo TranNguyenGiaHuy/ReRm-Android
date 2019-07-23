@@ -113,7 +113,7 @@ class RoomDetailFragment @Inject constructor(private val room: RoomData, private
         tvCooking.text = if (room.cookingAllowance) "YES" else "NO"
         tv_description.text = room.description
         tv_term.text = room.term
-        tv_cost.text = room.price.toString()
+        tv_cost.text = "${room.price} VND"
         tv_electricity_price.text = "${room.electricityPrice} VND/kWh"
         tv_water_price.text = "${room.waterPrice} VND/\u33A5"
 
@@ -224,6 +224,7 @@ class RoomDetailFragment @Inject constructor(private val room: RoomData, private
                 disposableContainer.add(it)
             }.subscribe(object: SingleObserver<List<Payment>> {
                 override fun onSuccess(t: List<Payment>) {
+                    processListPayment(t)
                 }
 
                 override fun onSubscribe(d: Disposable) {
@@ -248,7 +249,8 @@ class RoomDetailFragment @Inject constructor(private val room: RoomData, private
         if (notDonePaymentList.isEmpty()) return
         if (!isOwned && currentUser.svId != paymentList.first().payerId) return
 
-        llRent.visibility = View.VISIBLE
+        llPayment.visibility = View.VISIBLE
+        llRent.visibility = View.GONE
         val billList = paymentList.filter { payment ->
             payment.status == AppConstants.PaymentStatus.WAITING_BILL.raw
         }
@@ -266,6 +268,7 @@ class RoomDetailFragment @Inject constructor(private val room: RoomData, private
                 avatarController,
                 paymentController
             )
+            rvBill.adapter?.notifyDataSetChanged()
         }
 
         if (processList.isNotEmpty()) {
@@ -273,10 +276,11 @@ class RoomDetailFragment @Inject constructor(private val room: RoomData, private
             rvPaymentRequest.layoutManager = LinearLayoutManager(activity)
             rvPaymentRequest.adapter = PaymentRequestAdapter(
                 context!!,
-                billList.toMutableList(),
+                processList.toMutableList(),
                 avatarController,
                 paymentController
             )
+            rvPaymentRequest.adapter?.notifyDataSetChanged()
         }
 
     }
