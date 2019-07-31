@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style>
+* {
+  box-sizing: border-box;
+}
+
+#mySearch {
+  background-position: 10px 12px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 12px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+#myMenu {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#myMenu li a {
+  border: 1px solid #ddd;
+  margin-top: -1px; /* Prevent double borders */
+  background-color: #f6f6f6;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px;
+  color: black;
+  display: block
+}
+
+#myMenu li a:hover:not(.header) {
+  background-color: #eee;
+}
+</style>
+</head>
+<body>
+<h1>Các câu hỏi thường gặp</h1>
+
+        <input type="text" id="mySearch" onkeyup="myFunction()" placeholder="Search.." title="Type in a category">
+        <ol id="myMenu">
+            <li><a href="file:///android_asset/fqa1.html">Làm thế nào để đăng ký tài khoản?</a></li>
+            <li><a href="file:///android_asset/fqa2.html">Làm thế nào để đăng bài hay đăng nhà cần cho thuê?</a></li>
+            <li><a href="file:///android_asset/fqa3.html">Làm thế nào để nhắn tin với chủ nhà?</a></li>
+            <li><a href="file:///android_asset/fqa4.html">Làm thế nào để thuê nhà?</a></li>
+            <li><a href="file:///android_asset/fqa5.html">Tiền điện và nước được tính như thế nào?</a></li>
+            <li><a href="file:///android_asset/fqa6.html">Làm sao để biết hết hạn cho thuê?</a></li>
+            <li><a href="file:///android_asset/fqa7.html">Làm thế nào để cập nhật thông tin cá nhân?</a></li>
+            <li><a href="file:///android_asset/fqa8.html">Làm thế nào để cập nhật avartar?</a></li>
+            <li><a href="file:///android_asset/fqa9.html">Làm thế nào để thay đổi thông tin bài đăng đã đăng?</a> </li>
+            <li><a href="file:///android_asset/fqa10.html">Save/lưu bài đăng như thế nào?</a></li>
+            <li><a href="file:///android_asset/fqa11.html">Xem thông tin hợp đồng ở đâu?</a></li>
+            <li><a href="file:///android_asset/fqa12.html">Xem các bài đã đăng ở đâu?</a></li>
+            <li><a href="file:///android_asset/fqa13.html">Đăng xuất ứng dụng như thế nào?</a></li>
+            <li><a href="file:///android_asset/fqa2.html">Post bài như thế nào?</a></li>
+        </ol>
+
+<script>
+function myFunction() {
+  var input, filter, ol, li, a, i;
+  input = document.getElementById("mySearch");
+  filter = input.value.toUpperCase();
+  ol = document.getElementById("myMenu");
+  li = ol.getElementsByTagName("li");
+  for (i = 0; i < li.length; i++) {
+    a = li[i].getElementsByTagName("a")[0];
+    if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+      li[i].style.display = "";
+    } else {
+      li[i].style.display = "none";
+    }
+  }
+}
+</script>
+
+</body>
+</html>

@@ -59,4 +59,7 @@ abstract class FragmentModule {
     @ContributesAndroidInjector
     abstract fun contributeNotificationFragment(): NotificationFragment
 
+    @ContributesAndroidInjector
+    abstract fun contributeFQAFragment(): FQAFragment
+
 }

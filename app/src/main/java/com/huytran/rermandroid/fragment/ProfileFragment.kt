@@ -136,6 +136,13 @@ class ProfileFragment : BaseFragment() {
             )
         }
 
+        profile_setting.setOnClickListener {
+            TransactionManager.replaceFragmentWithWithBackStack(
+                activity!!,
+                FQAFragment()
+            )
+        }
+
         profile_Logout.setOnClickListener {
             //            val intent = Intent(this.activity!!, LoginActivity::class.java)
 //            startActivity(intent)
