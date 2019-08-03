@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp">
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/btn_rounded_gray"
+                android:id="@+id/searchLocation">
+            <ImageView
+                    android:layout_width="77dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_location"
+                    android:id="@+id/imageView3"
+                    android:padding="3dp"
+                    android:layout_weight="1"/>
+            <TextView
+                    android:text="Location"
+                    android:padding="6dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:id="@+id/tvLocation"/>
+
+            <ImageView
+                    android:layout_width="77dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_right_arrow_16"
+                    android:id="@+id/imageView5"
+                    android:layout_weight="1"/>
+
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/btn_rounded_gray"
+                android:id="@+id/searchType">
+
+            <ImageView
+                    android:layout_width="77dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_house"
+                    android:id="@+id/imageView4"
+                    android:padding="3dp"
+                    android:layout_weight="1"/>
+
+            <TextView
+                    android:text="Type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:padding="6dp"
+                    android:layout_weight="1"/>
+
+            <ImageView
+                    android:layout_width="77dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_right_arrow_16"
+                    android:id="@+id/imageView6"
+                    android:layout_weight="1"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:id="@+id/searchPrice">
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/btn_rounded_gray"
+                    android:layout_weight="1">
+                <TextView
+                        android:text="Price"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="6dp"
+                        android:layout_weight="1"/>
+
+                <ImageView
+                        android:layout_width="77dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/ic_right_arrow_16"
+                        android:layout_weight="1"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="3dp">
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/btn_rounded_gray"
+                    android:layout_weight="1"
+                    android:id="@+id/searchSquare">
+                <TextView
+                        android:text="Square"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="6dp"
+                        android:layout_weight="1"/>
+
+                <ImageView
+                        android:layout_width="77dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/ic_right_arrow_16"
+                        android:layout_weight="1"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

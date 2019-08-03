@@ -5,6 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.customview.customView
+import com.afollestad.materialdialogs.input.input
+import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.huytran.grpcdemo.generatedproto.Room
 import com.huytran.rermandroid.R
 import com.huytran.rermandroid.activity.MainActivity
@@ -21,6 +25,7 @@ import com.huytran.rermandroid.data.local.localbean.RoomData
 import com.huytran.rermandroid.data.local.repository.UserRepository
 import com.huytran.rermandroid.data.remote.*
 import io.reactivex.Single
+import kotlinx.android.synthetic.main.layout_search.*
 import java.io.File
 
 
@@ -82,6 +87,41 @@ class ExploreFragment : BaseFragment() {
         pullToRefresh.setOnRefreshListener {
             refreshData()
             pullToRefresh.isRefreshing = false
+        }
+
+        searchLocation.setOnClickListener{
+            MaterialDialog(context!!).show {
+                input()
+                title(text = "What's your location?")
+                negativeButton(R.string.text_cancel)
+            }
+        }
+
+        searchType.setOnClickListener{
+            MaterialDialog(context!!).show {
+                listItemsSingleChoice(R.array.roomType)
+                title(text = "Choosing the type ")
+                positiveButton(R.string.text_select)
+                negativeButton(R.string.text_cancel)
+            }
+        }
+
+        searchPrice.setOnClickListener {
+            MaterialDialog(context!!).show {
+                customView(R.layout.dialog_search_price)
+                title(text = "Choosing price ")
+                positiveButton {R.string.text_select}
+                negativeButton(R.string.text_cancel)
+            }
+        }
+
+        searchSquare.setOnClickListener {
+            MaterialDialog(context!!).show {
+                customView(R.layout.dialog_search_square)
+                title(text = "Choosing square ")
+                positiveButton {R.string.text_select}
+                negativeButton(R.string.text_cancel)
+            }
         }
 
     }

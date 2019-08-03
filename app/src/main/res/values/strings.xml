@@ -4,6 +4,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="text_cancel">Cancel</string>
+    <string name="text_select">Select</string>
     <string name="symbol_square_metre">\u33A1</string>
     <string name="symbol_cubic_metre">\u33A5</string>
     <string name="symbol_water_unit">VND/\u33A5</string>
