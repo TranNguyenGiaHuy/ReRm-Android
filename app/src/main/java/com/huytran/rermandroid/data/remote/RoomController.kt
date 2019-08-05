@@ -200,17 +200,23 @@ class RoomController(
 
     fun search(
         keyword: String,
-        minPrice: Long,
-        maxPrice: Long,
-        type: Int
+        minPrice: Long?,
+        maxPrice: Long?,
+        type: Int?
     ): Single<List<Room>> {
         val stub = RoomServiceGrpc.newStub(channel)
         val request = SearchRoomRequest.newBuilder()
             .setKeyword(keyword)
-            .setMinPrice(minPrice)
-            .setMaxPrice(maxPrice)
-            .setType(type)
-            .build()
+
+        minPrice?.let {
+            request.setMinPrice(minPrice)
+        }
+        maxPrice?.let {
+            request.setMaxPrice(maxPrice)
+        }
+        type?.let {
+            request.setType(type)
+        }
 
         return Single.create<List<Room>> {emitter ->
             val response = object: StreamObserver<SearchRoomResponse> {
@@ -232,7 +238,7 @@ class RoomController(
 
             }
 
-            stub.searchRoom(request, response)
+            stub.searchRoom(request.build(), response)
         }
     }
 

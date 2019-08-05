@@ -101,14 +101,60 @@ class ExploreFragment : BaseFragment() {
             android.R.layout.simple_spinner_item
         ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            spinnerType.setAdapter(adapter)
+            spinnerType.adapter = adapter
         }
 
         //keyword: etSearch.getText()
         //         etPriceFrom.getText()
         //         etPriceTo.getText()
         //         spinnerType.getSelectedItem()
-        //         btnSearch.setOnClickListener{}
+        //
+        btnSearch.setOnClickListener {
+            roomController.search(
+                etSearch.text.toString(),
+                etPriceFrom.text.toString().toLongOrNull(),
+                etPriceTo.text.toString().toLongOrNull(),
+                when (spinnerType.selectedItemPosition) {
+                    1 -> 0
+                    2 -> 1
+                    3 -> 2
+                    else -> null
+                }
+            ).observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe {
+                    disposableContainer.add(it)
+                }
+                .subscribe(object: SingleObserver<List<Room>> {
+                    override fun onSuccess(t: List<Room>) {
+                        recyclerView.apply {
+                            val roomData = t.map { room ->
+                                RoomData(room)
+                            }.sortedByDescending {
+                                it.id
+                            }
+
+                            adapter = PostAdapter(
+                                ArrayList(roomData),
+                                this.context,
+                                avatarController,
+                                imageController,
+                                savedRoomController,
+                                userRepository,
+                                savedRoomIdList.toMutableList())
+                            adapter?.notifyDataSetChanged()
+                        }
+                    }
+
+                    override fun onSubscribe(d: Disposable) {
+                    }
+
+                    override fun onError(e: Throwable) {
+                        e.printStackTrace()
+                    }
+
+                })
+        }
     }
 
     override fun onResume() {
