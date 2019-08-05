@@ -56,6 +56,11 @@ class AppConstants {
         DORM(2, "Dormitory")
     }
 
+    enum class RoomPrice(val raw: Long, name: String) {
+        MAX_PRICE(0, "Max"),
+        MIN_PRICE(1, "Min")
+    }
+
     enum class PaymentStatus(val raw: Int) {
         WAITING_BILL(0),
         WAITING_PAYMENT(1),
