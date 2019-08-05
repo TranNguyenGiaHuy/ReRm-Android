@@ -55,7 +55,7 @@ class ExploreFragment : BaseFragment() {
         val view = inflater.inflate(R.layout.fragment_explore, container, false)
 
         val spinnerType: Spinner = view.findViewById(R.id.spinnerType)
-        val spinnerPrice: Spinner = view.findViewById(R.id.spinnerPrice)
+
         return view
     }
 
@@ -104,14 +104,11 @@ class ExploreFragment : BaseFragment() {
             spinnerType.setAdapter(adapter)
         }
 
-        ArrayAdapter.createFromResource(
-            context!!,
-            R.array.roomPrice,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            spinnerPrice.setAdapter(adapter)
-        }
+        //keyword: etSearch.getText()
+        //         etPriceFrom.getText()
+        //         etPriceTo.getText()
+        //         spinnerType.getSelectedItem()
+        //         btnSearch.setOnClickListener{}
     }
 
     override fun onResume() {

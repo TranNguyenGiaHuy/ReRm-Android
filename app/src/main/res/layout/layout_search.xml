@@ -21,7 +21,6 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="8dp"
                 android:background="@drawable/btn_rounded_gray"
                 android:layout_weight="1">
             <EditText
@@ -46,62 +45,9 @@
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/btn_rounded_gray"
-                    android:layout_weight="1"
-                    android:id="@+id/searchType">
-                <TextView
-                        android:text="Type"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:padding="6dp"
-                        android:layout_weight="2"/>
-                <Spinner
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/spinnerType"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"/>
-
-            </LinearLayout>
-            <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_margin="3dp">
-            </LinearLayout>
-            <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/btn_rounded_gray"
-                    android:layout_weight="1">
-                <TextView
-                        android:text="Price"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:padding="6dp"
-                        android:layout_weight="2"/>
-                <Spinner
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:id="@+id/spinnerPrice"
-                        android:layout_weight="1"/>
-
-            </LinearLayout>
-        </LinearLayout>
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:background="@drawable/btn_rounded_gray">
             <LinearLayout
                     android:orientation="horizontal"
@@ -147,6 +93,53 @@
                         android:layout_weight="1" android:hint=" VND"/>
             </LinearLayout>
 
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/btn_rounded_gray"
+                    android:layout_weight="1"
+                    android:id="@+id/searchType">
+                <TextView
+                        android:text="Type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="6dp"
+                        android:layout_weight="2"/>
+                <Spinner
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/spinnerType"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"/>
+
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="3dp">
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="8dp"
+                    android:layout_weight="1">
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="6dp"
+                        android:layout_weight="2"/>
+
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
