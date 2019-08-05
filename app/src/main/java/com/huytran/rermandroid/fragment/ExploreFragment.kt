@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
@@ -50,7 +52,11 @@ class ExploreFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R.layout.fragment_explore, container, false)
+        val view = inflater.inflate(R.layout.fragment_explore, container, false)
+
+        val spinnerType: Spinner = view.findViewById(R.id.spinnerType)
+        val spinnerPrice: Spinner = view.findViewById(R.id.spinnerPrice)
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -89,41 +95,23 @@ class ExploreFragment : BaseFragment() {
             pullToRefresh.isRefreshing = false
         }
 
-        searchLocation.setOnClickListener{
-            MaterialDialog(context!!).show {
-                input()
-                title(text = "What's your location?")
-                negativeButton(R.string.text_cancel)
-            }
+        ArrayAdapter.createFromResource(
+            context!!,
+            R.array.roomType,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinnerType.setAdapter(adapter)
         }
 
-        searchType.setOnClickListener{
-            MaterialDialog(context!!).show {
-                listItemsSingleChoice(R.array.roomType)
-                title(text = "Choosing the type ")
-                positiveButton(R.string.text_select)
-                negativeButton(R.string.text_cancel)
-            }
+        ArrayAdapter.createFromResource(
+            context!!,
+            R.array.roomPrice,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinnerPrice.setAdapter(adapter)
         }
-
-        searchPrice.setOnClickListener {
-            MaterialDialog(context!!).show {
-                customView(R.layout.dialog_search_price)
-                title(text = "Choosing price ")
-                positiveButton {R.string.text_select}
-                negativeButton(R.string.text_cancel)
-            }
-        }
-
-        searchSquare.setOnClickListener {
-            MaterialDialog(context!!).show {
-                customView(R.layout.dialog_search_square)
-                title(text = "Choosing square ")
-                positiveButton {R.string.text_select}
-                negativeButton(R.string.text_cancel)
-            }
-        }
-
     }
 
     override fun onResume() {

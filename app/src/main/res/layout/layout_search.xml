@@ -4,43 +4,42 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="wrap_content">
-
+    <!--<com.mancj.materialsearchbar.MaterialSearchBar-->
+            <!--style="@style/MaterialSearchBarLight"-->
+            <!--app:mt_hint="Search"-->
+            <!--app:mt_maxSuggestionsCount="10"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_margin="8dp"-->
+            <!--android:id="@+id/searchBar"/>-->
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp">
-
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="8dp"
                 android:background="@drawable/btn_rounded_gray"
-                android:id="@+id/searchLocation">
-            <ImageView
-                    android:layout_width="77dp"
+                android:layout_weight="1">
+            <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:hint="Search"
+                    android:layout_gravity="center"
+                    android:ems="10"
+                    android:id="@+id/etSearch"
+                    android:layout_weight="4"/>
+            <ImageButton
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    app:srcCompat="@drawable/ic_location"
-                    android:id="@+id/imageView3"
-                    android:padding="3dp"
-                    android:layout_weight="1"/>
-            <TextView
-                    android:text="Location"
-                    android:padding="6dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:id="@+id/tvLocation"/>
-
-            <ImageView
-                    android:layout_width="77dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    app:srcCompat="@drawable/ic_right_arrow_16"
-                    android:id="@+id/imageView5"
+                    android:background="@color/white"
+                    app:srcCompat="@drawable/ic_search"
+                    android:id="@+id/btnSearch"
                     android:layout_weight="1"/>
 
         </LinearLayout>
@@ -48,64 +47,28 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/btn_rounded_gray"
-                android:id="@+id/searchType">
-
-            <ImageView
-                    android:layout_width="77dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    app:srcCompat="@drawable/ic_house"
-                    android:id="@+id/imageView4"
-                    android:padding="3dp"
-                    android:layout_weight="1"/>
-
-            <TextView
-                    android:text="Type"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:padding="6dp"
-                    android:layout_weight="1"/>
-
-            <ImageView
-                    android:layout_width="77dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    app:srcCompat="@drawable/ic_right_arrow_16"
-                    android:id="@+id/imageView6"
-                    android:layout_weight="1"/>
-
-        </LinearLayout>
-
-
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:id="@+id/searchPrice">
+        >
             <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/btn_rounded_gray"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:id="@+id/searchType">
                 <TextView
-                        android:text="Price"
+                        android:text="Type"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:padding="6dp"
+                        android:layout_weight="2"/>
+                <Spinner
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/spinnerType"
+                        android:layout_gravity="center"
                         android:layout_weight="1"/>
 
-                <ImageView
-                        android:layout_width="77dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        app:srcCompat="@drawable/ic_right_arrow_16"
-                        android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -118,25 +81,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/btn_rounded_gray"
-                    android:layout_weight="1"
-                    android:id="@+id/searchSquare">
+                    android:layout_weight="1">
                 <TextView
-                        android:text="Square"
+                        android:text="Price"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:padding="6dp"
-                        android:layout_weight="1"/>
-
-                <ImageView
-                        android:layout_width="77dp"
+                        android:layout_weight="2"/>
+                <Spinner
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        app:srcCompat="@drawable/ic_right_arrow_16"
+                        android:id="@+id/spinnerPrice"
                         android:layout_weight="1"/>
+
             </LinearLayout>
         </LinearLayout>
-
     </LinearLayout>
-
 </LinearLayout>

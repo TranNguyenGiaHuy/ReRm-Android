@@ -5,4 +5,8 @@
         <item>Home</item>
         <item>Dormitory</item>
     </array>
+    <array name="roomPrice">
+        <item>Max</item>
+        <item>Min</item>
+    </array>
 </resources>
