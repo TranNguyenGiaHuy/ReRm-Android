@@ -176,8 +176,8 @@ class RoomController(
         val request = GetRoomRequest.newBuilder().setRoomId(roomId).build()
         val errorThrowable = Throwable("Get Room Fail")
 
-        return Single.create<Room> {emitter ->
-            val responseObserver = object: StreamObserver<GetRoomResponse> {
+        return Single.create<Room> { emitter ->
+            val responseObserver = object : StreamObserver<GetRoomResponse> {
                 override fun onNext(value: GetRoomResponse) {
                     emitter.onSuccess(
                         value.room
@@ -196,6 +196,44 @@ class RoomController(
             stub.getRoom(request, responseObserver)
         }
 
+    }
+
+    fun search(
+        keyword: String,
+        minPrice: Long,
+        maxPrice: Long,
+        type: Int
+    ): Single<List<Room>> {
+        val stub = RoomServiceGrpc.newStub(channel)
+        val request = SearchRoomRequest.newBuilder()
+            .setKeyword(keyword)
+            .setMinPrice(minPrice)
+            .setMaxPrice(maxPrice)
+            .setType(type)
+            .build()
+
+        return Single.create<List<Room>> {emitter ->
+            val response = object: StreamObserver<SearchRoomResponse> {
+                override fun onNext(value: SearchRoomResponse?) {
+                    value?.let {
+                        emitter.onSuccess(value.roomList)
+                    }
+                }
+
+                override fun onError(t: Throwable?) {
+                    t?.let {
+                        t.printStackTrace()
+                        emitter.onError(t)
+                    }
+                }
+
+                override fun onCompleted() {
+                }
+
+            }
+
+            stub.searchRoom(request, response)
+        }
     }
 
     fun updateRoom(
@@ -310,8 +348,8 @@ class RoomController(
             .setId(id)
             .build()
 
-        return Completable.create {emitter ->
-            val response = object: StreamObserver<DeleteRoomResponse> {
+        return Completable.create { emitter ->
+            val response = object : StreamObserver<DeleteRoomResponse> {
                 override fun onNext(value: DeleteRoomResponse) {
                 }
 
@@ -332,8 +370,8 @@ class RoomController(
         val stub = RoomServiceGrpc.newStub(channel)
         val request = GetAllRoomOfUserRequest.newBuilder().build()
 
-        return Single.create<List<Room>> {emitter ->
-            val response = object: StreamObserver<GetAllRoomOfUserResponse> {
+        return Single.create<List<Room>> { emitter ->
+            val response = object : StreamObserver<GetAllRoomOfUserResponse> {
                 override fun onNext(value: GetAllRoomOfUserResponse) {
                     emitter.onSuccess(value.roomList)
                 }

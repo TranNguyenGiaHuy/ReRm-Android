@@ -22,6 +22,15 @@ message GetAllContractResponse {
     repeated Contract contract = 1;
 }
 
+message TerminateContractRequest {
+    int64 id = 1;
+}
+
+message TerminateContractResponse {
+    int32 result_code = 1;
+}
+
 service ContractService {
     rpc GetAllContract(GetAllContractRequest) returns (GetAllContractResponse) {}
+    rpc TerminateContract(TerminateContractRequest) returns (TerminateContractResponse) {}
 }
