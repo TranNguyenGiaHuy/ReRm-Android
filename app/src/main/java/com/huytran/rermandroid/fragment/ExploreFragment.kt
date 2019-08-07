@@ -116,8 +116,8 @@ class ExploreFragment : BaseFragment() {
                 etPriceTo.text.toString().toLongOrNull(),
                 when (spinnerType.selectedItemPosition) {
                     1 -> 0
-                    2 -> 1
-                    3 -> 2
+                    0 -> 1
+                    2 -> 2
                     else -> null
                 }
             ).observeOn(AndroidSchedulers.mainThread())
