@@ -37,6 +37,8 @@ class ManagePostAdapter(private val items : MutableList<RoomData>, val context: 
         holder.tvStatus.visibility = if (room.isRenting) View.VISIBLE else View.GONE
         holder.btnDelete.visibility = if (room.isRenting) View.GONE else View.VISIBLE
         holder.btnEdit.visibility = if (room.isRenting) View.GONE else View.VISIBLE
+        holder.tvTitle.text = "${room.title}"
+        holder.tvDescription.text = "${room.description}"
 
         holder.itemView.setOnClickListener{
             TransactionManager.replaceFragmentWithWithBackStack(
@@ -77,11 +79,13 @@ class ManagePostAdapter(private val items : MutableList<RoomData>, val context: 
     class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
         val tvRoomType = view.tvRoomType
         val tvPrice = view.tvPrice
+        val tvTitle = view.tvTitle
         val tvLocation = view.tvLocation
         val ratingBar = view.rbManagePost
         val btnDelete = view.ivDelete
         val btnEdit = view.ivEdit
         val tvStatus = view.tvStatus
+        val tvDescription = view.tvDescription
 
     }
 }
